@@ -40,46 +40,80 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.favourites', {
+    url: '/favourites',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-favourites': {
+        templateUrl: 'templates/tab-favourites.html',
+        controller: 'FavouritesCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.about', {
+    url: '/about',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/tab-about.html',
+        controller: 'AboutCtrl'
+      }
+    }
+  })
+  .state('tab.features', {
+    url: '/features',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/about-features.html'
+      }
+    }
+  })
+  .state('tab.copyright', {
+    url: '/copyright',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/about-copyright.html'
+      }
+    }
+  })
+  .state('tab.disclaimer', {
+    url: '/disclaimer',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/about-disclaimer.html'
+      }
+    }
+  })
+
+  .state('tab.figures', {
+      url: '/figures',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-figures': {
+          templateUrl: 'templates/tab-figures.html',
+          controller: 'FiguresCtrl'
         }
       }
     })
     .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+      url: '/figures/:chatId',
       views: {
-        'tab-chats': {
+        'tab-figures': {
           templateUrl: 'templates/chat-detail.html',
           controller: 'ChatDetailCtrl'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.search', {
+    url: '/search',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-search': {
+        templateUrl: 'templates/tab-search.html',
+        controller: 'SearchCtrl'
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/about');
 
 });

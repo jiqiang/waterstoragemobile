@@ -6,3 +6,4 @@ client/platforms/
 client/plugins/
 *.sublime-project
 *.sublime-workspace
+._*
