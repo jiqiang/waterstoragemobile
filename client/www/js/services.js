@@ -47,4 +47,12 @@ angular.module('watsto.services', [])
       return null;
     }
   };
-});
+})
+
+.factory('Utils', ['$http', function($http) {
+  return {
+    getData: function () {
+      return $http.get('data/data.json');
+    }
+  }
+}]);
