@@ -49,10 +49,13 @@ angular.module('watsto.services', [])
   };
 })
 
-.factory('Utils', ['$http', function($http) {
-  return {
-    getData: function () {
-      return $http.get('data/data.json');
-    }
+.factory('DataService', ['$http', function($http) {
+
+  function fetch () {
+    return $http.get('data/data.json');
   }
-}]);
+
+  return {
+    fetch: fetch
+  };
+}])

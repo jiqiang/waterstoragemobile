@@ -10,8 +10,8 @@ angular.module('watsto.controllers', ['watsto.services'])
 
 .controller('AboutCtrl', function($scope) {})
 
-.controller('FiguresCtrl', function($scope, Chats, rest) {
-  console.log(rest);
+.controller('FiguresCtrl', function($scope, Chats, ws) {
+  console.log(ws.data);
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),

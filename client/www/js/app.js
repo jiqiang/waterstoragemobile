@@ -87,8 +87,8 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
   .state('tab.figures', {
       url: '/figures',
       resolve: {
-        rest: ['$http', function ($http) {
-          return $http.get('/data/data.json');
+        ws: ['DataService', function (DataService) {
+          return DataService.fetch();
         }]
       },
       views: {
