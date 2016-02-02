@@ -7,3 +7,4 @@ client/plugins/
 *.sublime-project
 *.sublime-workspace
 ._*
+client/www/data/
