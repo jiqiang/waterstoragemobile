@@ -4,6 +4,10 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.platform = ionic.Platform.platform();
 }])
 
+.controller('TabCtrl', ['$scope', 'storage', function ($scope, storage) {
+  $scope.data = storage.data;
+}])
+
 .controller('FavouritesCtrl', ['$scope', 'Chats', function ($scope, Chats) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
@@ -13,8 +17,8 @@ angular.module('watsto.controllers', ['watsto.services'])
 
 .controller('AboutCtrl', function($scope) {})
 
-.controller('FiguresCtrl', function($scope, Chats, ws) {
-  console.log(ws.data);
+.controller('FiguresCtrl', ['$scope', 'Chats', function($scope, Chats) {
+
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -27,7 +31,7 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
-})
+}])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);

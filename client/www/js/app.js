@@ -35,7 +35,13 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
+    resolve: {
+      storage: ['DataService', function (DataService) {
+        return DataService.fetch();
+      }]
+    },
+    controller: 'TabCtrl'
   })
 
   // Each tab has its own nav history stack:
@@ -86,11 +92,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   .state('tab.figures', {
       url: '/figures',
-      resolve: {
-        ws: ['DataService', function (DataService) {
-          return DataService.fetch();
-        }]
-      },
       views: {
         'tab-figures': {
           templateUrl: 'templates/tab-figures.html',
