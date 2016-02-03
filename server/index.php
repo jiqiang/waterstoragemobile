@@ -24,22 +24,23 @@ $conn = null;
 try {
   $conn = new PDO($dsn, $cds['username'], $cds['password']);
 
-  $states = getStatesData();
+  $states = run(getStatesSQL());
   foreach ($states as &$row) {
-    $row['storages'] = getStorages('state', $row['state']);
+    $row['storages'] = run(getStoragesSQL('state', $row['state']));
   }
 
-  $cities = getCitiesData();
+  $cities = run(getCitiesSQL());
   foreach ($cities as &$row) {
-    $row['storages'] = getStorages('city', $row['city']);
+    $row['storages'] = run(getStoragesSQL('city', $row['city']));
   }
 
-  $drainages = getDrainagesData();
+  $drainages = run(getDrainagesSQL());
   foreach ($drainages as &$row) {
-    $row['storages'] = getStorages('drainage', $row['drainage']);
+    $row['storages'] = run(getStoragesSQL('drainage', $row['drainage']));
   }
 
   $data = array(
+    'national' => run(getNationalSQL()),
     'states' => $states,
     'cities' => $cities,
     'drainages' => $drainages,
@@ -52,10 +53,20 @@ catch (PDOException $e) {
   exit(1);
 }
 
-function getStatesData() {
-  global $conn;
+function getNationalSQL() {
+  return $sql = "
+    select
+      round(sum(today_volume_active), 2) as today_volume_active_total,
+      round(sum(today_capacity_active), 2) as today_capacity_active_total,
+      round(sum(today_volume_active) / sum(today_capacity_active) * 100, 2) as percentage_full_today,
+      to_char(today_day, 'DY DD MON YYYY') as today
+    from wid_schema.tblu_storage_view
+    group by today_day
+  ";
+}
 
-  $sql = "
+function getStatesSQL() {
+  return $sql = "
     select
       state,
       round(sum(today_volume_active), 2) as today_volume_active_total,
@@ -67,18 +78,10 @@ function getStatesData() {
     group by state, today
     order by state
   ";
-  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($data as &$row) {
-    $row['today_volume_active_total'] = floatval($row['today_volume_active_total']);
-    $row['today_capacity_active_total'] = floatval($row['today_capacity_active_total']);
-  }
-  return $data;
 }
 
-function getCitiesData() {
-  global $conn;
-
-  $sql = "
+function getCitiesSQL() {
+  return $sql = "
     select
       city,
       round(sum(today_volume_active), 2) as today_volume_active_total,
@@ -90,18 +93,10 @@ function getCitiesData() {
     group by city, today
     order by city
   ";
-  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($data as &$row) {
-    $row['today_volume_active_total'] = floatval($row['today_volume_active_total']);
-    $row['today_capacity_active_total'] = floatval($row['today_capacity_active_total']);
-  }
-  return $data;
 }
 
-function getDrainagesData() {
-  global $conn;
-
-  $sql = "
+function getDrainagesSQL() {
+  return $sql = "
     select
       drainage,
       round(sum(today_volume_active), 2) as today_volume_active_total,
@@ -113,17 +108,10 @@ function getDrainagesData() {
     group by drainage, today
     order by drainage
   ";
-  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($data as &$row) {
-    $row['today_volume_active_total'] = floatval($row['today_volume_active_total']);
-    $row['today_capacity_active_total'] = floatval($row['today_capacity_active_total']);
-  }
-  return $data;
 }
 
-function getStorages($by_what, $value) {
-  global $conn;
-  $sql = "
+function getStoragesSQL($by_what, $value) {
+  return $sql = "
     select
       storage_name as storage,
       round(sum(today_volume_active), 2) as today_volume_active_total,
@@ -135,6 +123,11 @@ function getStorages($by_what, $value) {
     group by storage_name, today
     order by storage_name
   ";
+}
+
+function run($sql) {
+  global $conn;
+
   $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as &$row) {
     $row['today_volume_active_total'] = floatval($row['today_volume_active_total']);
