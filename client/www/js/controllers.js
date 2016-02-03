@@ -4,8 +4,11 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.platform = ionic.Platform.platform();
 }])
 
-.controller('FavouritesCtrl', ['$scope', function ($scope) {
-
+.controller('FavouritesCtrl', ['$scope', 'Chats', function ($scope, Chats) {
+  $scope.chats = Chats.all();
+  $scope.remove = function(chat) {
+    Chats.remove(chat);
+  };
 }])
 
 .controller('AboutCtrl', function($scope) {})

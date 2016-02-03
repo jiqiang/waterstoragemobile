@@ -6,28 +6,33 @@ angular.module('watsto.services', [])
   // Some fake testing data
   var chats = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
+    name: 'Tasmania',
+    lastText: 'CAPACITY: 22,141,361 ML',
     face: 'img/ben.png'
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
+    name: 'New South Wales',
+    lastText: 'CAPACITY: 21,352,134 ML',
     face: 'img/max.png'
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
+    name: 'Victoria',
+    lastText: 'CAPACITY: 12,233,343 ML',
     face: 'img/adam.jpg'
   }, {
     id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
+    name: 'Western Australia',
+    lastText: 'CAPACITY: 34,232,333 ML',
     face: 'img/perry.png'
   }, {
     id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
+    name: 'Queensland',
+    lastText: 'CAPACITY: 12,233,343 ML',
+    face: 'img/mike.png'
+  } , {
+    id: 5,
+    name: 'South Australia',
+    lastText: 'CAPACITY: 12,233,343 ML',
     face: 'img/mike.png'
   }];
 
