@@ -41,25 +41,33 @@ angular.module('watsto.controllers', ['watsto.services'])
 
   $scope.$on('$ionicView.enter', function (e) {
 
-    $scope.viewTitle = $stateParams.value;
+    var name = $stateParams.type == 'states' ? 'state' : ($stateParams.type == 'cities' ? 'city' : ($stateParams.type == 'drainages' ? 'drainage' : ''));
 
-    var typeItems = $scope.data[$stateParams.type];
+    var item = $scope.data[$stateParams.type][$stateParams.typeIndex];
 
-    for (var i = 0; i < typeItems.length; i++) {
-      if ($stateParams.type == 'states' && typeItems[i].state == $stateParams.value) {
-        $scope.storages = typeItems[i].storages;
-        break;
-      }
-      else if ($stateParams.type == 'cities' && typeItems[i].city == $stateParams.value) {
-        $scope.storages = typeItems[i].storages;
-        break;
-      }
-      else if ($stateParams.type == 'drainages' && typeItems[i].drainage == $stateParams.value) {
-        $scope.storages = typeItems[i].storages;
-        break;
-      }
-    }
+    $scope.type = $stateParams.type;
+
+    $scope.typeIndex = $stateParams.typeIndex;
+
+    $scope.viewTitle = item[name];
+
+    $scope.storages = item.storages;
+
   });
+
+  $scope.$on('$ionicView.afterEnter', function (e) {
+    $ionicLoading.hide();
+  });
+}])
+
+.controller('StorageDetailCtrl', ['$scope', '$stateParams', '$ionicLoading', function ($scope, $stateParams, $ionicLoading) {
+  $scope.$on('$ionicView.beforeEnter', function (e) {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  });
+
+  $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex].storages[$stateParams.storageIndex];
 
   $scope.$on('$ionicView.afterEnter', function (e) {
     $ionicLoading.hide();

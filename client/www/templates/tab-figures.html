@@ -16,7 +16,7 @@
       </ion-item>
       -->
       <div class="item item-divider">STATES</div>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/{{item.state}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/{{$index}}">
         <h4>
           {{item.state}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
@@ -30,7 +30,7 @@
       </ion-item>
 
       <div class="item item-divider">CAPITAL CITIES</div>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/{{item.city}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/{{$index}}">
         <h4>
           {{item.city}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
@@ -44,7 +44,7 @@
       </ion-item>
 
       <div class="item item-divider">DRAINAGE DIVISIONS</div>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/{{item.drainage}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/{{$index}}">
         <h4>
           {{item.drainage}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
