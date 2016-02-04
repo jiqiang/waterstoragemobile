@@ -1,47 +1,50 @@
 <ion-view view-title="{{storageDetail.storage}}">
   <ion-content>
     <div class="list card">
-      <div class="item">
-        <h2>{{storageDetail.today}}</h2>
-      </div>
 
       <div class="item">
+        <h2 class="calm">{{storageDetail.today}}</h2>
         <h1>{{storageDetail.percentage_full_today}}%</h1>
-        <h4>AVAILABLE: <span style="float:right">{{storageDetail.today_capacity_active_total}} ML</span></h4>
-        <h4>VOLUME: <span style="float:right">{{storageDetail.today_volume_active_total}} ML</span></h4>
+        <h4 class="calm">AVAILABLE:</h2>
+        <h2>{{storageDetail.today_capacity_active_total}} ML</h2>
+        <h4 class="calm" style="float: right">{{storageDetail.today_volume_active_total}} ML</h4>
       </div>
 
     </div>
 
     <div class="list card">
       <div class="item">
-        <h2>SINCE: PREVIOUS DAY</h2>
+        <h2 class="calm">SINCE:</h2>
+        <h2>PREVIOUS DAY</h2>
         <h1>{{storageDetail.percentage_change_since_yesterday}}%</h1>
-        <h4>{{storageDetail.volume_change_since_yesterday}} ML</h4>
+        <h2>{{storageDetail.volume_change_since_yesterday}} ML</h2>
       </div>
     </div>
 
     <div class="list card">
       <div class="item">
-        <h2>SINCE: LAST WEEK</h2>
+        <h2 class="calm">SINCE:</h2>
+        <h2>LAST WEEK</h2>
         <h1>{{storageDetail.percentage_change_since_last_week}}%</h1>
-        <h4>{{storageDetail.volume_change_since_last_week}} ML</h4>
+        <h2>{{storageDetail.volume_change_since_last_week}} ML</h2>
       </div>
     </div>
 
     <div class="list card">
       <div class="item">
-        <h2>SINCE: LAST MONTH</h2>
+        <h2 class="calm">SINCE:</h2>
+        <h2>LAST MONTH</h2>
         <h1>{{storageDetail.percentage_change_since_last_month}}%</h1>
-        <h3>{{storageDetail.volume_change_since_last_month}} ML</h4>
+        <h2>{{storageDetail.volume_change_since_last_month}} ML</h2>
       </div>
     </div>
 
     <div class="list card">
       <div class="item">
-        <h2>SINCE: LAST YEAR</h2>
+        <h2 class="calm">SINCE:</h2>
+        <h2>LAST YEAR</h2>
         <h1>{{storageDetail.percentage_change_since_last_year}}%</h1>
-        <h4>{{storageDetail.volume_change_since_last_year}} ML</h4>
+        <h2>{{storageDetail.volume_change_since_last_year}} ML</h2>
       </div>
     </div>
   </ion-content>
