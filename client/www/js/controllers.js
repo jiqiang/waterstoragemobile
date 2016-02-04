@@ -6,6 +6,7 @@ angular.module('watsto.controllers', ['watsto.services'])
 
 .controller('TabCtrl', ['$scope', 'storage', function ($scope, storage) {
   $scope.data = storage.data;
+  console.log(storage);
 }])
 
 .controller('FavouritesCtrl', ['$scope', 'Chats', function ($scope, Chats) {
@@ -31,6 +32,31 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
+}])
+
+.controller('StoragesCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
+
+  $scope.$on('$ionicView.enter', function (e) {
+    $scope.viewTitle = $stateParams.value;
+
+    var typeItems = $scope.data[$stateParams.type];
+
+    for (var i = 0; i < typeItems.length; i++) {
+      if ($stateParams.type == 'states' && typeItems[i].state == $stateParams.value) {
+        $scope.storages = typeItems[i].storages;
+        break;
+      }
+      else if ($stateParams.type == 'cities' && typeItems[i].city == $stateParams.value) {
+        $scope.storages = typeItems[i].storages;
+        break;
+      }
+      else if ($stateParams.type == 'drainages' && typeItems[i].drainage == $stateParams.value) {
+        $scope.storages = typeItems[i].storages;
+        break;
+      }
+    }
+  });
+
 }])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
