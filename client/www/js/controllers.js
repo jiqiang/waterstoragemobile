@@ -18,25 +18,29 @@ angular.module('watsto.controllers', ['watsto.services'])
 
 .controller('AboutCtrl', function($scope) {})
 
-.controller('FiguresCtrl', ['$scope', 'Chats', function($scope, Chats) {
+.controller('FiguresCtrl', ['$scope', '$ionicLoading', function ($scope, $ionicLoading) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  $scope.$on('$ionicView.beforeEnter', function (e) {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  });
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  $scope.$on('$ionicView.afterEnter', function (e) {
+    $ionicLoading.hide();
+  });
 }])
 
-.controller('StoragesCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
+.controller('StoragesCtrl', ['$scope', '$stateParams', '$ionicLoading', function ($scope, $stateParams, $ionicLoading) {
+
+  $scope.$on('$ionicView.beforeEnter', function (e) {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  });
 
   $scope.$on('$ionicView.enter', function (e) {
+
     $scope.viewTitle = $stateParams.value;
 
     var typeItems = $scope.data[$stateParams.type];
@@ -57,6 +61,9 @@ angular.module('watsto.controllers', ['watsto.services'])
     }
   });
 
+  $scope.$on('$ionicView.afterEnter', function (e) {
+    $ionicLoading.hide();
+  });
 }])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
