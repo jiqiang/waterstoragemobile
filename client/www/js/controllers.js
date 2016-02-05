@@ -7,6 +7,9 @@ angular.module('watsto.controllers', ['watsto.services'])
 .controller('TabCtrl', ['$scope', 'FavouriteService', 'storage', function ($scope, FavouriteService, storage) {
   $scope.data = storage.data;
   console.log(storage.data);
+  $scope.switchChange = function (item) {
+    console.log(item);
+  }
 }])
 
 .controller('FavouritesCtrl', ['$scope', 'FavouriteService', function ($scope, FavouriteService) {
