@@ -4,13 +4,51 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.platform = ionic.Platform.platform();
 }])
 
-.controller('TabCtrl', ['$scope', 'storage', function ($scope, storage) {
+.controller('TabCtrl', ['$scope', 'FavouriteService', 'storage', function ($scope, FavouriteService, storage) {
   $scope.data = storage.data;
-  console.log(storage);
+  console.log(storage.data);
 }])
 
-.controller('FavouritesCtrl', ['$scope', 'Chats', function ($scope, Chats) {
-  $scope.chats = Chats.all();
+.controller('FavouritesCtrl', ['$scope', 'FavouriteService', function ($scope, FavouriteService) {
+
+  $scope.removeFavourite = function (index) {
+    $scope.favouritesData.splice(index, 1);
+    FavouriteService.remove(index);
+  }
+
+  $scope.$on('$ionicView.enter', function (e) {
+    var obj,
+        _type,
+        _typeIndex,
+        _storageIndex,
+        favouritesData = [],
+        favourites = FavouriteService.get();
+
+    for (var i = 0; i < favourites.length; i++) {
+
+      _type = favourites[i].type;
+      _typeIndex = favourites[i].typeIndex;
+      _storageIndex = favourites[i].storageIndex;
+
+      if (_storageIndex !== null) {
+        obj = $scope.data[_type][_typeIndex].storages[_storageIndex];
+        obj.href = '#/tab/storage/' + _type + '/' + _typeIndex + '/' + _storageIndex;
+        obj.title = $scope.data[_type][_typeIndex].storages[_storageIndex].storage;
+      }
+      else {
+        obj = $scope.data[_type][_typeIndex];
+        obj.href = '#/tab/storages/' + _type + '/' + _typeIndex;
+        obj.title = obj[(_type == 'states' ? 'state' : (_type == 'cities' ? 'city' : 'drainage'))];
+      }
+
+      favouritesData.push(obj);
+    }
+
+    $scope.favouritesData = favouritesData;
+
+  });
+
+
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
@@ -18,7 +56,9 @@ angular.module('watsto.controllers', ['watsto.services'])
 
 .controller('AboutCtrl', function($scope) {})
 
-.controller('FiguresCtrl', ['$scope', '$ionicLoading', function ($scope, $ionicLoading) {
+.controller('FiguresCtrl', ['$scope', '$ionicLoading', 'FavouriteService', function ($scope, $ionicLoading, FavouriteService) {
+
+  $scope.addFavourite = FavouriteService.add;
 
   $scope.$on('$ionicView.beforeEnter', function (e) {
     $ionicLoading.show({
@@ -31,7 +71,7 @@ angular.module('watsto.controllers', ['watsto.services'])
   });
 }])
 
-.controller('StoragesCtrl', ['$scope', '$stateParams', '$ionicLoading', function ($scope, $stateParams, $ionicLoading) {
+.controller('StoragesCtrl', ['$scope', '$stateParams', '$ionicLoading', 'FavouriteService', function ($scope, $stateParams, $ionicLoading, FavouriteService) {
 
   $scope.$on('$ionicView.beforeEnter', function (e) {
     $ionicLoading.show({
@@ -52,6 +92,8 @@ angular.module('watsto.controllers', ['watsto.services'])
     $scope.viewTitle = item[name];
 
     $scope.storages = item.storages;
+
+    $scope.addFavourite = FavouriteService.add;
 
   });
 

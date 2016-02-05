@@ -99,15 +99,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/figures/:chatId',
-      views: {
-        'tab-figures': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
 
   .state('tab.storages', {
     url: '/storages/:type/:typeIndex',

@@ -64,3 +64,45 @@ angular.module('watsto.services', [])
     fetch: fetch
   };
 }])
+
+.factory('FavouriteService', function () {
+  function add (type, typeIndex, storageIndex) {
+    var isExist = false, favourites = get();
+
+    for (var i = 0; i < favourites.length; i++) {
+      if (favourites[i].type === type && favourites[i].typeIndex === typeIndex && favourites[i].storageIndex === storageIndex) {
+        isExist = true;
+      }
+    }
+
+    if (!isExist) {
+      favourites.push({type: type, typeIndex: typeIndex, storageIndex: storageIndex});
+      window.localStorage.setItem('waterstoragefavourites', angular.toJson(favourites));
+    }
+  }
+
+  function get () {
+    var favourites_json = window.localStorage.getItem('waterstoragefavourites');
+
+    if (favourites_json) {
+      return angular.fromJson(favourites_json);
+    }
+
+    return [];
+  }
+
+  function remove (index) {
+    var favourites = get();
+
+    favourites.splice(index, 1);
+
+    window.localStorage.setItem('waterstoragefavourites', angular.toJson(favourites));
+  }
+
+  return {
+    add: add,
+    get: get,
+    remove: remove
+  };
+});
+

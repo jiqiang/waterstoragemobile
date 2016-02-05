@@ -1,15 +1,15 @@
 <ion-view view-title="Favourites">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/figures/{{chat.id}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in favouritesData" type="item-text-wrap" href="{{item.href}}">
         <h4>
-          {{chat.name}}<span style="float:right">55%</span>
+          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
         <h6 class="calm">
-          {{chat.lastText}}<span style="float:right">98.73 ML</span>
+          CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
         </h6>
         <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-calm" ng-click="remove(chat)">
+        <ion-option-button class="button-calm" ng-click="removeFavourite($index)">
           <i class="icon ion-trash-a"></i>
         </ion-option-button>
       </ion-item>

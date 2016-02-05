@@ -10,7 +10,7 @@
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
         </h6>
         <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-calm" ng-click="favourite(chat)">
+        <ion-option-button class="button-calm" ng-click="addFavourite(type, typeIndex, {{$index}})">
           <i class="icon ion-{{platform}}-star"></i>
         </ion-option-button>
       </ion-item>
