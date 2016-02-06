@@ -96,6 +96,8 @@ angular.module('watsto.controllers', ['watsto.services'])
 
     $scope.storages = item.storages;
 
+    $scope.summary = item;
+
     $scope.addFavourite = FavouriteService.add;
 
   });
