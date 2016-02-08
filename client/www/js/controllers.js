@@ -126,7 +126,30 @@ angular.module('watsto.controllers', ['watsto.services'])
 })
 
 .controller('SearchCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+
+  var storages = [], i, j, tempStorages;
+  for (i = 0; i < $scope.data.states.length; i++) {
+    for (j = 0; j < $scope.data.states[i].storages.length; j++) {
+      var ts = $scope.data.states[i].storages[j];
+      ts.type = 'states';
+      ts.typeIndex = i;
+      ts.storageIndex = j;
+      storages.push(ts);
+    }
+  }
+
+  $scope.storages = storages;
+
+  $scope.keyword = {value: undefined};
+
+  $scope.onKeywordChange = function () {
+    tempStorages = [];
+    for (i = 0; i < storages.length; i++) {
+      if (storages[i].storage.indexOf($scope.keyword.value) != -1) {
+        tempStorages.push(storages[i]);
+      }
+    }
+
+    $scope.storages = tempStorages;
+  }
 });

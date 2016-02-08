@@ -1,10 +1,21 @@
 <ion-view view-title="Search">
   <ion-content>
     <div class="list list-inset">
-  <label class="item item-input">
-    <i class="icon ion-search placeholder-icon"></i>
-    <input type="text" placeholder="Search">
-  </label>
-</div>
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-change="onKeywordChange()" ng-model="keyword.value">
+      </label>
+    </div>
+    <ion-list>
+      <ion-item class="item-icon-right" ng-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{item.type}}/{{item.typeIndex}}/{{item.storageIndex}}">
+        <h4>
+          {{item.storage}}<span style="float:right">{{item.percentage_full_today}}%</span>
+        </h4>
+        <h6 class="calm">
+          CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
+        </h6>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
