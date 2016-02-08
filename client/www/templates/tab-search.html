@@ -7,7 +7,7 @@
       </label>
     </div>
     <ion-list>
-      <ion-item class="item-icon-right" ng-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{item.type}}/{{item.typeIndex}}/{{item.storageIndex}}">
+      <ion-item class="item-icon-right" collection-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{item.type}}/{{item.typeIndex}}/{{item.storageIndex}}">
         <h4>
           {{item.storage}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>

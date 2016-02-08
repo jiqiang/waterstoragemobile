@@ -131,6 +131,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/about');
+  $urlRouterProvider.otherwise('/tab/figures');
 
 });

@@ -125,7 +125,13 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('SearchCtrl', function($scope) {
+.controller('SearchCtrl', ['$scope', '$ionicLoading', function($scope, $ionicLoading) {
+
+  $scope.$on('$ionicView.beforeEnter', function (e) {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  });
 
   var storages = [], i, j, tempStorages;
   for (i = 0; i < $scope.data.states.length; i++) {
@@ -152,4 +158,8 @@ angular.module('watsto.controllers', ['watsto.services'])
 
     $scope.storages = tempStorages;
   }
-});
+
+  $scope.$on('$ionicView.afterEnter', function (e) {
+    $ionicLoading.hide();
+  });
+}]);
