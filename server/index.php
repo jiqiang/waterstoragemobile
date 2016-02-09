@@ -373,5 +373,15 @@ function run($sql) {
 
   $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
+  foreach ($data as &$row) {
+    $row['today_volume_active_total'] = number_format(floatval($row['today_volume_active_total']), 2, '.', ',');
+    $row['today_capacity_active_total'] = number_format(floatval($row['today_capacity_active_total']), 2, '.', ',');
+    $row['volume_change_since_yesterday'] = number_format(floatval($row['volume_change_since_yesterday']), 2, '.', ',');
+    $row['volume_change_since_last_week'] = number_format(floatval($row['volume_change_since_last_week']), 2, '.', ',');
+    $row['volume_change_since_last_month'] = number_format(floatval($row['volume_change_since_last_month']), 2, '.', ',');
+    $row['volume_change_since_last_year'] = number_format(floatval($row['volume_change_since_last_year']), 2, '.', ',');
+
+  }
+
   return $data;
 }
