@@ -22,7 +22,9 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.$on('$ionicView.enter', function (e) {
     var obj,
         _type,
+        _subType,
         _typeIndex,
+        _subTypeIndex,
         _storageIndex,
         favouritesData = [],
         favourites = FavouriteService.get();
@@ -30,17 +32,28 @@ angular.module('watsto.controllers', ['watsto.services'])
     for (var i = 0; i < favourites.length; i++) {
 
       _type = favourites[i].type;
+      _subType = favourites[i].subType;
       _typeIndex = favourites[i].typeIndex;
+      _subTypeIndex = favourites[i].subTypeIndex;
       _storageIndex = favourites[i].storageIndex;
 
-      if (_storageIndex !== null) {
-        obj = $scope.data[_type][_typeIndex].storages[_storageIndex];
-        obj.href = '#/tab/storage/' + _type + '/' + _typeIndex + '/' + _storageIndex;
-      }
-      else {
+      if (_type !== null && _typeIndex !== null && _subType === null && _subTypeIndex === null && _storageIndex === null) {
         obj = $scope.data[_type][_typeIndex];
-        obj.href = '#/tab/storages/' + _type + '/' + _typeIndex;
+        obj.href = "#/tab/storages/" + _type + "/storages/" + _typeIndex + "/-1";
       }
+      else if (_type !== null && _typeIndex !== null && _subType !== null && _subTypeIndex !== null && _storageIndex === null) {
+        obj = $scope.data[_type][_typeIndex][_subType][_subTypeIndex];
+        obj.href = "#/tab/storages/" + _type + "/cityandsystem/" + _typeIndex + "/" + _subTypeIndex;
+      }
+      else if (_type !== null && _typeIndex !== null && _subType === 'storages' && _subTypeIndex === -1 && _storageIndex !== null) {
+        obj = $scope.data[_type][_typeIndex].storages[_storageIndex];
+        obj.href = "#/tab/storage/" + _type + "/storages/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
+      }
+      else if (_type !== null && _typeIndex !== null && _subType === 'cityandsystem' && _subTypeIndex !== null && _storageIndex !== null) {
+        obj = $scope.data[_type][_typeIndex]['cityandsystem'][_subTypeIndex].storages[_storageIndex];
+        obj.href = "#/tab/storage/" + _type + "/cityandsystem/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
+      }
+
       favouritesData.push(obj);
     }
     $scope.favouritesData = favouritesData;
@@ -89,7 +102,7 @@ angular.module('watsto.controllers', ['watsto.services'])
 
     var item;
     $scope.cityandsystem = [];
-    if ($scope.subType == 'default') {
+    if ($scope.subType == 'storages') {
       item = $scope.data[$stateParams.type][$stateParams.typeIndex];
       $scope.cityandsystem = item.cityandsystem;
     }
@@ -122,8 +135,12 @@ angular.module('watsto.controllers', ['watsto.services'])
       template: 'Loading...'
     });
   });
-
-  $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
+  if ($stateParams.subType === 'storages') {
+    $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
+  }
+  else {
+    $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
+  }
 
   $scope.$on('$ionicView.afterEnter', function (e) {
     $ionicLoading.hide();

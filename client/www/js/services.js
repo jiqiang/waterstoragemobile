@@ -66,17 +66,21 @@ angular.module('watsto.services', [])
 }])
 
 .factory('FavouriteService', function () {
-  function add (type, typeIndex, storageIndex) {
+  function add (type, typeIndex, subType, subTypeIndex, storageIndex) {
     var isExist = false, favourites = get();
 
     for (var i = 0; i < favourites.length; i++) {
-      if (favourites[i].type === type && favourites[i].typeIndex === typeIndex && favourites[i].storageIndex === storageIndex) {
+      if (favourites[i].type === type
+          && favourites[i].subType === subType
+          && favourites[i].typeIndex === typeIndex
+          && favourites[i].storageIndex === storageIndex
+          && favourites[i].subTypeIndex === subTypeIndex) {
         isExist = true;
       }
     }
 
     if (!isExist) {
-      favourites.push({type: type, typeIndex: typeIndex, storageIndex: storageIndex});
+      favourites.push({type: type, subType: subType, typeIndex: typeIndex, storageIndex: storageIndex, subTypeIndex: subTypeIndex});
       window.localStorage.setItem('waterstoragefavourites', angular.toJson(favourites));
     }
   }
