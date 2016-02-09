@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item class="item-icon-right" collection-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{item.type}}/{{item.typeIndex}}/{{item.storageIndex}}">
         <h4>
-          {{item.storage}}<span style="float:right">{{item.percentage_full_today}}%</span>
+          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
         <h6 class="calm">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>

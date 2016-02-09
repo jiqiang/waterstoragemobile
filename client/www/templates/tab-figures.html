@@ -44,9 +44,9 @@
     </div>
     <ion-list>
       <div class="item item-divider">STATES</div>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/{{$index}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/default/{{$index}}/-1">
         <h4>
-          {{item.state}}<span style="float:right">{{item.percentage_full_today}}%</span>
+          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
         <h6 class="calm">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
@@ -58,9 +58,9 @@
       </ion-item>
 
       <div class="item item-divider">CAPITAL CITIES</div>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/{{$index}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/default/{{$index}}/-1">
         <h4>
-          {{item.city}}<span style="float:right">{{item.percentage_full_today}}%</span>
+          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
         <h6 class="calm">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
@@ -72,9 +72,9 @@
       </ion-item>
 
       <div class="item item-divider">DRAINAGE DIVISIONS</div>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/{{$index}}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/default/{{$index}}/-1">
         <h4>
-          {{item.drainage}}<span style="float:right">{{item.percentage_full_today}}%</span>
+          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
         </h4>
         <h6 class="calm">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>

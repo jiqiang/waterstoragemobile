@@ -101,7 +101,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
     })
 
   .state('tab.storages', {
-    url: '/storages/:type/:typeIndex',
+    url: '/storages/:type/:subType/:typeIndex/:subTypeIndex',
     views: {
       'tab-figures': {
         templateUrl: 'templates/tab-storages.html',
@@ -111,7 +111,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
   })
 
   .state('tab.storage-detail', {
-    url: '/storage/:type/:typeIndex/:storageIndex',
+    url: '/storage/:type/:subType/:typeIndex/:storageIndex',
     views: {
       'tab-figures': {
         templateUrl: 'templates/storage-detail.html',

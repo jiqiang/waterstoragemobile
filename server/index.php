@@ -28,17 +28,31 @@ try {
 
   $states = run(getStatesSQL());
   foreach ($states as &$row) {
-    $row['storages'] = run(getStoragesSQL('state', $row['state']));
+    $row['cityandsystem'] = run(getCityAndSystemSQL('state', $row['title']));
+    foreach ($row['cityandsystem'] as &$row1) {
+      $row1['storages'] = run(getStoragesSQL(array(
+        "state = '" . $row['title'] . "'",
+        "(city = '".$row1['title']."' or linked_water_system_name = '".$row1['title']."')",
+      )));
+    }
+    $row['storages'] = run(getStoragesSQL(array("state = '" . $row['title'] . "'")));
   }
 
   $cities = run(getCitiesSQL());
   foreach ($cities as &$row) {
-    $row['storages'] = run(getStoragesSQL('city', $row['city']));
+    $row['storages'] = run(getStoragesSQL(array("city ='" . $row['title'] . "'")));
   }
 
   $drainages = run(getDrainagesSQL());
   foreach ($drainages as &$row) {
-    $row['storages'] = run(getStoragesSQL('drainage', $row['drainage']));
+    $row['cityandsystem'] = run(getCityAndSystemSQL('drainage', $row['title']));
+    foreach ($row['cityandsystem'] as &$row1) {
+      $row1['storages'] = run(getStoragesSQL(array(
+        "drainage = '" . $row['title'] . "'",
+        "(city = '".$row1['title']."' or linked_water_system_name = '".$row1['title']."')",
+      )));
+    }
+    $row['storages'] = run(getStoragesSQL(array("drainage = '" . $row['title'] ."'")));
   }
 
   $data = array(
@@ -98,7 +112,7 @@ function getNationalSQL() {
 function getStatesSQL() {
   return $sql = "
     select
-      t1.state,
+      t1.state as title,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -135,14 +149,14 @@ function getStatesSQL() {
         round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
       from wid_schema.tblu_storage_agg_all
       where group_level = 'State_Territory'
-    ) t2 on t1.state = t2.group_name
+    ) t2 on t1.state = t2.group_name order by t1.today_capacity_active_total desc
   ";
 }
 
 function getCitiesSQL() {
   return $sql = "
     select
-      t1.city,
+      t1.city as title,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -179,14 +193,14 @@ function getCitiesSQL() {
         round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
       from wid_schema.tblu_storage_agg_all
       where group_level = 'Urban_System'
-    ) t2 on t1.city = t2.group_name
+    ) t2 on t1.city = t2.group_name order by t1.today_capacity_active_total desc
   ";
 }
 
 function getDrainagesSQL() {
   return $sql = "
     select
-      t1.drainage,
+      t1.drainage as title,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -223,14 +237,14 @@ function getDrainagesSQL() {
         round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
       from wid_schema.tblu_storage_agg_all
       where group_level = 'UWDB DRAINAGE DIV'
-    ) t2 on t1.drainage = t2.group_name
+    ) t2 on t1.drainage = t2.group_name order by t1.today_capacity_active_total desc
   ";
 }
 
-function getStoragesSQL($by_what, $value) {
+function getStoragesSQL($filters) {
   return $sql = "
     select
-      t1.storage_name as storage,
+      t1.storage_name as title,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -251,14 +265,14 @@ function getStoragesSQL($by_what, $value) {
         round(sum(today_volume_active) / sum(today_capacity_active) * 100, 2) as percentage_full_today,
         to_char(today_day, 'DY DD MON YYYY') as today
       from wid_schema.tblu_storage_view
-      where " . $by_what . " = '" . $value . "'
+      where " . implode(" and ", $filters) . "
       group by storage_name, today
       order by storage_name
     ) t1 left join (
       select
         storage_name,
         round(change_since_yesterday * 100, 2) as percentage_change_since_yesterday,
-        round(today_volume_active - yestrday_volume_active, 2) as volume_change_since_yesterday,
+        round(today_volume_active - ystrday_volume_active, 2) as volume_change_since_yesterday,
         round(change_since_last_week * 100, 2) as percentage_change_since_last_week,
         round(today_volume_active - last_wk_volume_active, 2) as volume_change_since_last_week,
         round(change_since_last_month * 100, 2) as percentage_change_since_last_month,
@@ -266,7 +280,91 @@ function getStoragesSQL($by_what, $value) {
         round(change_since_last_year * 100, 2) as percentage_change_since_last_year,
         round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
       from wid_schema.tblu_storage_view
-    ) t2 on t1.storage_name = t2.storage_name
+    ) t2 on t1.storage_name = t2.storage_name order by t1.today_capacity_active_total desc
+  ";
+}
+
+function getCityAndSystemSQL($filterBy, $filterByValue) {
+  return $sql = "
+    ((select
+      t1.city as title,
+      t1.today_volume_active_total,
+      t1.today_capacity_active_total,
+      t1.percentage_full_today,
+      t1.today,
+      t2.percentage_change_since_yesterday,
+      t2.volume_change_since_yesterday,
+      t2.percentage_change_since_last_week,
+      t2.volume_change_since_last_week,
+      t2.percentage_change_since_last_month,
+      t2.volume_change_since_last_month,
+      t2.percentage_change_since_last_year,
+      t2.volume_change_since_last_year
+    from (
+      select
+        city,
+        round(sum(today_volume_active), 2) as today_volume_active_total,
+        round(sum(today_capacity_active), 2) as today_capacity_active_total,
+        round(sum(today_volume_active) / sum(today_capacity_active) * 100, 2) as percentage_full_today,
+        to_char(today_day, 'DY DD MON YYYY') as today
+      from wid_schema.tblu_storage_view
+      where city != '' and " . $filterBy . " = '" . $filterByValue . "'
+      group by city, today
+    ) t1 left join (
+      select
+        group_name,
+        round(change_since_yesterday * 100, 2) as percentage_change_since_yesterday,
+        round(today_volume_active - ystrday_volume_active, 2) as volume_change_since_yesterday,
+        round(change_since_last_week * 100, 2) as percentage_change_since_last_week,
+        round(today_volume_active - lst_wk_volume_active, 2) as volume_change_since_last_week,
+        round(change_since_last_month * 100, 2) as percentage_change_since_last_month,
+        round(today_volume_active - lst_mth_volume_active, 2) as volume_change_since_last_month,
+        round(change_since_last_year * 100, 2) as percentage_change_since_last_year,
+        round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
+      from wid_schema.tblu_storage_agg_all
+      where group_level = 'Urban_System'
+    ) t2 on t1.city = t2.group_name)
+
+    union
+
+    (select
+      t1.linked_water_system_name as title,
+      t1.today_volume_active_total,
+      t1.today_capacity_active_total,
+      t1.percentage_full_today,
+      t1.today,
+      t2.percentage_change_since_yesterday,
+      t2.volume_change_since_yesterday,
+      t2.percentage_change_since_last_week,
+      t2.volume_change_since_last_week,
+      t2.percentage_change_since_last_month,
+      t2.volume_change_since_last_month,
+      t2.percentage_change_since_last_year,
+      t2.volume_change_since_last_year
+    from (
+      select
+        linked_water_system_name,
+        round(sum(today_volume_active), 2) as today_volume_active_total,
+        round(sum(today_capacity_active), 2) as today_capacity_active_total,
+        round(sum(today_volume_active) / sum(today_capacity_active) * 100, 2) as percentage_full_today,
+        to_char(today_day, 'DY DD MON YYYY') as today
+      from wid_schema.tblu_storage_view
+      where linked_water_system_name != '' and " . $filterBy . " = '" . $filterByValue . "'
+      group by linked_water_system_name, today
+    ) t1 left join (
+      select
+        group_name,
+        round(change_since_yesterday * 100, 2) as percentage_change_since_yesterday,
+        round(today_volume_active - ystrday_volume_active, 2) as volume_change_since_yesterday,
+        round(change_since_last_week * 100, 2) as percentage_change_since_last_week,
+        round(today_volume_active - lst_wk_volume_active, 2) as volume_change_since_last_week,
+        round(change_since_last_month * 100, 2) as percentage_change_since_last_month,
+        round(today_volume_active - lst_mth_volume_active, 2) as volume_change_since_last_month,
+        round(change_since_last_year * 100, 2) as percentage_change_since_last_year,
+        round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
+      from wid_schema.tblu_storage_agg_all
+      where group_level = 'Rural_System'
+    ) t2 on t1.linked_water_system_name = t2.group_name)) order by today_capacity_active_total desc
   ";
 }
 
@@ -274,5 +372,6 @@ function run($sql) {
   global $conn;
 
   $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
   return $data;
 }

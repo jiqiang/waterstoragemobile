@@ -36,19 +36,14 @@ angular.module('watsto.controllers', ['watsto.services'])
       if (_storageIndex !== null) {
         obj = $scope.data[_type][_typeIndex].storages[_storageIndex];
         obj.href = '#/tab/storage/' + _type + '/' + _typeIndex + '/' + _storageIndex;
-        obj.title = $scope.data[_type][_typeIndex].storages[_storageIndex].storage;
       }
       else {
         obj = $scope.data[_type][_typeIndex];
         obj.href = '#/tab/storages/' + _type + '/' + _typeIndex;
-        obj.title = obj[(_type == 'states' ? 'state' : (_type == 'cities' ? 'city' : 'drainage'))];
       }
-
       favouritesData.push(obj);
     }
-
     $scope.favouritesData = favouritesData;
-
   });
 
 
@@ -84,15 +79,29 @@ angular.module('watsto.controllers', ['watsto.services'])
 
   $scope.$on('$ionicView.enter', function (e) {
 
-    var name = $stateParams.type == 'states' ? 'state' : ($stateParams.type == 'cities' ? 'city' : ($stateParams.type == 'drainages' ? 'drainage' : ''));
-
-    var item = $scope.data[$stateParams.type][$stateParams.typeIndex];
-
     $scope.type = $stateParams.type;
+
+    $scope.subType = $stateParams.subType;
 
     $scope.typeIndex = $stateParams.typeIndex;
 
-    $scope.viewTitle = item[name];
+    $scope.subTypeIndex = $stateParams.subTypeIndex;
+
+    var item;
+    $scope.cityandsystem = [];
+    if ($scope.subType == 'default') {
+      item = $scope.data[$stateParams.type][$stateParams.typeIndex];
+      $scope.cityandsystem = item.cityandsystem;
+    }
+    else {
+      item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
+    }
+
+    if ($scope.type != 'cities') {
+      $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
+    }
+
+    $scope.viewTitle = item.title;
 
     $scope.storages = item.storages;
 
@@ -114,7 +123,7 @@ angular.module('watsto.controllers', ['watsto.services'])
     });
   });
 
-  $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex].storages[$stateParams.storageIndex];
+  $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
 
   $scope.$on('$ionicView.afterEnter', function (e) {
     $ionicLoading.hide();
