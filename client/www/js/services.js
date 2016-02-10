@@ -108,5 +108,96 @@ angular.module('watsto.services', [])
     get: get,
     remove: remove
   };
-});
+})
 
+.factory('SearchService', function () {
+
+  var i, j, k, l, list;
+
+  function listItemExists (item) {
+    for (k = 0; k < list.length; k++) {
+      if (item.name === list[k].name && item.type === list[k].type) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function addToList (item) {
+
+    if (!listItemExists(item)) {
+      list.push(item);
+    }
+
+  }
+
+  function createList (rawData) {
+
+    list = [];
+
+    // National
+    addToList({
+      name: 'Australia',
+      type: 'National',
+      href: '#/tab/figure'
+    });
+
+    for (i = 0; i < rawData.states.length; i++) {
+
+      // State
+      addToList({
+        name: rawData.states[i].title,
+        type: 'State',
+        href: '#/tab/storages/states/storages/' + i + '/-1'
+      });
+
+      // City and system
+      for (j = 0; j < rawData.states[i].cityandsystem.length; j++) {
+        addToList({
+          name: rawData.states[i].cityandsystem[j].title,
+          type: 'City / System',
+          href: '#/tab/storages/states/cityandsystem/' + i + '/' + j
+        });
+      }
+
+      // Storage
+      for (j = 0; j < rawData.states[i].storages.length; j++) {
+        addToList({
+          name: rawData.states[i].storages[j].title,
+          type: 'Water Storage',
+          href: '#/tab/storage/states/storages/' + i + '/-1/' + j
+        });
+      }
+    }
+
+    // Drainage
+    for (i = 0; i < rawData.drainages.length; i++) {
+      addToList({
+        name: rawData.drainages[i].title,
+        type: 'Drainage Division',
+        href: '#/tab/storages/drainages/storages/' + i + '/-1'
+      });
+    }
+
+    // Sort list
+    list.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      else if (a.name > b.name) {
+        return 1;
+      }
+      else {
+        return 0;
+      }
+    });
+
+    return list;
+
+  }
+
+  return {
+    createList: createList
+  };
+
+});

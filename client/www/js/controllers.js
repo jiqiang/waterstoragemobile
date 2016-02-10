@@ -151,41 +151,38 @@ angular.module('watsto.controllers', ['watsto.services'])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('SearchCtrl', ['$scope', '$ionicLoading', function($scope, $ionicLoading) {
+.controller('SearchCtrl', [
+  '$scope',
+  '$ionicLoading',
+  'SearchService',
+  function($scope, $ionicLoading, SearchService) {
 
-  $scope.$on('$ionicView.beforeEnter', function (e) {
-    $ionicLoading.show({
-      template: 'Loading...'
+    $scope.$on('$ionicView.beforeEnter', function (e) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
     });
-  });
 
-  var storages = [], i, j, tempStorages;
-  for (i = 0; i < $scope.data.states.length; i++) {
-    for (j = 0; j < $scope.data.states[i].storages.length; j++) {
-      var ts = $scope.data.states[i].storages[j];
-      ts.type = 'states';
-      ts.typeIndex = i;
-      ts.storageIndex = j;
-      storages.push(ts);
-    }
-  }
+    var list = SearchService.createList($scope.data);
 
-  $scope.storages = storages;
+    $scope.keyword = {value: undefined};
 
-  $scope.keyword = {value: undefined};
+    $scope.onKeywordChange = function () {
+      var newList = [];
 
-  $scope.onKeywordChange = function () {
-    tempStorages = [];
-    for (i = 0; i < storages.length; i++) {
-      if (storages[i].storage.indexOf($scope.keyword.value) != -1) {
-        tempStorages.push(storages[i]);
+      for (i = 0; i < list.length; i++) {
+        if (list[i].name.toLowerCase().indexOf($scope.keyword.value.toLowerCase()) != -1) {
+          newList.push(list[i]);
+        }
       }
+
+      $scope.list = newList;
     }
 
-    $scope.storages = tempStorages;
-  }
+    $scope.list = list;
 
-  $scope.$on('$ionicView.afterEnter', function (e) {
-    $ionicLoading.hide();
-  });
+
+    $scope.$on('$ionicView.afterEnter', function (e) {
+      $ionicLoading.hide();
+    });
 }]);

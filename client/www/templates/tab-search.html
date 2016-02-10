@@ -7,13 +7,10 @@
       </label>
     </div>
     <ion-list>
-      <ion-item class="item-icon-right" collection-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{item.type}}/{{item.typeIndex}}/{{item.storageIndex}}">
+      <ion-item class="item-icon-right" collection-repeat="item in list" type="item-text-wrap" href="{{item.href}}">
         <h4>
-          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
+          {{item.name}}<span style="float:right" class="positive">{{item.type}}</span>
         </h4>
-        <h6 class="positive">
-          CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
-        </h6>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
