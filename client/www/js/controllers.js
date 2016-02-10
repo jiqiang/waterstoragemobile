@@ -1,12 +1,18 @@
-angular.module('watsto.controllers', ['watsto.services'])
+angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
 .controller('AppCtrl', ['$scope', function ($scope) {
   $scope.platform = ionic.Platform.platform();
 }])
 
-.controller('TabCtrl', ['$scope', 'FavouriteService', 'storage', function ($scope, FavouriteService, storage) {
+.controller('TabCtrl', ['$scope', 'FavouriteService', 'storage', '$state', function ($scope, FavouriteService, storage, $state) {
+  $scope.error = false;
+  if (storage === false) {
+    $scope.error = true;
+    $state.go('tab.error');
+  }
+
   $scope.data = storage.data;
-  console.log(storage.data);
+
   $scope.getColorClass = function (figure) {
 
     if (figure && figure.indexOf('-') === 0) {
@@ -188,4 +194,9 @@ angular.module('watsto.controllers', ['watsto.services'])
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
     });
+}])
+.controller('ErrorCtrl', ['$scope', '$state', function ($scope, $state) {
+  $scope.retry = function () {
+    $state.go('tab.figures');
+  }
 }]);

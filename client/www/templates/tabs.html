@@ -5,23 +5,28 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-striped tabs-icon-left tabs-color-positive">
 
-  <ion-tab title="Favourites" icon-off="ion-ios-star-outline" icon-on="ion-ios-star-outline" href="#/tab/favourites">
+  <ion-tab title="Favourites" icon-off="ion-ios-star-outline" icon-on="ion-ios-star-outline" href="#/tab/favourites"  disabled="error">
     <ion-nav-view name="tab-favourites"></ion-nav-view>
   </ion-tab>
 
   <!-- Chats Tab -->
-  <ion-tab title="Australia" icon-off="ion-ios-analytics-outline" icon-on="ion-ios-analytics-outline" href="#/tab/figures">
+  <ion-tab title="Australia" icon-off="ion-ios-analytics-outline" icon-on="ion-ios-analytics-outline" href="#/tab/figures"  disabled="error">
     <ion-nav-view name="tab-figures"></ion-nav-view>
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="Search" icon-off="ion-ios-search" icon-on="ion-ios-search" href="#/tab/search">
+  <ion-tab title="Search" icon-off="ion-ios-search" icon-on="ion-ios-search" href="#/tab/search"  disabled="error">
     <ion-nav-view name="tab-search"></ion-nav-view>
   </ion-tab>
 
   <!-- Dashboard Tab -->
-  <ion-tab title="About" icon-off="ion-ios-information-outline" icon-on="ion-ios-information-outline" href="#/tab/about">
+  <ion-tab title="About" icon-off="ion-ios-information-outline" icon-on="ion-ios-information-outline" href="#/tab/about" disabled="error">
     <ion-nav-view name="tab-about"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Dashboard Tab -->
+  <ion-tab title="Error" icon-off="ion-wifi" icon-on="ion-wifi" href="#/tab/error" hidden="true">
+    <ion-nav-view name="tab-error"></ion-nav-view>
   </ion-tab>
 
 </ion-tabs>

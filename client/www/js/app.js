@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $state, DataService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +20,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
 })
 
@@ -38,7 +39,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
     templateUrl: 'templates/tabs.html',
     resolve: {
       storage: ['DataService', function (DataService) {
-        return DataService.fetch();
+        return DataService.fetch().then(function (response) {
+          return response;
+        }, function (error) {
+          return false;
+        });
       }]
     },
     controller: 'TabCtrl'
@@ -126,6 +131,15 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
       'tab-search': {
         templateUrl: 'templates/tab-search.html',
         controller: 'SearchCtrl'
+      }
+    }
+  })
+  .state('tab.error', {
+    url: '/error',
+    views: {
+      'tab-error': {
+        templateUrl: 'templates/tab-error.html',
+        controller: 'ErrorCtrl'
       }
     }
   });
