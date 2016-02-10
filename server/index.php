@@ -376,10 +376,42 @@ function run($sql) {
   foreach ($data as &$row) {
     $row['today_volume_active_total'] = number_format(floatval($row['today_volume_active_total']), 2, '.', ',');
     $row['today_capacity_active_total'] = number_format(floatval($row['today_capacity_active_total']), 2, '.', ',');
+
     $row['volume_change_since_yesterday'] = number_format(floatval($row['volume_change_since_yesterday']), 2, '.', ',');
+    if (false === strpos($row['volume_change_since_yesterday'], '-') && floatval($row['volume_change_since_yesterday']) !== 0.00) {
+      $row['volume_change_since_yesterday'] = '+' . $row['volume_change_since_yesterday'];
+    }
+
     $row['volume_change_since_last_week'] = number_format(floatval($row['volume_change_since_last_week']), 2, '.', ',');
+    if (false === strpos($row['volume_change_since_last_week'], '-')  && floatval($row['volume_change_since_last_week']) !== 0.00) {
+      $row['volume_change_since_last_week'] = '+' . $row['volume_change_since_last_week'];
+    }
+
     $row['volume_change_since_last_month'] = number_format(floatval($row['volume_change_since_last_month']), 2, '.', ',');
+    if (false === strpos($row['volume_change_since_last_month'], '-')  && floatval($row['volume_change_since_last_month']) !== 0.00) {
+      $row['volume_change_since_last_month'] = '+' . $row['volume_change_since_last_month'];
+    }
+
     $row['volume_change_since_last_year'] = number_format(floatval($row['volume_change_since_last_year']), 2, '.', ',');
+    if (false === strpos($row['volume_change_since_last_year'], '-')  && floatval($row['volume_change_since_last_year']) !== 0.00) {
+      $row['volume_change_since_last_year'] = '+' . $row['volume_change_since_last_year'];
+    }
+
+    if (false === strpos($row['percentage_change_since_yesterday'], '-') && floatval($row['percentage_change_since_yesterday']) !== 0.00) {
+      $row['percentage_change_since_yesterday'] = '+' . $row['percentage_change_since_yesterday'];
+    }
+
+    if (false === strpos($row['percentage_change_since_last_week'], '-')  && floatval($row['percentage_change_since_last_week']) !== 0.00) {
+      $row['percentage_change_since_last_week'] = '+' . $row['percentage_change_since_last_week'];
+    }
+
+    if (false === strpos($row['percentage_change_since_last_month'], '-')  && floatval($row['percentage_change_since_last_month']) !== 0.00) {
+      $row['percentage_change_since_last_month'] = '+' . $row['percentage_change_since_last_month'];
+    }
+
+    if (false === strpos($row['percentage_change_since_last_year'], '-')  && floatval($row['percentage_change_since_last_year']) !== 0.00) {
+      $row['percentage_change_since_last_year'] = '+' . $row['percentage_change_since_last_year'];
+    }
 
   }
 

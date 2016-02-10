@@ -13,7 +13,7 @@
           <div class="col col-33">
             <h5 class="positive">SINCE:</h5>
             <h5>LAST YEAR</h5>
-            <h3>{{summary.percentage_change_since_last_year}}%</h3>
+            <h3 class="{{getColorClass(summary.percentage_change_since_last_year)}}">{{summary.percentage_change_since_last_year}}%</h3>
             <h5>{{summary.volume_change_since_last_year}} ML</h5>
           </div>
         </div>
@@ -24,19 +24,19 @@
           <div class="col">
             <h6 class="positive">SINCE:</h6>
             <h6>PREVIOUS DAY</h6>
-            <h3>{{summary.percentage_change_since_yesterday}}%</h3>
+            <h3 class="{{getColorClass(summary.percentage_change_since_yesterday)}}">{{summary.percentage_change_since_yesterday}}%</h3>
             <h6>{{summary.volume_change_since_yesterday}} ML</h6>
           </div>
           <div class="col">
             <h6 class="positive">SINCE:</h6>
             <h6>LAST WEEK</h6>
-            <h3>{{summary.percentage_change_since_last_week}}%</h3>
+            <h3 class="{{getColorClass(summary.percentage_change_since_last_week)}}">{{summary.percentage_change_since_last_week}}%</h3>
             <h6>{{summary.volume_change_since_last_week}} ML</h6>
           </div>
           <div class="col">
             <h6 class="positive">SINCE:</h6>
             <h6>LAST MONTH</h6>
-            <h3>{{summary.percentage_change_since_last_month}}%</h3>
+            <h3 class="{{getColorClass(summary.percentage_change_since_last_month)}}">{{summary.percentage_change_since_last_month}}%</h3>
             <h6>{{summary.volume_change_since_last_month}} ML</h6>
           </div>
         </div>

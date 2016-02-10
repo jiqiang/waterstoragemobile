@@ -4,40 +4,40 @@
       <div class="item nopadding">
         <div class="row row-center">
           <div class="col col-67">
-            <h2 class="positive">{{data.national[0].today}}</h2>
-            <h1>{{data.national[0].percentage_full_today}}%</h1>
+            <h2 class="positive">{{summary.today}}</h2>
+            <h1>{{summary.percentage_full_today}}%</h1>
             <h4 class="positive">AVAILABLE:</h2>
-            <h2>{{data.national[0].today_capacity_active_total}} ML</h2>
+            <h2>{{summary.today_capacity_active_total}} ML</h2>
 
           </div>
           <div class="col col-33">
             <h5 class="positive">SINCE:</h5>
             <h5>LAST YEAR</h5>
-            <h3>{{data.national[0].percentage_change_since_last_year}}%</h3>
-            <h5>{{data.national[0].volume_change_since_last_year}} ML</h5>
+            <h3 class="{{getColorClass(summary.percentage_change_since_last_year)}}">{{summary.percentage_change_since_last_year}}%</h3>
+            <h5>{{summary.volume_change_since_last_year}} ML</h5>
           </div>
         </div>
-        <div class="row"><div class="col"><h4 class="positive" style="float: right">{{data.national[0].today_volume_active_total}} ML</h4></div></div>
+        <div class="row"><div class="col"><h4 class="positive" style="float: right">{{summary.today_volume_active_total}} ML</h4></div></div>
       </div>
       <div class="item nopadding">
         <div class="row">
           <div class="col">
             <h6 class="positive">SINCE:</h6>
             <h6>PREVIOUS DAY</h6>
-            <h3>{{data.national[0].percentage_change_since_yesterday}}%</h3>
-            <h6>{{data.national[0].volume_change_since_yesterday}} ML</h6>
+            <h3 class="{{getColorClass(summary.percentage_change_since_yesterday)}}">{{summary.percentage_change_since_yesterday}}%</h3>
+            <h6>{{summary.volume_change_since_yesterday}} ML</h6>
           </div>
           <div class="col">
             <h6 class="positive">SINCE:</h6>
             <h6>LAST WEEK</h6>
-            <h3>{{data.national[0].percentage_change_since_last_week}}%</h3>
-            <h6>{{data.national[0].volume_change_since_last_week}} ML</h6>
+            <h3 class="{{getColorClass(summary.percentage_change_since_last_week)}}">{{summary.percentage_change_since_last_week}}%</h3>
+            <h6>{{summary.volume_change_since_last_week}} ML</h6>
           </div>
           <div class="col">
             <h6 class="positive">SINCE:</h6>
             <h6>LAST MONTH</h6>
-            <h3>{{data.national[0].percentage_change_since_last_month}}%</h3>
-            <h6>{{data.national[0].volume_change_since_last_month}} ML</h6>
+            <h3 class="{{getColorClass(summary.percentage_change_since_last_month)}}">{{summary.percentage_change_since_last_month}}%</h3>
+            <h6>{{summary.volume_change_since_last_month}} ML</h6>
           </div>
         </div>
       </div>

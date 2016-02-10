@@ -7,9 +7,15 @@ angular.module('watsto.controllers', ['watsto.services'])
 .controller('TabCtrl', ['$scope', 'FavouriteService', 'storage', function ($scope, FavouriteService, storage) {
   $scope.data = storage.data;
   console.log(storage.data);
-  $scope.switchChange = function (item) {
-    console.log(item);
-  }
+  $scope.getColorClass = function (figure) {
+
+    if (figure && figure.indexOf('-') === 0) {
+      return "assertive";
+    }
+    else if (figure && figure.indexOf('+') === 0) {
+      return "balanced";
+    }
+  };
 }])
 
 .controller('FavouritesCtrl', ['$scope', 'FavouriteService', function ($scope, FavouriteService) {
@@ -58,11 +64,6 @@ angular.module('watsto.controllers', ['watsto.services'])
     }
     $scope.favouritesData = favouritesData;
   });
-
-
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
 }])
 
 .controller('AboutCtrl', function($scope) {})
@@ -76,6 +77,8 @@ angular.module('watsto.controllers', ['watsto.services'])
       template: 'Loading...'
     });
   });
+
+  $scope.summary = $scope.data.national[0];
 
   $scope.$on('$ionicView.afterEnter', function (e) {
     $ionicLoading.hide();
