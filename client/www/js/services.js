@@ -1,8 +1,18 @@
 angular.module('watsto.services', [])
 
-.factory('DataService', ['$http', function($http) {
+.factory('DataService', ['$http', '$q', function($http, $q) {
 
-  function fetch () {
+  // Initialize data.
+  var wsData = {
+    cities: [],
+    drainages: [],
+    national: [],
+    states: []
+  };
+
+  function getFromRemote () {
+    console.log('get data from remote');
+
     return $http({
       method: 'GET',
       url: 'data/data.json',
@@ -10,29 +20,87 @@ angular.module('watsto.services', [])
     });
   }
 
-  function saveToLocal (data) {
-    window.localStorage.setItem('waterstoragedata', angular.toJson(data));
+  function saveToLocal () {
+    console.log('save data to local');
+
+    window.localStorage.setItem('waterstoragedata', angular.toJson(wsData));
+  }
+
+  function getFromLocal () {
+    console.log('get data from local');
+
+    wsData = angular.fromJson(window.localStorage.getItem('waterstoragedata'));
   }
 
   function isLocalDataOutdated () {
     var timestamp = window.localStorage.getItem('waterstoragedatatimestamp');
 
-    if (timestamp === null || Date.now() - timestamp > 86400) {
+    if (timestamp === null) {
+      console.log('local data is outdated - no timestamp found');
       return true;
     }
+
+    var now = Date.now();
+    if (Math.floor(Date.now() / 1000) - timestamp > 86400) {
+      console.log('local data is outdated - ' + parseInt(Math.floor(Date.now() / 1000) - timestamp));
+      return true;
+    }
+
+    console.log('local data is not outdated');
 
     return false;
   }
 
-  function setTimestamp () {
-    window.localStorage.setItem('waterstoragedatatimestamp', Date.now());
+  function localDataExists () {
+    return window.localStorage.getItem('waterstoragedata') === null ? false : true;
+
+  }
+
+  function setLocalDataTimestamp () {
+    window.localStorage.setItem('waterstoragedatatimestamp', Math.floor(Date.now() / 1000));
+  }
+
+  function isLocalDataLoaded () {
+    if (wsData.cities.length === 0
+      || wsData.drainages.length === 0
+      || wsData.states.length === 0
+      || wsData.national.length ===0) {
+      console.log('local data is not loaded');
+      return false;
+    }
+    console.log('local data is loaded');
+    return true;
   }
 
   return {
-    fetch: fetch,
-    saveToLocal: saveToLocal,
-    isLocalDataOutdated: isLocalDataOutdated,
-    setTimestamp: setTimestamp
+    fetch: function () {
+
+      var deferred = $q.defer();
+
+      if (isLocalDataOutdated()) {
+
+        getFromRemote().then(function (response) {
+          wsData = response.data;
+          saveToLocal();
+          setLocalDataTimestamp();
+          deferred.resolve(wsData);
+        }, function (error) {
+          console.log('can not get data from remote');
+          if (localDataExists()) {
+            getFromLocal();
+          }
+          deferred.resolve(wsData);
+        });
+      }
+      else {
+        if (!isLocalDataLoaded()) {
+          getFromLocal();
+        }
+        deferred.resolve(wsData);
+      }
+
+      return deferred.promise;
+    }
   };
 }])
 

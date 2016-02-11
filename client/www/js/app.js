@@ -33,19 +33,10 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html',
-    resolve: {
-      storage: ['DataService', function (DataService) {
-        return DataService.fetch().then(function (response) {
-          return response;
-        }, function (error) {
-          return false;
-        });
-      }]
-    },
     controller: 'TabCtrl'
   })
 
@@ -53,6 +44,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   .state('tab.favourites', {
     url: '/favourites',
+    resolve: {
+      storage: ['DataService', function (DataService) {
+        return DataService.fetch();
+      }]
+    },
     views: {
       'tab-favourites': {
         templateUrl: 'templates/tab-favourites.html',
@@ -97,6 +93,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   .state('tab.figures', {
       url: '/figures',
+      resolve: {
+        storage: ['DataService', function (DataService) {
+          return DataService.fetch();
+        }]
+      },
       views: {
         'tab-figures': {
           templateUrl: 'templates/tab-figures.html',
@@ -107,6 +108,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   .state('tab.storages', {
     url: '/storages/:type/:subType/:typeIndex/:subTypeIndex',
+    resolve: {
+      storage: ['DataService', function (DataService) {
+        return DataService.fetch();
+      }]
+    },
     views: {
       'tab-figures': {
         templateUrl: 'templates/tab-storages.html',
@@ -117,6 +123,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   .state('tab.storage-detail', {
     url: '/storage/:type/:subType/:typeIndex/:subTypeIndex/:storageIndex',
+    resolve: {
+      storage: ['DataService', function (DataService) {
+        return DataService.fetch();
+      }]
+    },
     views: {
       'tab-figures': {
         templateUrl: 'templates/storage-detail.html',
@@ -127,6 +138,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
 
   .state('tab.search', {
     url: '/search',
+    resolve: {
+      storage: ['DataService', function (DataService) {
+        return DataService.fetch();
+      }]
+    },
     views: {
       'tab-search': {
         templateUrl: 'templates/tab-search.html',
@@ -134,15 +150,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
       }
     }
   })
-  .state('tab.error', {
-    url: '/error',
-    views: {
-      'tab-error': {
-        templateUrl: 'templates/tab-error.html',
-        controller: 'ErrorCtrl'
-      }
-    }
-  });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/figures');

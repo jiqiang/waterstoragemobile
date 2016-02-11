@@ -4,14 +4,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   $scope.platform = ionic.Platform.platform();
 }])
 
-.controller('TabCtrl', ['$scope', 'FavouriteService', 'storage', '$state', function ($scope, FavouriteService, storage, $state) {
-  $scope.error = false;
-  if (storage === false) {
-    $scope.error = true;
-    $state.go('tab.error');
-  }
-
-  $scope.data = storage.data;
+.controller('TabCtrl', ['$scope', function ($scope) {
 
   $scope.getColorClass = function (figure) {
 
@@ -24,7 +17,11 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   };
 }])
 
-.controller('FavouritesCtrl', ['$scope', 'FavouriteService', function ($scope, FavouriteService) {
+.controller('FavouritesCtrl', [
+  '$scope',
+  'FavouriteService',
+  'storage',
+  function ($scope, FavouriteService, storage) {
 
   $scope.removeFavourite = function (index) {
     $scope.favouritesData.splice(index, 1);
@@ -32,6 +29,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   }
 
   $scope.$on('$ionicView.enter', function (e) {
+    $scope.data = storage;
     var obj,
         _type,
         _subType,
@@ -74,97 +72,18 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
 .controller('AboutCtrl', function($scope) {})
 
-.controller('FiguresCtrl', ['$scope', '$ionicLoading', 'FavouriteService', function ($scope, $ionicLoading, FavouriteService) {
-
-  $scope.addFavourite = FavouriteService.add;
-
-  $scope.$on('$ionicView.beforeEnter', function (e) {
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-  });
-
-  $scope.summary = $scope.data.national[0];
-
-  $scope.$on('$ionicView.afterEnter', function (e) {
-    $ionicLoading.hide();
-  });
-}])
-
-.controller('StoragesCtrl', ['$scope', '$stateParams', '$ionicLoading', 'FavouriteService', function ($scope, $stateParams, $ionicLoading, FavouriteService) {
-
-  $scope.$on('$ionicView.beforeEnter', function (e) {
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-  });
-
-  $scope.$on('$ionicView.enter', function (e) {
-
-    $scope.type = $stateParams.type;
-
-    $scope.subType = $stateParams.subType;
-
-    $scope.typeIndex = $stateParams.typeIndex;
-
-    $scope.subTypeIndex = $stateParams.subTypeIndex;
-
-    var item;
-    $scope.cityandsystem = [];
-    if ($scope.subType == 'storages') {
-      item = $scope.data[$stateParams.type][$stateParams.typeIndex];
-      $scope.cityandsystem = item.cityandsystem;
-    }
-    else {
-      item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
-    }
-
-    if ($scope.type != 'cities') {
-      $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
-    }
-
-    $scope.viewTitle = item.title;
-
-    $scope.storages = item.storages;
-
-    $scope.summary = item;
-
-    $scope.addFavourite = FavouriteService.add;
-
-  });
-
-  $scope.$on('$ionicView.afterEnter', function (e) {
-    $ionicLoading.hide();
-  });
-}])
-
-.controller('StorageDetailCtrl', ['$scope', '$stateParams', '$ionicLoading', function ($scope, $stateParams, $ionicLoading) {
-  $scope.$on('$ionicView.beforeEnter', function (e) {
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-  });
-  if ($stateParams.subType === 'storages') {
-    $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
-  }
-  else {
-    $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
-  }
-
-  $scope.$on('$ionicView.afterEnter', function (e) {
-    $ionicLoading.hide();
-  });
-}])
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('SearchCtrl', [
+.controller('FiguresCtrl', [
   '$scope',
   '$ionicLoading',
-  'SearchService',
-  function($scope, $ionicLoading, SearchService) {
+  'FavouriteService',
+  'storage',
+  function ($scope, $ionicLoading, FavouriteService, storage) {
+
+    console.log(storage);
+
+    $scope.data = storage;
+
+    $scope.addFavourite = FavouriteService.add;
 
     $scope.$on('$ionicView.beforeEnter', function (e) {
       $ionicLoading.show({
@@ -172,7 +91,107 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       });
     });
 
-    var list = SearchService.createList($scope.data);
+    $scope.summary = storage.national[0];
+
+    $scope.$on('$ionicView.afterEnter', function (e) {
+      $ionicLoading.hide();
+    });
+}])
+
+.controller('StoragesCtrl', [
+  '$scope',
+  '$stateParams',
+  '$ionicLoading',
+  'FavouriteService',
+  'storage',
+  function ($scope, $stateParams, $ionicLoading, FavouriteService, storage) {
+    $scope.data = storage;
+
+    $scope.$on('$ionicView.beforeEnter', function (e) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    });
+
+    $scope.$on('$ionicView.enter', function (e) {
+
+      $scope.type = $stateParams.type;
+
+      $scope.subType = $stateParams.subType;
+
+      $scope.typeIndex = $stateParams.typeIndex;
+
+      $scope.subTypeIndex = $stateParams.subTypeIndex;
+
+      var item;
+      $scope.cityandsystem = [];
+      if ($scope.subType == 'storages') {
+        item = $scope.data[$stateParams.type][$stateParams.typeIndex];
+        $scope.cityandsystem = item.cityandsystem;
+      }
+      else {
+        item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
+      }
+
+      if ($scope.type != 'cities') {
+        $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
+      }
+
+      $scope.viewTitle = item.title;
+
+      $scope.storages = item.storages;
+
+      $scope.summary = item;
+
+      $scope.addFavourite = FavouriteService.add;
+
+    });
+
+    $scope.$on('$ionicView.afterEnter', function (e) {
+      $ionicLoading.hide();
+    });
+}])
+
+.controller('StorageDetailCtrl', [
+  '$scope',
+  '$stateParams',
+  '$ionicLoading',
+  'storage',
+  function ($scope, $stateParams, $ionicLoading, storage) {
+    $scope.data = storage;
+    $scope.$on('$ionicView.beforeEnter', function (e) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    });
+    if ($stateParams.subType === 'storages') {
+      $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
+    }
+    else {
+      $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
+    }
+
+    $scope.$on('$ionicView.afterEnter', function (e) {
+      $ionicLoading.hide();
+    });
+}])
+
+.controller('SearchCtrl', [
+  '$scope',
+  '$ionicLoading',
+  'SearchService',
+  'storage',
+  function($scope, $ionicLoading, SearchService, storage) {
+
+    $scope.data = storage;
+
+    $scope.$on('$ionicView.beforeEnter', function (e) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    });
+
+    var list = SearchService.createList(storage);
 
     $scope.keyword = {value: undefined};
 
@@ -194,9 +213,4 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
     });
-}])
-.controller('ErrorCtrl', ['$scope', '$state', function ($scope, $state) {
-  $scope.retry = function () {
-    $state.go('tab.figures');
-  }
 }]);
