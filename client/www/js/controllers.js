@@ -70,7 +70,9 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   });
 }])
 
-.controller('AboutCtrl', function($scope) {})
+.controller('AboutCtrl', function($scope) {
+  $scope.timeline = {data: ['a', 'b', 'c']};
+})
 
 .controller('FiguresCtrl', [
   '$scope',

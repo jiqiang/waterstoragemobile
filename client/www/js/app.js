@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services'])
+angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'watsto.directives'])
 
 .run(function($ionicPlatform, $rootScope, $state, DataService) {
   $ionicPlatform.ready(function() {
