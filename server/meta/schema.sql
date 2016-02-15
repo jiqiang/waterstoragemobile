@@ -19,7 +19,8 @@ create table wid_schema."tblu_alloc_trade_mdb"
     "price_missing" text,
     "water_resource_type_local" text not null,
     "water_resource_type_national" text,
-    "surface_ground_water_code" text
+    "surface_ground_water_code" text,
+    "entitlement_total" numeric
 );
 
 drop table if exists wid_schema."tblu_alloc_trade_national" cascade;
@@ -42,7 +43,8 @@ create table wid_schema."tblu_alloc_trade_national"
     "price_missing" text,
     "water_resource_type_local" text not null,
     "water_resource_type_national" text,
-    "surface_ground_water_code" text
+    "surface_ground_water_code" text,
+    "entitlement_total" numeric
 );
 
 drop table if exists wid_schema."tblu_alloc_trade_state" cascade;
@@ -66,7 +68,8 @@ create table wid_schema."tblu_alloc_trade_state"
     "price_missing" text,
     "water_resource_type_local" text not null,
     "water_resource_type_national" text,
-    "surface_ground_water_code" text
+    "surface_ground_water_code" text,
+    "entitlement_total" numeric
 );
 
 drop table if exists wid_schema."tblu_alloc_trade_trading_zone" cascade;
@@ -98,7 +101,8 @@ create table wid_schema."tblu_alloc_trade_trading_zone"
     "price_missing" text,
     "water_resource_type_local" text not null,
     "water_resource_type_national" text,
-    "surface_ground_water_code" text
+    "surface_ground_water_code" text,
+    "entitlement_total" numeric
 );
 
 drop table if exists wid_schema."tblu_alloc_trade_water_syst" cascade;
@@ -126,7 +130,8 @@ create table wid_schema."tblu_alloc_trade_water_syst"
     "price_missing" text,
     "water_resource_type_local" text not null,
     "water_resource_type_national" text,
-    "surface_ground_water_code" text
+    "surface_ground_water_code" text,
+    "entitlement_total" numeric
 );
 
 drop table if exists wid_schema."tblu_alloc_trade_chart_state" cascade;
@@ -478,16 +483,21 @@ create table wid_schema."tblu_storage_view"
     "storage_name" text,
     "web_storage_name" text,
     "state" text,
+    "state1" text,
     "city" text,
     "drainage" text,
     "nat_water_account" text,
+    "GMA" text,
+    "river_system" text,
+    "catchment" text,
     "rural_system" text,
+    "water_system" text,
+    "linked_water_system_name" text,
     "latitude" numeric(9,6),
     "longitude" numeric(9,6),
     "storage_description" text,
-    "web_description_html" text,
     "web_description_plain" text,
-    "constructed_year" date,
+    "constructed_year" text,
     "data_provider_name" text,
     "owner_name" text,
     "catchment_size_ha" numeric(12,3),
@@ -505,10 +515,10 @@ create table wid_schema."tblu_storage_view"
     "change_since_last_month" numeric,
     "change_since_last_year" numeric,
     "ystrday_proportion_full" numeric(7,6),
-    "yestrday_day" date,
-    "yestrday_volume_active" numeric(16,3),
-    "yestrday_capacity_active" numeric(16,3),
-    "last_week_proportion_full" numeric(7,6),
+    "ystrday_day" date,
+    "ystrday_volume_active" numeric(16,3),
+    "ystrday_capacity_active" numeric(16,3),
+    "last_wk_proportion_full" numeric(7,6),
     "last_wk_day" date,
     "last_wk_volume_active" numeric(16,3),
     "last_wk_capacity_active" numeric(16,3),
@@ -611,4 +621,54 @@ create table wid_schema."tblu_storage_agg_drainage"
     "lst_yr_day" date,
     "lst_yr_volume_active" numeric(16,3),
     "lst_yr_capacity_active" numeric(16,3)
+);
+
+drop table if exists wid_schema."tblu_storage_agg_all" cascade;
+create table wid_schema."tblu_storage_agg_all"
+(
+    "id" bigserial primary key,
+    "run_date" date,
+    "group_name" text not null,
+    "group_level" text not null,
+    "latest_calc_reading_date" date,
+    "today_proportion_full" numeric(7,6),
+    "today_day" date,
+    "today_volume_active" numeric(16,3),
+    "today_capacity_active" numeric(16,3),
+    "change_since_yesterday" numeric,
+    "change_since_last_week" numeric,
+    "change_since_last_month" numeric,
+    "change_since_last_year" numeric,
+    "ystrday_proportion_full" numeric(7,6),
+    "ystrday_day" date,
+    "ystrday_volume_active" numeric(16,3),
+    "ystrday_capacity_active" numeric(16,3),
+    "lst_week_proportion_full" numeric(7,6),
+    "lst_wk_day" date,
+    "lst_wk_volume_active" numeric(16,3),
+    "lst_wk_capacity_active" numeric(16,3),
+    "lst_mth_proportion_full" numeric(7,6),
+    "lst_mth_day" date,
+    "lst_mth_volume_active" numeric(16,3),
+    "lst_mth_capacity_active" numeric(16,3),
+    "lst_yr_proportion_full" numeric(7,6),
+    "lst_yr_day" date,
+    "lst_yr_volume_active" numeric(16,3),
+    "lst_yr_capacity_active" numeric(16,3)
+);
+
+drop table if exists wid_schema."tblu_storage_agg_timeseries" cascade;
+create table wid_schema."tblu_storage_agg_timeseries"
+(
+    "id" bigserial primary key,
+    "observation_date" date,
+    "group_name" text,
+    "group_type_code" text,
+    "volume_active" numeric(16,3),
+    "capacity_active" numeric(16,3),
+    "proportion_full" numeric(7,6),
+    "quality_id" numeric(38),
+    "quality_name" text,
+    "month" text,
+    "year" text
 );
