@@ -78,12 +78,16 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$scope',
   '$ionicLoading',
   'FavouriteService',
+  'ChartDataService',
   'storage',
-  function ($scope, $ionicLoading, FavouriteService, storage) {
+  function ($scope, $ionicLoading, FavouriteService, ChartDataService, storage) {
 
     console.log(storage);
 
     $scope.data = storage;
+
+    $scope.grouptype = "National";
+    $scope.groupvalue = "National";
 
     $scope.addFavourite = FavouriteService.add;
 

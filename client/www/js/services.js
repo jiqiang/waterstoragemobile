@@ -104,6 +104,18 @@ angular.module('watsto.services', [])
   };
 }])
 
+.factory('ChartDataService', ['$http', function ($http) {
+  return {
+    fetch: function (group_type, group_value) {
+      return $http({
+        url: "http://localhost:8888/waterstoragemobile/server/chart.php",
+        method: "GET",
+        params: {group_type: group_type, group_value: group_value}
+     });
+    }
+  }
+}])
+
 .factory('FavouriteService', function () {
   function add (type, typeIndex, subType, subTypeIndex, storageIndex) {
     var isExist = false, favourites = get();
