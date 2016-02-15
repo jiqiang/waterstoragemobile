@@ -50,8 +50,9 @@ try {
     );
   }
 
-  echo "<pre>";
-  print_r($data);
+  //echo "<pre>";
+  //print_r($data);
+  echo json_encode($data);
 
 } catch (PDOException $e) {
   echo $e->getMessage();
@@ -81,7 +82,7 @@ function getChartTotalCapacityData($groupType, $groupValue, $year) {
   $capacity = "";
   $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
-    $capacity = $row['capacity_active_total'];
+    $capacity = floatval($row['capacity_active_total']);
   }
   return $capacity;
 }
@@ -114,7 +115,7 @@ function getChartProportionFullData($groupType, $groupValue, $year) {
   $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
     $mon = intval($row['observation_mon_num']);
-    $data_array[$mon] = $row['proportion_full'];
+    $data_array[$mon] = floatval($row['proportion_full']);
   }
   return $data_array;
 }
