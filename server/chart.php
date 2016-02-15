@@ -111,11 +111,12 @@ function getChartProportionFullData($groupType, $groupValue, $year) {
   }
 
   global $conn;
-  $data_array = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  $data_array = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
     $mon = intval($row['observation_mon_num']);
     $data_array[$mon] = floatval($row['proportion_full']);
   }
+  array_shift($data_array);
   return $data_array;
 }
