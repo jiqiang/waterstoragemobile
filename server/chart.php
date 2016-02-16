@@ -52,6 +52,7 @@ try {
 
   //echo "<pre>";
   //print_r($data);
+  header("Access-Control-Allow-Origin: *");
   echo json_encode($data);
 
 } catch (PDOException $e) {
