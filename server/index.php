@@ -113,6 +113,7 @@ function getStatesSQL() {
   return $sql = "
     select
       t1.state as title,
+      'State_Territory'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -157,6 +158,7 @@ function getCitiesSQL() {
   return $sql = "
     select
       t1.city as title,
+      'Urban_System'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -201,6 +203,7 @@ function getDrainagesSQL() {
   return $sql = "
     select
       t1.drainage as title,
+      'UWDB DRAINAGE DIV'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -288,6 +291,7 @@ function getCityAndSystemSQL($filterBy, $filterByValue) {
   return $sql = "
     ((select
       t1.city as title,
+      'Urban_System'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -329,6 +333,7 @@ function getCityAndSystemSQL($filterBy, $filterByValue) {
 
     (select
       t1.linked_water_system_name as title,
+      'Rural_System'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,

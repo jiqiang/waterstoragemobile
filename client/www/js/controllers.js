@@ -86,9 +86,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.data = storage;
 
-    $scope.grouptype = "National";
-    $scope.groupvalue = "National";
-
     $scope.addFavourite = FavouriteService.add;
 
     $scope.$on('$ionicView.beforeEnter', function (e) {
@@ -101,6 +98,10 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
+      $scope.$broadcast('viewisready', {
+        grouptype: "National",
+        groupvalue: "National"
+      });
     });
 }])
 
@@ -119,6 +120,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       });
     });
 
+    var item;
+
     $scope.$on('$ionicView.enter', function (e) {
 
       $scope.type = $stateParams.type;
@@ -129,7 +132,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
       $scope.subTypeIndex = $stateParams.subTypeIndex;
 
-      var item;
       $scope.cityandsystem = [];
       if ($scope.subType == 'storages') {
         item = $scope.data[$stateParams.type][$stateParams.typeIndex];
@@ -151,10 +153,18 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
       $scope.addFavourite = FavouriteService.add;
 
+      $scope.grouptype = item.subtype;
+
+      $scope.groupvalue = item.title;
+
     });
 
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
+      $scope.$broadcast('viewisready', {
+        grouptype: item.subtype,
+        groupvalue: item.title
+      });
     });
 }])
 
@@ -179,6 +189,10 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
+      $scope.$broadcast('viewisready', {
+        grouptype: "storages",
+        groupvalue: $scope.storageDetail.title
+      });
     });
 }])
 

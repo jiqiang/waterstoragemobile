@@ -5,14 +5,12 @@ angular.module('watsto.directives', ['watsto.services'])
     restrict: 'AE',
     transclude: false,
     replace: false,
-    scope: {
-      groupType: '=',
-      groupValue: '='
-    },
+    scope: {},
+    template: "<div style='text-align: center; margin: 5px;'><ion-spinner></ion-spinner><h5>loading chart...</h5></div>",
     link: function (scope, element, attrs) {
-      ChartDataService.fetch(scope.groupType, scope.groupValue).then(function (response) {
+      scope.$on('viewisready', function (event, value) {
+        ChartDataService.fetch(value.grouptype, value.groupvalue).then(function (response) {
         var timeline = response.data;
-        console.log(timeline);
         var parentWidth = element.parent().width(),
                 current_year = new Date().getFullYear(),
                 last_year = current_year - 1,
@@ -83,6 +81,7 @@ angular.module('watsto.directives', ['watsto.services'])
               legend: {enabled: false}
             });
 
+      });
       });
     }
   };

@@ -31,8 +31,8 @@ try {
   $data = array();
 
   if (isset($_GET['group_type']) && isset($_GET['group_value'])) {
-    $groupType = $_GET['group_type'];
-    $groupValue = $_GET['group_value'];
+    $groupType = pg_escape_string($_GET['group_type']);
+    $groupValue = pg_escape_string($_GET['group_value']);
 
     $data = array(
       $current_year => array(
