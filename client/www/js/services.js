@@ -267,7 +267,7 @@ angular.module('watsto.services', [])
         baseUrl = 'http://wdev.bom.gov.au/water/ws_mobile_app_master/data/';
         break;
     }
-
+    console.log(baseUrl);
     return baseUrl;
   }
 
