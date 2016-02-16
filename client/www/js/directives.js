@@ -20,7 +20,7 @@ angular.module('watsto.directives', ['watsto.services'])
                 type: 'column',
                 reflow: true,
                 width: parentWidth,
-                height: Math.floor(parentWidth / 1.618)
+                height: Math.floor(parentWidth / 1.418)
               },
               title: {
                 text: '',
@@ -48,10 +48,12 @@ angular.module('watsto.directives', ['watsto.services'])
                 max: 100,
                 title: {
                   text: 'Proportion Full',
-                  margin: 0
+                  margin: 0,
+                  style: {"fontSize": "10px"}
                 },
                 labels: {
-                  format: '{value}%'
+                  format: '{value}%',
+                  style: {"fontSize": "10px"}
                 }
               }, {
                 min: 0,
