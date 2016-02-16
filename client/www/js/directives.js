@@ -66,15 +66,18 @@ angular.module('watsto.directives', ['watsto.services'])
               series: [{
                 type: 'column',
                 name: current_year,
-                data: timeline[current_year].proportions
+                //data: timeline[current_year].proportions
+                data: ChartDataService.random()
               }, {
                 type: 'spline',
                 name: last_year,
-                data: timeline[last_year].proportions
+                //data: timeline[last_year].proportions
+                data: ChartDataService.random()
               }, {
                 type: 'spline',
                 name: last_year_before,
-                data: timeline[last_year_before].proportions
+                //data: timeline[last_year_before].proportions
+                data: ChartDataService.random()
               }],
               credits: {enabled: false},
               exporting: {enabled: false},

@@ -112,6 +112,14 @@ angular.module('watsto.services', [])
         method: "GET",
         params: {group_type: group_type, group_value: group_value}
      });
+    },
+
+    random: function() {
+      var dummyData = [], i;
+      for (i = 0; i < 12; i++) {
+        dummyData.push(Math.floor(Math.random()*(100-0+1)+0));
+      }
+      return dummyData;
     }
   }
 }])
