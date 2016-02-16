@@ -376,7 +376,8 @@ function getCityAndSystemSQL($filterBy, $filterByValue) {
 function run($sql) {
   global $conn;
 
-  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+  $result = $conn->query($sql);
+  $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
   foreach ($data as &$row) {
     $row['today_volume_active_total'] = number_format(floatval($row['today_volume_active_total']), 2, '.', ',');
