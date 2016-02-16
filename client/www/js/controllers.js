@@ -79,10 +79,18 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$ionicLoading',
   'FavouriteService',
   'ChartDataService',
+  'DataService',
   'storage',
-  function ($scope, $ionicLoading, FavouriteService, ChartDataService, storage) {
+  function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage) {
 
     console.log(storage);
+
+    $scope.doRefresh = function () {
+      DataService.fetch().then(function (newData) {
+        $scope.data = newData;
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
 
     $scope.data = storage;
 
@@ -110,9 +118,17 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$stateParams',
   '$ionicLoading',
   'FavouriteService',
+  'DataService',
   'storage',
-  function ($scope, $stateParams, $ionicLoading, FavouriteService, storage) {
+  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, storage) {
     $scope.data = storage;
+
+    $scope.doRefresh = function () {
+      DataService.fetch().then(function (newData) {
+        $scope.data = newData;
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
 
     $scope.$on('$ionicView.beforeEnter', function (e) {
       $ionicLoading.show({
@@ -172,14 +188,24 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$scope',
   '$stateParams',
   '$ionicLoading',
+  'DataService',
   'storage',
-  function ($scope, $stateParams, $ionicLoading, storage) {
+  function ($scope, $stateParams, $ionicLoading, DataService, storage) {
     $scope.data = storage;
+
+    $scope.doRefresh = function () {
+      DataService.fetch().then(function (newData) {
+        $scope.data = newData;
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
+
     $scope.$on('$ionicView.beforeEnter', function (e) {
       $ionicLoading.show({
         template: 'Loading...'
       });
     });
+
     if ($stateParams.subType === 'storages') {
       $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
     }
