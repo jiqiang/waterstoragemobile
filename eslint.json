@@ -1,0 +1,29 @@
+/**
+ * ESLint rule configuration http://eslint.org/docs/user-guide/configuring
+ * 
+ * 0 - turn the rule off 1 - turn the rule on as a warning (doesn't affect exit code) 2 - turn the rule on as an error
+ * (exit code is 1 when triggered)
+ * 
+ */
+{
+  "env": {
+    "browser": true
+  },
+  
+  "globals": {
+    "angular": true,
+    "strict": [1, "always"]
+  },
+  
+  "rules": {
+    "camelcase": 1,
+    "curly": 1,
+    "brace-style": [1, "1tbs"],
+    "quotes": [1, "single"],
+    "semi": [1, "always"],
+    "object-curly-spacing": [1, "always"], 
+    "array-bracket-spacing": [1, "always"],
+    "space-infix-ops": 1,
+    "indent": 1
+  }
+}
