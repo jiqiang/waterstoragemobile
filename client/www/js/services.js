@@ -1,6 +1,6 @@
 angular.module('watsto.services', [])
 
-.factory('DataService', ['$http', '$q', function($http, $q) {
+.factory('DataService', ['$http', '$q', 'ConfigService', function($http, $q, ConfigService) {
 
   // Initialize data.
   var wsData = {
@@ -15,7 +15,7 @@ angular.module('watsto.services', [])
 
     return $http({
       method: 'GET',
-      url: 'data/data.json',
+      url: ConfigService.getDataUrl(),
       timeout: 15000
     });
   }
@@ -104,11 +104,11 @@ angular.module('watsto.services', [])
   };
 }])
 
-.factory('ChartDataService', ['$http', function ($http) {
+.factory('ChartDataService', ['$http', 'ConfigService', function ($http, ConfigService) {
   return {
     fetch: function (group_type, group_value) {
       return $http({
-        url: "http://localhost:8888/waterstoragemobile/server/chart.php",
+        url: ConfigService.getChartUrl(),
         method: "GET",
         params: {group_type: group_type, group_value: group_value}
      });
@@ -251,4 +251,33 @@ angular.module('watsto.services', [])
     createList: createList
   };
 
+})
+
+.factory('ConfigService', function ($location) {
+
+  function getBaseUrl () {
+    var host = $location.host(),
+        baseUrl;
+
+    switch (host) {
+      case 'localhost':
+        baseUrl = 'http://localhost:8888/waterstoragemobile/server/';
+        break;
+      case 'wdev.bom.gov.au':
+        baseUrl = 'http://wdev.bom.gov.au/water/ws_mobile_app_master/data/';
+        break;
+    }
+
+    return baseUrl;
+  }
+
+  return {
+    getDataUrl: function () {
+      return getBaseUrl() + 'index.php';
+
+    },
+    getChartUrl: function () {
+      return getBaseUrl() + 'chart.php';
+    }
+  };
 });

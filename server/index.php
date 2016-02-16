@@ -61,7 +61,7 @@ try {
     'cities' => $cities,
     'drainages' => $drainages,
   );
-
+  header("Access-Control-Allow-Origin: *");
   echo json_encode($data);
 }
 catch (PDOException $e) {

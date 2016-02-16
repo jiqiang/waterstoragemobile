@@ -1,6 +1,6 @@
 angular.module('watsto.directives', ['watsto.services'])
 
-.directive('ionHighcharts', function (ChartDataService) {
+.directive('ionHighcharts', function (ChartDataService, ConfigService) {
   return {
     restrict: 'AE',
     transclude: false,
