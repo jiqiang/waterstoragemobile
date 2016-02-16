@@ -47,8 +47,11 @@ angular.module('watsto.directives', ['watsto.services'])
                 min: 0,
                 max: 100,
                 title: {
-                  text: '',
+                  text: 'Proportion Full',
                   margin: 0
+                },
+                labels: {
+                  format: '{value}%'
                 }
               }, {
                 min: 0,
@@ -80,8 +83,7 @@ angular.module('watsto.directives', ['watsto.services'])
                 data: ChartDataService.random()
               }],
               credits: {enabled: false},
-              exporting: {enabled: false},
-              legend: {enabled: false}
+              exporting: {enabled: false}
             });
 
       });
