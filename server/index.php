@@ -377,10 +377,6 @@ function run($sql) {
   global $conn;
 
   $result = $conn->query($sql);
-  if (!$result) {
-    var_dump($sql);
-  }
-
   $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
   foreach ($data as &$row) {
