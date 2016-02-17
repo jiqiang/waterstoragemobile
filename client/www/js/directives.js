@@ -13,7 +13,7 @@ angular.module('watsto.directives', ['watsto.services'])
         .css('background-color', '#f8f8f8')
         .css('height', height)
         .css('margin-top', 10)
-        .append($("<div></div>").css('height', height).css('width', scope.percentage + '%').css('background-color', '#11c1f3'));
+        .append($("<div></div>").css('height', height).css('width', scope.percentage + '%').css('background-color', '#11c1f3').css('opacity', 0.5));
     }
   };
 })
