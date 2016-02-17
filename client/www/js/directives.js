@@ -1,5 +1,23 @@
 angular.module('watsto.directives', ['watsto.services'])
 
+.directive('ionPercentageBar', function () {
+  return {
+    restrict: 'AE',
+    transclude: false,
+    replace: true,
+    scope: {percentage: "="},
+    template: "<div></div>",
+    link: function (scope, element, attrs) {
+      var height = 3;
+      element
+        .css('background-color', '#f8f8f8')
+        .css('height', height)
+        .css('margin-top', 10)
+        .append($("<div></div>").css('height', height).css('width', scope.percentage + '%').css('background-color', '#11c1f3'));
+    }
+  };
+})
+
 .directive('ionHighcharts', function (ChartDataService, ConfigService) {
   return {
     restrict: 'AE',

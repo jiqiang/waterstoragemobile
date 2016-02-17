@@ -58,6 +58,7 @@
         <h6 class="positive">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
         </h6>
+        <ion-percentage-bar percentage="item.percentage_full_today"></ion-percentage-bar>
         <i class="icon ion-chevron-right icon-accessory"></i>
         <ion-option-button class="button-positive" ng-click="addFavourite('{{type}}', {{typeIndex}}, 'cityandsystem', {{$index}}, null)">
           <i class="icon ion-{{platform}}-star"></i>
@@ -71,6 +72,7 @@
         <h6 class="positive">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
         </h6>
+        <ion-percentage-bar percentage="item.percentage_full_today"></ion-percentage-bar>
         <i class="icon ion-chevron-right icon-accessory"></i>
         <ion-option-button class="button-positive" ng-click="addFavourite('{{type}}', {{typeIndex}}, '{{subType}}', {{subTypeIndex}}, {{$index}})">
           <i class="icon ion-{{platform}}-star"></i>
