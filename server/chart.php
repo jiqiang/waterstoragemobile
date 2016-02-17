@@ -36,20 +36,25 @@ try {
     $groupType = pg_escape_string($_GET['group_type']);
     $groupValue = pg_escape_string($_GET['group_value']);
 
-    $data = array(
-      $current_year => array(
-        'capacity' => getChartTotalCapacityData($groupType, $groupValue, $current_year),
-        'proportions' => getChartProportionFullData($groupType, $groupValue, $current_year),
-      ),
-      $last_year => array(
-        'capacity' => getChartTotalCapacityData($groupType, $groupValue, $last_year),
-        'proportions' => getChartProportionFullData($groupType, $groupValue, $last_year),
-      ),
-      $last_year_before => array(
-        'capacity' => getChartTotalCapacityData($groupType, $groupValue, $last_year_before),
-        'proportions' => getChartProportionFullData($groupType, $groupValue, $last_year_before),
-      ),
-    );
+    if ($groupType === 'all' && $groupValue === 'all') {
+      $data = getAll();
+    }
+    else {
+      $data = array(
+        $current_year => array(
+          'capacity' => getChartTotalCapacityData($groupType, $groupValue, $current_year),
+          'proportions' => getChartProportionFullData($groupType, $groupValue, $current_year),
+        ),
+        $last_year => array(
+          'capacity' => getChartTotalCapacityData($groupType, $groupValue, $last_year),
+          'proportions' => getChartProportionFullData($groupType, $groupValue, $last_year),
+        ),
+        $last_year_before => array(
+          'capacity' => getChartTotalCapacityData($groupType, $groupValue, $last_year_before),
+          'proportions' => getChartProportionFullData($groupType, $groupValue, $last_year_before),
+        ),
+      );
+    }
   }
 
   //echo "<pre>";
@@ -84,7 +89,12 @@ function getChartTotalCapacityData($groupType, $groupValue, $year) {
 
   global $conn;
   $capacity = "";
-  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+  $result = $conn->query($sql);
+  if (!$result) {
+    var_dump($sql);
+  }
+  $data = $result->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
     $capacity = floatval($row['capacity_active_total']);
   }
@@ -116,11 +126,55 @@ function getChartProportionFullData($groupType, $groupValue, $year) {
 
   global $conn;
   $data_array = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+  $result = $conn->query($sql);
+  if (!$result) {
+    var_dump($sql);
+  }
+  $data = $result->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
     $mon = intval($row['observation_mon_num']);
     $data_array[$mon] = floatval($row['proportion_full']);
   }
   array_shift($data_array);
   return $data_array;
+}
+
+function getCategories() {
+  $sql = "
+    (select distinct
+      'storages'::text as grouptype,
+      storage_name as groupvalue
+    from wid_schema.tblu_storage_view)
+    union
+    (select distinct
+      group_type_code as grouptype,
+      group_name as groupvalue
+    from wid_schema.tblu_storage_agg_timeseries
+    where group_type_code in ('UWDB DRAINAGE DIV', 'Urban_System', 'Rural_System', 'State_Territory', 'National')
+    order by group_type_code asc
+    )
+  ";
+  global $conn;
+  $data = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+  return $data;
+}
+
+function getAll() {
+
+  $current_year = date('Y');
+  $most_recent_three_years = array($current_year, $current_year - 1, $current_year - 2);
+
+  $data = array();
+  $categories = getCategories();
+  foreach ($categories as $cat) {
+    foreach ($most_recent_three_years as $year) {
+      $data[] = array(
+        'grouptype' => $cat['grouptype'],
+        'groupvalue' => $cat['groupvalue'],
+        'year' => $year,
+        'capacity' => getChartTotalCapacityData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $year),
+        'proportion' => getChartProportionFullData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $year),
+      );
+    }
+  }
 }

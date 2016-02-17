@@ -47,7 +47,7 @@ angular.module('watsto.directives', ['watsto.services'])
                 min: 0,
                 max: 100,
                 title: {
-                  text: 'Proportion Full',
+                  text: 'Percentage % Full',
                   margin: 0,
                   style: {"fontSize": "10px"}
                 },
