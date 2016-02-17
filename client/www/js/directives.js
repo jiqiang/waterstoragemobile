@@ -106,6 +106,8 @@ angular.module('watsto.directives', ['watsto.services'])
               exporting: {enabled: false}
             });
 
+      }, function (error) {
+        element.empty();
       });
       });
     }
