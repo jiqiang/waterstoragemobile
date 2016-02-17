@@ -268,25 +268,28 @@ angular.module('watsto.services', [])
         protocol = $location.protocol(),
         baseUrl;
 
+    switch (host) {
+      case 'localhost':
+        baseUrl = 'http://localhost:8888/waterstoragemobile/server/';
+        break;
+      case 'wdev.bom.gov.au':
+        baseUrl = 'http://wdev.bom.gov.au/water/ws_mobile_app_master/data/';
+        break;
+    }
+
     if (protocol === 'file') {
-      baseUrl = 'data/data.json';
+      baseUrl = '';
     }
-    else {
-      switch (host) {
-        case 'localhost':
-          baseUrl = 'http://localhost:8888/waterstoragemobile/server/';
-          break;
-        case 'wdev.bom.gov.au':
-          baseUrl = 'http://wdev.bom.gov.au/water/ws_mobile_app_master/data/';
-          break;
-      }
-    }
+
     console.log(baseUrl);
     return baseUrl;
   }
 
   return {
     getDataUrl: function () {
+      if ('' === getBaseUrl()) {
+        return 'data/data.json';
+      }
       return getBaseUrl() + 'index.php';
 
     },
