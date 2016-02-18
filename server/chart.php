@@ -177,4 +177,5 @@ function getAll() {
       );
     }
   }
+  return $data;
 }
