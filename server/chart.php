@@ -104,7 +104,7 @@ function getChartTotalCapacityData($groupType, $groupValue, $year) {
 function getChartProportionFullData($groupType, $groupValue, $year) {
   $sql = "
     select
-      round(sum(volume_active) / sum(capacity_active) * 100, 2) proportion_full,
+      round(sum(volume_active) / sum(capacity_active) * 100, 2) as proportion_full,
       to_char(observation_date, 'MM') as observation_mon_num,
       to_char(observation_date, 'MON') as observation_mon_str
     from wid_schema.tblu_storage_agg_timeseries
@@ -115,7 +115,7 @@ function getChartProportionFullData($groupType, $groupValue, $year) {
   if ($groupType === 'storages') {
     $sql = "
       select
-        round(sum(volume_active) / sum(capacity_active) * 100, 2) proportion_full,
+        round(sum(volume_active) / sum(capacity_active) * 100, 2) as proportion_full,
         to_char(observation_day, 'MM') as observation_mon_num,
         to_char(observation_day, 'MON') as observation_mon_str
       from wid_schema.tblu_storage_timeseries
