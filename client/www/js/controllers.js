@@ -106,10 +106,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
-      $scope.$broadcast('viewisready', {
-        grouptype: "National",
-        groupvalue: "National"
-      });
+      $scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', storage.chart));
     });
 }])
 
@@ -119,8 +116,9 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$ionicLoading',
   'FavouriteService',
   'DataService',
+  'ChartDataService',
   'storage',
-  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, storage) {
+  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage) {
     $scope.data = storage;
 
     $scope.doRefresh = function () {
@@ -177,10 +175,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
-      $scope.$broadcast('viewisready', {
-        grouptype: item.subtype,
-        groupvalue: item.title
-      });
+      $scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, storage.chart));
     });
 }])
 
@@ -189,8 +184,9 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$stateParams',
   '$ionicLoading',
   'DataService',
+  'ChartDataService',
   'storage',
-  function ($scope, $stateParams, $ionicLoading, DataService, storage) {
+  function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage) {
     $scope.data = storage;
 
     $scope.doRefresh = function () {
@@ -215,10 +211,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.afterEnter', function (e) {
       $ionicLoading.hide();
-      $scope.$broadcast('viewisready', {
-        grouptype: "storages",
-        groupvalue: $scope.storageDetail.title
-      });
+      $scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart));
     });
 }])
 

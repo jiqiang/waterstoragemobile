@@ -27,8 +27,6 @@ angular.module('watsto.directives', ['watsto.services'])
     template: "<div style='text-align: center; margin: 5px;'><ion-spinner></ion-spinner><h5>loading chart...</h5></div>",
     link: function (scope, element, attrs) {
       scope.$on('viewisready', function (event, value) {
-        ChartDataService.fetch(value.grouptype, value.groupvalue).then(function (response) {
-        var timeline = response.data;
         var parentWidth = element.parent().width(),
                 current_year = new Date().getFullYear(),
                 last_year = current_year - 1,
@@ -89,26 +87,22 @@ angular.module('watsto.directives', ['watsto.services'])
               series: [{
                 type: 'column',
                 name: current_year,
-                //data: timeline[current_year].proportions
-                data: ChartDataService.random()
+                data: value[0]
+                //data: ChartDataService.random()
               }, {
                 type: 'spline',
                 name: last_year,
-                //data: timeline[last_year].proportions
-                data: ChartDataService.random()
+                data: value[1]
+                //data: ChartDataService.random()
               }, {
                 type: 'spline',
                 name: last_year_before,
-                //data: timeline[last_year_before].proportions
-                data: ChartDataService.random()
+                data: value[2]
+                //data: ChartDataService.random()
               }],
               credits: {enabled: false},
               exporting: {enabled: false}
             });
-
-      }, function (error) {
-        element.empty();
-      });
       });
     }
   };

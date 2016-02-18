@@ -106,12 +106,20 @@ angular.module('watsto.services', [])
 
 .factory('ChartDataService', ['$http', 'ConfigService', function ($http, ConfigService) {
   return {
-    fetch: function (group_type, group_value) {
-      return $http({
-        url: ConfigService.getChartUrl(),
-        method: "GET",
-        params: {group_type: group_type, group_value: group_value}
-     });
+    fetch: function (group_type, group_value, data) {
+      var i,
+          timeline = [],
+          current_year = new Date().getFullYear(),
+          last_year = current_year - 1,
+          last_year_before = current_year - 2;
+      for (i = 0; i < data.length; i++) {
+        if (data[i]['grouptype'] === group_type && data[i]['groupvalue'] === group_value) {
+          if (data[i]['year'] == current_year || data[i]['year'] == last_year || data[i]['year'] == last_year_before) {
+            timeline.push(data[i]['proportion']);
+          }
+        }
+      }
+      return timeline;
     },
 
     random: function() {
@@ -290,11 +298,16 @@ angular.module('watsto.services', [])
       if ('' === getBaseUrl()) {
         return 'data/data.json';
       }
-      return getBaseUrl() + 'index.php';
+      //return getBaseUrl() + 'index.php';
+      return 'data/data.json';
 
     },
     getChartUrl: function () {
-      return getBaseUrl() + 'chart.php';
+      if ('' === getBaseUrl()) {
+        return 'data/chart.json';
+      }
+      //return getBaseUrl() + 'chart.php';
+      return 'data/chart.json';
     }
   };
 });
