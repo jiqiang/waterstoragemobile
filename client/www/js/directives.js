@@ -35,10 +35,12 @@ angular.module('watsto.directives', ['watsto.services'])
       scope.chartMessage = "Loading chart data...";
 
       angular.element($window).bind('resize', function() {
-        element.highcharts().destroy();
-        options.chart.width = element.parent().width();
-        options.chart.height = Math.floor(element.parent().width() / 1.418);
-        element.highcharts(options);
+        if (element.highcharts()) {
+          element.highcharts().destroy();
+          options.chart.width = element.parent().width();
+          options.chart.height = Math.floor(element.parent().width() / 1.418);
+          element.highcharts(options);
+        }
       });
 
       scope.$on('viewisready', function (event, value) {
