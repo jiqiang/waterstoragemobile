@@ -112,13 +112,18 @@ angular.module('watsto.services', [])
           current_year = new Date().getFullYear(),
           last_year = current_year - 1,
           last_year_before = current_year - 2;
-      for (i = 0; i < data.length; i++) {
-        if (data[i]['grouptype'] === group_type && data[i]['groupvalue'] === group_value) {
-          if (data[i]['year'] == current_year || data[i]['year'] == last_year || data[i]['year'] == last_year_before) {
-            timeline.push(data[i]['proportion']);
-          }
-        }
+
+      if (data[group_type][group_value]) {
+        timeline = [
+          data[group_type][group_value][current_year.toString()],
+          data[group_type][group_value][last_year.toString()],
+          data[group_type][group_value][last_year_before.toString()]
+        ];
       }
+      else {
+        timeline = [];
+      }
+
       return timeline;
     },
 

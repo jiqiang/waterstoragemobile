@@ -62,9 +62,13 @@ try {
     'drainages' => $drainages,
     'chart' => getAll(),
   );
+
   header("Access-Control-Allow-Origin: *");
   header('Content-Type: application/json');
   echo json_encode($data);
+
+ //echo "<pre>";
+ //print_r($data);
 }
 catch (PDOException $e) {
   echo $e->getMessage();
@@ -75,6 +79,7 @@ function getNationalSQL() {
   return $sql = "
     select
       t1.today_volume_active_total,
+      'National'::text as subtype,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
       t1.today,
@@ -250,6 +255,7 @@ function getStoragesSQL($filters) {
   return $sql = "
     select
       t1.storage_name as title,
+      'storages'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
       t1.percentage_full_today,
@@ -432,7 +438,7 @@ function getChartProportionFullData($groupType, $groupValue, $year) {
   }
 
   global $conn;
-  $data_array = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  $data_array = array(null, null, null, null, null, null, null, null, null, null, null, null, null);
   $result = $conn->query($sql);
   if (!$result) {
     var_dump($sql);
@@ -475,13 +481,7 @@ function getAll() {
   $categories = getCategories();
   foreach ($categories as $cat) {
     foreach ($most_recent_three_years as $year) {
-      $data[] = array(
-        'grouptype' => $cat['grouptype'],
-        'groupvalue' => $cat['groupvalue'],
-        'year' => $year,
-        'capacity' => getChartTotalCapacityData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $year),
-        'proportion' => getChartProportionFullData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $year),
-      );
+      $data[$cat['grouptype']][$cat['groupvalue']][$year] = getChartProportionFullData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $year);
     }
   }
   return $data;
