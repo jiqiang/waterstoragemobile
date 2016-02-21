@@ -71,7 +71,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 }])
 
 .controller('AboutCtrl', function($scope) {
-  $scope.timeline = {data: ['a', 'b', 'c']};
+
 })
 
 .controller('FiguresCtrl', [
@@ -83,11 +83,11 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'storage',
   function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage) {
 
-    console.log(storage);
-
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
         $scope.data = newData;
+        $scope.summary = newData.national[0];
+        $scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', newData.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
@@ -96,18 +96,13 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.addFavourite = FavouriteService.add;
 
-    $scope.$on('$ionicView.beforeEnter', function (e) {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
-    });
-
     $scope.summary = storage.national[0];
 
-    $scope.$on('$ionicView.afterEnter', function (e) {
-      $ionicLoading.hide();
-      $scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', storage.chart));
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.viewisentered = true;
+      $scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', storage.chart, "viewisready"));
     });
+
 }])
 
 .controller('StoragesCtrl', [
@@ -121,62 +116,87 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage) {
     $scope.data = storage;
 
+    var item;
+
+    $scope.type = $stateParams.type;
+
+    $scope.subType = $stateParams.subType;
+
+    $scope.typeIndex = $stateParams.typeIndex;
+
+    $scope.subTypeIndex = $stateParams.subTypeIndex;
+
+    $scope.cityandsystem = [];
+    if ($scope.subType == 'storages') {
+      item = $scope.data[$stateParams.type][$stateParams.typeIndex];
+      $scope.cityandsystem = item.cityandsystem;
+    }
+    else {
+      item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
+    }
+
+    if ($scope.type != 'cities') {
+      $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
+    }
+
+    $scope.viewTitle = item.title;
+
+    $scope.storages = item.storages;
+
+    $scope.summary = item;
+
+    $scope.addFavourite = FavouriteService.add;
+
+    $scope.grouptype = item.subtype;
+
+    $scope.groupvalue = item.title;
+
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
         $scope.data = newData;
+        $scope.type = $stateParams.type;
+
+        $scope.subType = $stateParams.subType;
+
+        $scope.typeIndex = $stateParams.typeIndex;
+
+        $scope.subTypeIndex = $stateParams.subTypeIndex;
+
+        $scope.cityandsystem = [];
+        if ($scope.subType == 'storages') {
+          item = $scope.data[$stateParams.type][$stateParams.typeIndex];
+          $scope.cityandsystem = item.cityandsystem;
+        }
+        else {
+          item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
+        }
+
+        if ($scope.type != 'cities') {
+          $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
+        }
+
+        $scope.viewTitle = item.title;
+
+        $scope.storages = item.storages;
+
+        $scope.summary = item;
+
+        $scope.addFavourite = FavouriteService.add;
+
+        $scope.grouptype = item.subtype;
+
+        $scope.groupvalue = item.title;
+
+        $scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
 
-    $scope.$on('$ionicView.beforeEnter', function (e) {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.viewisentered = true;
+      $scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, storage.chart, "viewisready"));
     });
 
-    var item;
-
-    $scope.$on('$ionicView.enter', function (e) {
-
-      $scope.type = $stateParams.type;
-
-      $scope.subType = $stateParams.subType;
-
-      $scope.typeIndex = $stateParams.typeIndex;
-
-      $scope.subTypeIndex = $stateParams.subTypeIndex;
-
-      $scope.cityandsystem = [];
-      if ($scope.subType == 'storages') {
-        item = $scope.data[$stateParams.type][$stateParams.typeIndex];
-        $scope.cityandsystem = item.cityandsystem;
-      }
-      else {
-        item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
-      }
-
-      if ($scope.type != 'cities') {
-        $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
-      }
-
-      $scope.viewTitle = item.title;
-
-      $scope.storages = item.storages;
-
-      $scope.summary = item;
-
-      $scope.addFavourite = FavouriteService.add;
-
-      $scope.grouptype = item.subtype;
-
-      $scope.groupvalue = item.title;
-
-    });
-
-    $scope.$on('$ionicView.afterEnter', function (e) {
-      $ionicLoading.hide();
-      $scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, storage.chart));
-    });
 }])
 
 .controller('StorageDetailCtrl', [
@@ -189,19 +209,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage) {
     $scope.data = storage;
 
-    $scope.doRefresh = function () {
-      DataService.fetch().then(function (newData) {
-        $scope.data = newData;
-        $scope.$broadcast('scroll.refreshComplete');
-      });
-    };
-
-    $scope.$on('$ionicView.beforeEnter', function (e) {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
-    });
-
     if ($stateParams.subType === 'storages') {
       $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
     }
@@ -209,9 +216,22 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
     }
 
-    $scope.$on('$ionicView.afterEnter', function (e) {
-      $ionicLoading.hide();
-      $scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart));
+    $scope.doRefresh = function () {
+      DataService.fetch().then(function (newData) {
+        $scope.data = newData;
+        if ($stateParams.subType === 'storages') {
+          $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
+        }
+        else {
+          $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
+        }
+        $scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh"));
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
+
+    $scope.$on('$ionicView.enter', function (e) {
+      $scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "viewisready"));
     });
 }])
 
@@ -223,12 +243,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   function($scope, $ionicLoading, SearchService, storage) {
 
     $scope.data = storage;
-
-    $scope.$on('$ionicView.beforeEnter', function (e) {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
-    });
 
     var list = SearchService.createList(storage);
 
@@ -247,9 +261,4 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     }
 
     $scope.list = list;
-
-
-    $scope.$on('$ionicView.afterEnter', function (e) {
-      $ionicLoading.hide();
-    });
 }]);

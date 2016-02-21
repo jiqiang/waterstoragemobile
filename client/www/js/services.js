@@ -106,7 +106,7 @@ angular.module('watsto.services', [])
 
 .factory('ChartDataService', ['$http', 'ConfigService', function ($http, ConfigService) {
   return {
-    fetch: function (group_type, group_value, data) {
+    fetch: function (group_type, group_value, data, event_name) {
       var i,
           timeline = [],
           current_year = new Date().getFullYear(),
@@ -117,7 +117,8 @@ angular.module('watsto.services', [])
         timeline = [
           data[group_type][group_value][current_year.toString()],
           data[group_type][group_value][last_year.toString()],
-          data[group_type][group_value][last_year_before.toString()]
+          data[group_type][group_value][last_year_before.toString()],
+          event_name
         ];
       }
       else {

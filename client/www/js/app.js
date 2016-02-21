@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'watsto.directives'])
 
-.run(function($ionicPlatform, $rootScope, $state, DataService) {
+.run(function($ionicPlatform, $rootScope, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,10 +21,26 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       StatusBar.styleDefault();
     }
 
+    $rootScope.$on('$ionicView.beforeLeave', function (e) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    });
+
+    $rootScope.$on('$ionicView.afterEnter', function (e) {
+      $ionicLoading.hide();
+    });
+
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
+
+  $ionicConfigProvider.views.maxCache(0);
+
+  $ionicConfigProvider.views.forwardCache(false);
+
+  $ionicConfigProvider.views.transition('platform');
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
