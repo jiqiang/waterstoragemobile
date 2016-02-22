@@ -24,9 +24,13 @@ $assertive: #386e9b !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-.logo-bg {
+.item.logo-bg {
   background-color: #2c3e50;
-  padding: 20px 40px;
+}
+
+.item.logo-bg img {
+  width: 95%;
+  height: 75px;
 }
 
 .summary-current {
@@ -37,8 +41,13 @@ $assertive: #386e9b !default;
   background-color: #ecf0f1;
 }
 
-.item-bg.item-complex .item-content, .item-bg.item {
+.item-complex .item-content, .item {
   background-color: #ecf0f1;
+  border-color: #ffffff;
+}
+
+.item.item-divider {
+  background-color: #f8f8f8;
   border-color: #ffffff;
 }
 
