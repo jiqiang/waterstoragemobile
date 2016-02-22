@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'OpenSansRegular';
+    src: url('../lib/ionic/fonts/OpenSansRegular.eot');
+    src: url('../lib/ionic/fonts/OpenSansRegular.eot') format('embedded-opentype'),
+         url('../lib/ionic/fonts/OpenSansRegular.woff2') format('woff2'),
+         url('../lib/ionic/fonts/OpenSansRegular.woff') format('woff'),
+         url('../lib/ionic/fonts/OpenSansRegular.ttf') format('truetype'),
+         url('../lib/ionic/fonts/OpenSansRegular.svg#OpenSansRegular') format('svg');
+}
