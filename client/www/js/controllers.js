@@ -1,7 +1,10 @@
 angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
-.controller('AppCtrl', ['$scope', function ($scope) {
+.controller('AppCtrl', ['$scope', '$ionicScrollDelegate', function ($scope, $ionicScrollDelegate) {
   $scope.platform = ionic.Platform.platform();
+  $scope.scrollToTop = function() {
+    $ionicScrollDelegate.scrollTop(true);
+  }
 }])
 
 .controller('TabCtrl', ['$scope', function ($scope) {
