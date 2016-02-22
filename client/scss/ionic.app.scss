@@ -18,8 +18,33 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
+$royal: #2c3e50 !default;
+$assertive: #386e9b !default;
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+.logo-bg {
+  background-color: #2c3e50;
+  padding: 20px 40px;
+}
+
+.summary-current {
+  background-color: #bdc3c7;
+}
+
+.summary-past {
+  background-color: #ecf0f1;
+}
+
+.item-bg.item-complex .item-content, .item-bg.item {
+  background-color: #ecf0f1;
+  border-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #333333;
+}
 
 .center {
   margin-left: auto;

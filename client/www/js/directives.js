@@ -6,13 +6,22 @@ angular.module('watsto.directives', ['watsto.services'])
     transclude: false,
     replace: false,
     scope: {percentage: "="},
-    template: "<div></div>",
     link: function (scope, element, attrs) {
       var height = 3;
+
       element
-        .css('background-color', '#f8f8f8')
-        .css('height', height)
-        .append($("<div></div>").css('height', height).css('width', scope.percentage + '%').css('background-color', '#11c1f3'));
+        .append(
+          $("<div></div>")
+          .css('height', height)
+          .css('background-color', '#cccccc')
+          .css('margin-top', 10)
+          .append(
+            $("<div></div>")
+            .css('height', height)
+            .css('width', scope.percentage + '%')
+            .css('background-color', '#0099ff')
+          )
+        );
     }
   };
 })
@@ -50,7 +59,7 @@ angular.module('watsto.directives', ['watsto.services'])
             chart: {
               type: 'column',
               reflow: true,
-              width: element.parent().width(),
+              //width: element.parent().width(),
               height: Math.floor(element.parent().width() / 1.418),
               animation: false,
               events: {

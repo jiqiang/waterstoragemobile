@@ -1,16 +1,16 @@
 <ion-view view-title="Favourites">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="item in favouritesData" type="item-text-wrap" href="{{item.href}}">
+      <ion-item class="item-remove-animate item-icon-right item-bg" ng-repeat="item in favouritesData" type="item-text-wrap" href="{{item.href}}">
         <h4>
-          {{item.title}}<span style="float:right">{{item.percentage_full_today}}%</span>
+          {{item.title}}<span style="float:right" class="assertive">{{item.percentage_full_today}}%</span>
         </h4>
-        <h6 class="positive">
+        <h6 class="assertive">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
         </h6>
         <ion-percentage-bar percentage="item.percentage_full_today"></ion-percentage-bar>
         <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-positive" ng-click="removeFavourite($index)">
+        <ion-option-button ng-click="removeFavourite($index)">
           <i class="icon ion-trash-a"></i>
         </ion-option-button>
       </ion-item>
