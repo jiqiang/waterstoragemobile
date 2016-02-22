@@ -11,3 +11,4 @@ client/plugins/
 *.sublime-project
 *.sublime-workspace
 ._*
+.DS_Store

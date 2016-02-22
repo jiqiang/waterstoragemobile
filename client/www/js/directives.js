@@ -24,7 +24,6 @@ angular.module('watsto.directives', ['watsto.services'])
     replace: true,
     template: "<div style='text-align: center; margin: 10px;'><h3>{{chartMessage}}</h3></div>",
     link: function (scope, element, attrs) {
-
       var current_year = new Date().getFullYear(),
           last_year = current_year - 1,
           last_year_before = current_year - 2,
@@ -53,7 +52,15 @@ angular.module('watsto.directives', ['watsto.services'])
               reflow: true,
               width: element.parent().width(),
               height: Math.floor(element.parent().width() / 1.418),
-              animation: false
+              animation: false,
+              events: {
+                click: function(e) {
+
+                },
+                selection: function(e) {
+
+                }
+              }
             },
             title: {
               text: '',
@@ -142,7 +149,11 @@ angular.module('watsto.directives', ['watsto.services'])
             }
           };
 
-          chart = element.highcharts(options);
+          //chart = element.highcharts(options);
+          chart = new Highcharts.Chart(element[0], options);
+          chart.container.onclick = null;
+          chart.container.onmousemove = null;
+          chart.container.onmousedown = null;
         }
       });
     }
