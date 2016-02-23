@@ -51,28 +51,32 @@ angular.module('watsto.directives', ['watsto.services'])
             chart: {
               type: 'spline',
               reflow: true,
-              height: Math.floor(element.parent().width() / 1.418),
+              height: Math.floor(element.parent().width() / 1.618),
               animation: false
             },
             title: {
-              text: '',
-              margin: 0
+              text: 'Percentage % Full in last 18 months',
+              style: {"fontSize": "10px"},
+              margin: 10
             },
             xAxis: {
               categories: value[1],
-              crosshair: false
+              crosshair: false,
+              labels: {
+                style: {"fontSize": "8px"}
+              }
             },
             yAxis: [{
               min: 0,
               max: 100,
               title: {
-                text: 'Percentage % Full',
+                text: '',
                 margin: 0,
-                style: {"fontSize": "10px"}
+                style: {"fontSize": "8px"}
               },
               labels: {
                 format: '{value}%',
-                style: {"fontSize": "10px"}
+                style: {"fontSize": "8px"}
               }
             }],
             series: [{
@@ -84,6 +88,7 @@ angular.module('watsto.directives', ['watsto.services'])
             credits: {enabled: false},
             exporting: {enabled: false},
             tooltip: {enabled: false},
+            legend: {enabled: false},
             plotOptions: {
               column: {
                 animation: false,
