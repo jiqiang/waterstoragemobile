@@ -85,6 +85,15 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'DataService',
   'storage',
   function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage) {
+    // Turn off splash screen.
+    $scope.$on('$ionicView.loaded', function() {
+      ionic.Platform.ready(function() {
+        if (navigator && navigator.splashscreen) {
+          navigator.splashscreen.hide();
+          console.log('turn off splashscreen');
+        }
+      });
+    });
 
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
