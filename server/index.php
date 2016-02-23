@@ -414,42 +414,49 @@ function getChartTotalCapacityData($groupType, $groupValue, $year) {
   return $capacity;
 }
 
-function getChartProportionFullData($groupType, $groupValue, $year) {
+function getChartProportionFullData($groupType, $groupValue, $month_array) {
+
   $sql = "
     select
       round(sum(volume_active) / sum(capacity_active) * 100, 2) as proportion_full,
-      to_char(observation_date, 'MM') as observation_mon_num,
-      to_char(observation_date, 'MON') as observation_mon_str
+      to_char(observation_date, 'YYYY.MM') as observation_mon_str
     from wid_schema.tblu_storage_agg_timeseries
-    where year = '" . $year . "' and group_type_code = '" . $groupType . "' and group_name = '" . $groupValue . "'
-    group by observation_mon_str, observation_mon_num order by observation_mon_num asc
+    where to_char(observation_date, 'YYYY.MM') in ('" . implode("','", $month_array) . "') and group_type_code = '" . $groupType . "' and group_name = '" . $groupValue . "'
+    group by observation_mon_str order by observation_mon_str asc
   ";
 
   if ($groupType === 'storages') {
     $sql = "
       select
         round(sum(volume_active) / sum(capacity_active) * 100, 2) as proportion_full,
-        to_char(observation_day, 'MM') as observation_mon_num,
-        to_char(observation_day, 'MON') as observation_mon_str
+        to_char(observation_day, 'YYYY.MM') as observation_mon_str
       from wid_schema.tblu_storage_timeseries
-      where to_char(observation_day, 'YYYY') = '" . $year . "' and storage_name = '" . $groupValue . "'
-      group by observation_mon_str, observation_mon_num order by observation_mon_num asc
+      where to_char(observation_day, 'YYYY.MM') in ('" . implode("','", $month_array) . "') and storage_name = '" . $groupValue . "'
+      group by observation_mon_str order by observation_mon_str asc
     ";
   }
 
   global $conn;
-  $data_array = array(null, null, null, null, null, null, null, null, null, null, null, null, null);
+
   $result = $conn->query($sql);
   if (!$result) {
     var_dump($sql);
   }
   $data = $result->fetchAll(PDO::FETCH_ASSOC);
+
   foreach ($data as $row) {
-    $mon = intval($row['observation_mon_num']);
-    $data_array[$mon] = floatval($row['proportion_full']);
+    if (false !== ($key = array_search($row['observation_mon_str'], $month_array))) {
+      $month_array[$key] = floatval($row['proportion_full']);
+    }
   }
-  array_shift($data_array);
-  return $data_array;
+
+  foreach ($month_array as &$d) {
+    if (is_string($d)) {
+      $d = null;
+    }
+  }
+
+  return $month_array;
 }
 
 function getCategories() {
@@ -474,17 +481,23 @@ function getCategories() {
 
 function getAll() {
 
-  $current_year = date('Y');
-  $most_recent_three_years = array($current_year, $current_year - 1, $current_year - 2);
-
+  $month_array = getTimeseries();
   $data = array();
+
   $categories = getCategories();
   foreach ($categories as $cat) {
-    foreach ($most_recent_three_years as $year) {
-      $data[$cat['grouptype']][$cat['groupvalue']][$year] = getChartProportionFullData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $year);
-    }
+    $data[$cat['grouptype']][$cat['groupvalue']] = getChartProportionFullData(pg_escape_string($cat['grouptype']), pg_escape_string($cat['groupvalue']), $month_array);
   }
+  $data['timeseries'] = $month_array;
   return $data;
+}
+
+function getTimeseries() {
+  $month_array = array();
+  for ($i = -18; $i <= -1; $i++) {
+    $month_array[] = date('Y.m', strtotime(date('Y-m')." ".$i." month"));
+  }
+  return $month_array;
 }
 
 function run($sql) {

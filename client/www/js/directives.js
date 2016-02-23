@@ -54,42 +54,20 @@ angular.module('watsto.directives', ['watsto.services'])
         if (value.length === 0) {
           scope.chartMessage = "No chart data";
         }
-        else if (typeof(chart) === 'undefined' || value[3] === 'dorefresh') {
+        else if (typeof(chart) === 'undefined' || value[2] === 'dorefresh') {
           options = {
             chart: {
-              type: 'column',
+              type: 'spline',
               reflow: true,
-              //width: element.parent().width(),
               height: Math.floor(element.parent().width() / 1.418),
-              animation: false,
-              events: {
-                click: function(e) {
-
-                },
-                selection: function(e) {
-
-                }
-              }
+              animation: false
             },
             title: {
               text: '',
               margin: 0
             },
             xAxis: {
-              categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
-              ],
+              categories: value[1],
               crosshair: false
             },
             yAxis: [{
@@ -104,34 +82,12 @@ angular.module('watsto.directives', ['watsto.services'])
                 format: '{value}%',
                 style: {"fontSize": "10px"}
               }
-            }, {
-              min: 0,
-              title: {
-                text: '',
-                margin: 0
-              }
-            } , {
-              min: 0,
-              title: {
-                text: '',
-                margin: 0
-              }
             }],
             series: [{
-              type: 'column',
+              type: 'spline',
               name: current_year,
-              //data: value[0]
-              data: ChartDataService.random()
-            }, {
-              type: 'spline',
-              name: last_year,
-              //data: value[1]
-              data: ChartDataService.random()
-            }, {
-              type: 'spline',
-              name: last_year_before,
-              //data: value[2]
-              data: ChartDataService.random()
+              data: value[0]
+              //data: ChartDataService.random()
             }],
             credits: {enabled: false},
             exporting: {enabled: false},
