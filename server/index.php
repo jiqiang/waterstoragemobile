@@ -32,7 +32,7 @@ try {
     foreach ($row['cityandsystem'] as &$row1) {
       $row1['storages'] = run(getStoragesSQL(array(
         "state = '" . $row['title'] . "'",
-        "(city = '".$row1['title']."' or linked_water_system_name = '".$row1['title']."')",
+        "(city = '".$row1['title']."' or rural_system = '".$row1['title']."')",
       )));
     }
     $row['storages'] = run(getStoragesSQL(array("state = '" . $row['title'] . "'")));
@@ -49,7 +49,7 @@ try {
     foreach ($row['cityandsystem'] as &$row1) {
       $row1['storages'] = run(getStoragesSQL(array(
         "drainage = '" . $row['title'] . "'",
-        "(city = '".$row1['title']."' or linked_water_system_name = '".$row1['title']."')",
+        "(city = '".$row1['title']."' or rural_system = '".$row1['title']."')",
       )));
     }
     $row['storages'] = run(getStoragesSQL(array("drainage = '" . $row['title'] ."'")));
@@ -340,7 +340,7 @@ function getCityAndSystemSQL($filterBy, $filterByValue) {
     union
 
     (select
-      t1.linked_water_system_name as title,
+      t1.rural_system as title,
       'Rural_System'::text as subtype,
       t1.today_volume_active_total,
       t1.today_capacity_active_total,
@@ -356,14 +356,14 @@ function getCityAndSystemSQL($filterBy, $filterByValue) {
       t2.volume_change_since_last_year
     from (
       select
-        linked_water_system_name,
+        rural_system,
         round(sum(today_volume_active), 2) as today_volume_active_total,
         round(sum(today_capacity_active), 2) as today_capacity_active_total,
         round(sum(today_volume_active) / sum(today_capacity_active) * 100, 2) as percentage_full_today,
         to_char(today_day, 'DY DD MON YYYY') as today
       from wid_schema.tblu_storage_view
-      where linked_water_system_name != '' and " . $filterBy . " = '" . $filterByValue . "'
-      group by linked_water_system_name, today
+      where rural_system != '' and " . $filterBy . " = '" . $filterByValue . "'
+      group by rural_system, today
     ) t1 left join (
       select
         group_name,
@@ -377,7 +377,7 @@ function getCityAndSystemSQL($filterBy, $filterByValue) {
         round(today_volume_active - lst_yr_volume_active, 2) as volume_change_since_last_year
       from wid_schema.tblu_storage_agg_all
       where group_level = 'Rural_System'
-    ) t2 on t1.linked_water_system_name = t2.group_name)) order by today_capacity_active_total desc
+    ) t2 on t1.rural_system = t2.group_name)) order by today_capacity_active_total desc
   ";
 }
 
