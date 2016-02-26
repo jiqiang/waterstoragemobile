@@ -64,7 +64,8 @@ angular.module('watsto.directives', ['watsto.services'])
               crosshair: false,
               labels: {
                 style: {"fontSize": "8px"}
-              }
+              },
+              gridLineWidth: 1
             },
             yAxis: [{
               min: 0,
@@ -77,7 +78,8 @@ angular.module('watsto.directives', ['watsto.services'])
               labels: {
                 format: '{value}%',
                 style: {"fontSize": "8px"}
-              }
+              },
+              gridLineWidth: 1
             }],
             series: [{
               type: 'spline',
