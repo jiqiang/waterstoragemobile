@@ -17,7 +17,36 @@ angular.module('watsto.directives', ['watsto.services'])
     }
   };
 })
+/*
+.directive('ionBomBranding', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: "<div class='branding'></div>",
+    link: function (scope, element, attrs) {
+      var footerImg = angular
+        .element("<img src='img/footer-logo.png' alt=''>")
+        .css('width', 37)
+        .css('height', 27)
+        .css('margin-right', 10)
+        .css('vertical-align', 'middle');
 
+      var footerText = angular
+        .element("<span>Australian Government</span> <span>Bureau of Meteorology</span>")
+
+      element
+        .css('margin-top', 40)
+        .css('border-top', '1px #000 solid')
+        .css('padding', '10px 20px')
+        .css('font-size', 10)
+        .css('background-color', '#ecf0f1')
+        .css('text-align', 'center')
+        .append(footerImg)
+        .append(footerText);
+    }
+  };
+})
+*/
 .directive('ionHighcharts', function ($window, ChartDataService, ConfigService) {
   return {
     restrict: 'AE',
