@@ -54,7 +54,7 @@
       <div class="item item-divider">STATES</div>
       <ion-item ion-percentage-bar="{{item.percentage_full_today}}" ng-if="viewisentered" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
         <h4>
-          {{item.title}}<span style="float:right" class="assertive">{{item.percentage_full_today}}%</span>
+          {{item.title | stateAbbr}}<span style="float:right" class="assertive">{{item.percentage_full_today}}%</span>
         </h4>
         <h6 class="assertive">
           CAPACITY: {{item.today_capacity_active_total}} ML<span style="float:right">{{item.today_volume_active_total}} ML</span>
