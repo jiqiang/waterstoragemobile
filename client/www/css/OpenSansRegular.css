@@ -7,3 +7,23 @@
          url('../lib/ionic/fonts/OpenSansRegular.ttf') format('truetype'),
          url('../lib/ionic/fonts/OpenSansRegular.svg#OpenSansRegular') format('svg');
 }
+
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('../lib/ionic/fonts/OpenSansBold.eot');
+    src: url('../lib/ionic/fonts/OpenSansBold.eot') format('embedded-opentype'),
+         url('../lib/ionic/fonts/OpenSansBold.woff2') format('woff2'),
+         url('../lib/ionic/fonts/OpenSansBold.woff') format('woff'),
+         url('../lib/ionic/fonts/OpenSansBold.ttf') format('truetype'),
+         url('../lib/ionic/fonts/OpenSansBold.svg#OpenSansBold') format('svg');
+}
+
+@font-face {
+    font-family: 'OpenSansExtraBold';
+    src: url('../lib/ionic/fonts/OpenSansExtraBold.eot');
+    src: url('../lib/ionic/fonts/OpenSansExtraBold.eot') format('embedded-opentype'),
+         url('../lib/ionic/fonts/OpenSansExtraBold.woff2') format('woff2'),
+         url('../lib/ionic/fonts/OpenSansExtraBold.woff') format('woff'),
+         url('../lib/ionic/fonts/OpenSansExtraBold.ttf') format('truetype'),
+         url('../lib/ionic/fonts/OpenSansExtraBold.svg#OpenSansExtraBold') format('svg');
+}

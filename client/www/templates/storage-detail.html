@@ -9,16 +9,16 @@
         <div class="row row-center">
           <div class="col col-67">
             <h2>{{storageDetail.today}}</h2>
-            <h1 class="assertive">{{storageDetail.percentage_full_today}}%</h1>
+            <h1 class="assertive highlight-figure">{{storageDetail.percentage_full_today}}%</h1>
             <h4>AVAILABLE:</h2>
-            <h2 class="assertive">{{storageDetail.today_capacity_active_total}} ML</h2>
+            <h2><span class="highlight-figure">{{storageDetail.today_capacity_active_total}}</span> ML</h2>
 
           </div>
           <div class="col col-33">
             <h5>SINCE</h5>
             <h5>1 YEAR AGO</h5>
-            <h3 class="assertive">{{storageDetail.percentage_change_since_last_year}}%</h3>
-            <h5 class="assertive">{{storageDetail.volume_change_since_last_year}} ML</h5>
+            <h3 class="assertive highlight-figure">{{storageDetail.percentage_change_since_last_year}}%</h3>
+            <h5><span class="highlight-figure">{{storageDetail.volume_change_since_last_year}}</span> ML</h5>
           </div>
         </div>
         <div class="row"><div class="col"><h4 style="float: right" class="assertive">{{storageDetail.today_volume_active_total}} ML</h4></div></div>
@@ -31,20 +31,20 @@
           <div class="col">
             <h6>SINCE</h6>
             <h6>1 DAY AGO</h6>
-            <h3 class="assertive">{{storageDetail.percentage_change_since_yesterday}}%</h3>
-            <h6 class="assertive">{{storageDetail.volume_change_since_yesterday}} ML</h6>
+            <h3 class="assertive highlight-figure">{{storageDetail.percentage_change_since_yesterday}}%</h3>
+            <h6><span class="highlight-figure">{{storageDetail.volume_change_since_yesterday}}</span> ML</h6>
           </div>
           <div class="col">
             <h6>SINCE</h6>
             <h6>7 DAYS AGO</h6>
-            <h3 class="assertive">{{storageDetail.percentage_change_since_last_week}}%</h3>
-            <h6 class="assertive">{{storageDetail.volume_change_since_last_week}} ML</h6>
+            <h3 class="assertive highlight-figure">{{storageDetail.percentage_change_since_last_week}}%</h3>
+            <h6><span class="highlight-figure">{{storageDetail.volume_change_since_last_week}}</span> ML</h6>
           </div>
           <div class="col">
             <h6>SINCE</h6>
             <h6>30 DAYS AGO</h6>
-            <h3 class="assertive">{{storageDetail.percentage_change_since_last_month}}%</h3>
-            <h6 class="assertive">{{storageDetail.volume_change_since_last_month}} ML</h6>
+            <h3 class="assertive highlight-figure">{{storageDetail.percentage_change_since_last_month}}%</h3>
+            <h6><span class="highlight-figure">{{storageDetail.volume_change_since_last_month}}</span> ML</h6>
           </div>
         </div>
       </div>
