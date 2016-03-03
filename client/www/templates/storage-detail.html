@@ -6,13 +6,18 @@
     </ion-refresher>
     <div class="list card">
       <div class="item nopadding summary-past item-bg">
+        <div class="row">
+          <div class="col">
+            <h2>{{storageDetail.today}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="item nopadding summary-past item-bg">
+
         <div class="row row-center">
           <div class="col col-67">
-            <h2>{{storageDetail.today}}</h2>
-            <h1 class="assertive highlight-figure">{{storageDetail.percentage_full_today}}%</h1>
-            <h4>AVAILABLE:</h2>
-            <h2><span class="highlight-figure">{{storageDetail.today_capacity_active_total}}</span> ML</h2>
-
+            <h6>TOTAL STORAGE CAPACITY (% FULL):</h6>
+            <h1 class="assertive highlight-figure" style="margin-top:8px">{{storageDetail.percentage_full_today}}%</h1>
           </div>
           <div class="col col-33">
             <h5>SINCE</h5>
@@ -21,7 +26,27 @@
             <h5><span class="highlight-figure">{{storageDetail.volume_change_since_last_year}}</span> ML</h5>
           </div>
         </div>
-        <div class="row"><div class="col"><h4 style="float: right" class="assertive">{{storageDetail.today_volume_active_total}} ML</h4></div></div>
+
+      </div>
+      <div class="item nopadding summary-past item-bg">
+        <div class="row row-center">
+          <div class="col">
+            <h6>LATEST VOLUME (LV):</h6>
+          </div>
+          <div class="col">
+            <h6><span class="highlight-figure">{{storageDetail.today_volume_active_total}}</span> ML</h6>
+          </div>
+        </div>
+      </div>
+      <div class="item nopadding summary-past item-bg">
+        <div class="row row-center">
+          <div class="col">
+            <h6>TOTAL CAPACITY (TC):</h6>
+          </div>
+          <div class="col">
+            <h6><span class="highlight-figure">{{storageDetail.today_capacity_active_total}}</span> ML</h6>
+          </div>
+        </div>
       </div>
       <div class="item nopadding summary-past item-bg">
         <ion-highcharts></ion-highcharts>
