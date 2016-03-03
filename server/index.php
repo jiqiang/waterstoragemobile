@@ -419,9 +419,9 @@ function getChartProportionFullData($groupType, $groupValue, $month_array) {
   $sql = "
     select
       round(sum(volume_active) / sum(capacity_active) * 100, 2) as proportion_full,
-      to_char(observation_date, 'YYYY.MM') as observation_mon_str
+      to_char(observation_date, 'Mon YY') as observation_mon_str
     from wid_schema.tblu_storage_agg_timeseries
-    where to_char(observation_date, 'YYYY.MM') in ('" . implode("','", $month_array) . "') and group_type_code = '" . $groupType . "' and group_name = '" . $groupValue . "'
+    where to_char(observation_date, 'Mon YY') in ('" . implode("','", $month_array) . "') and group_type_code = '" . $groupType . "' and group_name = '" . $groupValue . "'
     group by observation_mon_str order by observation_mon_str asc
   ";
 
@@ -429,9 +429,9 @@ function getChartProportionFullData($groupType, $groupValue, $month_array) {
     $sql = "
       select
         round(sum(volume_active) / sum(capacity_active) * 100, 2) as proportion_full,
-        to_char(observation_day, 'YYYY.MM') as observation_mon_str
+        to_char(observation_day, 'Mon YY') as observation_mon_str
       from wid_schema.tblu_storage_timeseries
-      where to_char(observation_day, 'YYYY.MM') in ('" . implode("','", $month_array) . "') and storage_name = '" . $groupValue . "'
+      where to_char(observation_day, 'Mon YY') in ('" . implode("','", $month_array) . "') and storage_name = '" . $groupValue . "'
       group by observation_mon_str order by observation_mon_str asc
     ";
   }
@@ -495,7 +495,7 @@ function getAll() {
 function getTimeseries() {
   $month_array = array();
   for ($i = -18; $i <= -1; $i++) {
-    $month_array[] = date('Y.m', strtotime(date('Y-m')." ".$i." month"));
+    $month_array[] = date('M y', strtotime(date('Y-m')." ".$i." month"));
   }
   return $month_array;
 }
