@@ -84,7 +84,7 @@ angular.module('watsto.directives', ['watsto.services'])
               animation: false
             },
             title: {
-              text: 'Percentage % Full in last 18 months',
+              text: 'WATER STORAGE CAPACITY (% FULL)',
               style: {"fontSize": "10px"},
               margin: 10
             },
@@ -122,35 +122,25 @@ angular.module('watsto.directives', ['watsto.services'])
             }],
             credits: {enabled: false},
             exporting: {enabled: false},
-            tooltip: {enabled: false},
+            tooltip: {
+              enabled: true,
+              headerFormat: '',
+              pointFormat: '{point.y:.2f} %'
+            },
             legend: {enabled: false},
             plotOptions: {
-              column: {
-                animation: false,
-                allowPointSelect: false,
-                events: {
-                  legendItemClick: function() {
-                    return false;
-                  }
-                }
-              },
               spline: {
                 animation: false,
-                allowPointSelect: false,
-                events: {
-                  legendItemClick: function() {
-                    return false;
-                  }
-                }
+                allowPointSelect: true
               }
             }
           };
 
           //chart = element.highcharts(options);
           chart = new Highcharts.Chart(element[0], options);
-          chart.container.onclick = null;
-          chart.container.onmousemove = null;
-          chart.container.onmousedown = null;
+          //chart.container.onclick = null;
+          //chart.container.onmousemove = null;
+          //chart.container.onmousedown = null;
         }
       });
     }
