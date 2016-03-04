@@ -5,8 +5,7 @@
       on-refresh="doRefresh()">
     </ion-refresher>
     <div ng-if="!viewisentered" style="text-align:center;margin-top:30px;">
-      <ion-spinner></ion-spinner>
-      <p>Loading</p>
+      <ion-spinner></ion-spinner><span style="font-size:11px;margin-left:10px">Loading</span>
     </div>
     <div class="list card" ng-if="viewisentered">
       <div class="item nopadding summary-past item-bg">

@@ -9771,3 +9771,10 @@ div.list.list-inset.search label {
 
 .highlight-figure {
   font-family: "OpenSansBold", sans-serif; }
+
+.spinner svg {
+  width: 20px;
+  height: 20px;
+  stroke: #444;
+  fill: #444;
+  vertical-align: middle; }
