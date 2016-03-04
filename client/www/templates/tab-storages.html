@@ -75,9 +75,9 @@
       </div>
 
     </div>
-    <ion-list>
+    <ion-list ng-if="viewisentered">
       <div class="item item-divider" ng-show="showCityAndSystem">CITIES AND SYSTEMS</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" ng-if="viewisentered" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in cityandsystem" type="item-text-wrap" href="#/tab/storages/{{type}}/cityandsystem/{{typeIndex}}/{{$index}}">
+      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in cityandsystem" type="item-text-wrap" href="#/tab/storages/{{type}}/cityandsystem/{{typeIndex}}/{{$index}}">
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
@@ -90,7 +90,7 @@
         </ion-option-button>
       </ion-item>
       <div class="item item-divider">WATER STORAGES</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" ng-if="viewisentered" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{type}}/{{subType}}/{{typeIndex}}/{{subTypeIndex}}/{{$index}}">
+      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{type}}/{{subType}}/{{typeIndex}}/{{subTypeIndex}}/{{$index}}">
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>

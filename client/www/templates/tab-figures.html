@@ -75,9 +75,9 @@
       </div>
 
     </div>
-    <ion-list>
+    <ion-list ng-if="viewisentered">
       <div class="item item-divider">STATES</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" ng-if="viewisentered" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
+      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
         <h4>
           {{item.title | stateAbbr}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
@@ -91,7 +91,7 @@
       </ion-item>
 
       <div class="item item-divider">CAPITAL CITIES</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" ng-if="viewisentered" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/storages/{{$index}}/-1">
+      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/storages/{{$index}}/-1">
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
@@ -105,7 +105,7 @@
       </ion-item>
 
       <div class="item item-divider">DRAINAGE DIVISIONS</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" ng-if="viewisentered" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/storages/{{$index}}/-1">
+      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/storages/{{$index}}/-1">
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
