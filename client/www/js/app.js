@@ -21,16 +21,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       StatusBar.styleDefault();
     }
 
-    $rootScope.$on('$ionicView.beforeLeave', function (e) {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
-    });
-
-    $rootScope.$on('$ionicView.afterEnter', function (e) {
-      $ionicLoading.hide();
-    });
-
   });
 })
 
@@ -57,9 +47,13 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
-  $ionicConfigProvider.views.maxCache(0);
+  $ionicConfigProvider.views.maxCache(50);
 
-  $ionicConfigProvider.views.forwardCache(false);
+  $ionicConfigProvider.views.forwardCache(true);
+
+  $ionicConfigProvider.scrolling.jsScrolling(true);
+
+  $ionicConfigProvider.templates.maxPrefetch(30);
 
   $ionicConfigProvider.views.transition('platform');
 

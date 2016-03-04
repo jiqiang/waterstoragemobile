@@ -4,6 +4,10 @@
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
+    <div ng-if="!viewisentered" style="text-align:center;margin-top:30px;">
+      <ion-spinner></ion-spinner>
+      <p>Loading</p>
+    </div>
     <div class="list card" ng-if="viewisentered">
       <div class="item nopadding summary-past item-bg">
         <div class="row">
