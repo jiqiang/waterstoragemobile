@@ -7,18 +7,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   }
 }])
 
-.controller('TabCtrl', ['$scope', function ($scope) {
-
-  $scope.getColorClass = function (figure) {
-
-    if (figure && figure.indexOf('-') === 0) {
-      return "assertive";
-    }
-    else if (figure && figure.indexOf('+') === 0) {
-      return "balanced";
-    }
-  };
-}])
+.controller('TabCtrl', ['$scope', function ($scope) {}])
 
 .controller('FavouritesCtrl', [
   '$scope',
@@ -100,7 +89,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
         $scope.data = newData;
         $scope.summary = newData.national[0];
         $scope.chartData = ChartDataService.fetch('National', 'National', newData.chart, "dorefresh");
-        //$scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', newData.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
@@ -115,7 +103,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
-      //$scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', storage.chart, "viewisready"));
     });
 
 }])
@@ -206,14 +193,12 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
         $scope.chartData = ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh");
 
-        //$scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
-      //$scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, storage.chart, "viewisready"));
     });
 
 }])
@@ -247,14 +232,12 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
           $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
         }
         $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh");
-        //$scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
 
     $scope.$on('$ionicView.enter', function (e) {
       $scope.viewisentered = true;
-      //$scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "viewisready"));
     });
 }])
 
