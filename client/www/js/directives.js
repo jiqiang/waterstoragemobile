@@ -52,8 +52,10 @@ angular.module('watsto.directives', ['watsto.services'])
     restrict: 'AE',
     transclude: false,
     replace: true,
+    scope: {data: '='},
     template: "<div style='text-align: center; margin: 10px;'><h3>{{chartMessage}}</h3></div>",
     link: function (scope, element, attrs) {
+
       var current_year = new Date().getFullYear(),
           last_year = current_year - 1,
           last_year_before = current_year - 2,
@@ -71,77 +73,75 @@ angular.module('watsto.directives', ['watsto.services'])
         }
       });
 
-      scope.$on('viewisready', function (event, value) {
-        if (value.length === 0) {
-          scope.chartMessage = "No chart data";
-        }
-        else if (typeof(chart) === 'undefined' || value[2] === 'dorefresh') {
-          options = {
-            chart: {
-              type: 'spline',
-              reflow: true,
-              height: Math.floor(element.parent().width() / 1.618),
-              animation: false
+      function getOptions(value) {
+        return {
+          chart: {
+            type: 'spline',
+            reflow: true,
+            height: Math.floor(element.parent().width() / 1.618),
+            animation: false
+          },
+          title: {
+            text: 'WATER STORAGE CAPACITY (% FULL)',
+            style: {"fontSize": "10px"},
+            margin: 10
+          },
+          xAxis: {
+            categories: value[1],
+            crosshair: false,
+            labels: {
+              style: {"fontSize": "8px"}
             },
+            gridLineWidth: 1,
+            lineColor: '#000000',
+            lineWidth: 1
+          },
+          yAxis: [{
+            min: 0,
+            max: 100,
             title: {
-              text: 'WATER STORAGE CAPACITY (% FULL)',
-              style: {"fontSize": "10px"},
-              margin: 10
+              text: '',
+              margin: 0,
+              style: {"fontSize": "8px"}
             },
-            xAxis: {
-              categories: value[1],
-              crosshair: false,
-              labels: {
-                style: {"fontSize": "8px"}
-              },
-              gridLineWidth: 1,
-              lineColor: '#000000',
-              lineWidth: 1
+            labels: {
+              format: '{value}%',
+              style: {"fontSize": "8px"}
             },
-            yAxis: [{
-              min: 0,
-              max: 100,
-              title: {
-                text: '',
-                margin: 0,
-                style: {"fontSize": "8px"}
-              },
-              labels: {
-                format: '{value}%',
-                style: {"fontSize": "8px"}
-              },
-              gridLineWidth: 1,
-              lineColor: '#000000',
-              lineWidth: 1
-            }],
-            series: [{
-              type: 'spline',
-              name: current_year,
-              data: value[0]
-              //data: ChartDataService.random()
-            }],
-            credits: {enabled: false},
-            exporting: {enabled: false},
-            tooltip: {
-              enabled: true,
-              headerFormat: '',
-              pointFormat: '{point.y:.2f} %'
-            },
-            legend: {enabled: false},
-            plotOptions: {
-              spline: {
-                animation: false,
-                allowPointSelect: true
-              }
+            gridLineWidth: 1,
+            lineColor: '#000000',
+            lineWidth: 1
+          }],
+          series: [{
+            type: 'spline',
+            name: current_year,
+            data: value[0]
+            //data: ChartDataService.random()
+          }],
+          credits: {enabled: false},
+          exporting: {enabled: false},
+          tooltip: {
+            enabled: true,
+            headerFormat: '',
+            pointFormat: '{point.y:.2f} %'
+          },
+          legend: {enabled: false},
+          plotOptions: {
+            spline: {
+              animation: false,
+              allowPointSelect: true
             }
-          };
+          }
+        };
+      }
 
-          //chart = element.highcharts(options);
-          chart = new Highcharts.Chart(element[0], options);
-          //chart.container.onclick = null;
-          //chart.container.onmousemove = null;
-          //chart.container.onmousedown = null;
-        }
+      chart = new Highcharts.Chart(element[0], getOptions(scope.data));
+      //chart.container.onclick = null;
+      //chart.container.onmousemove = null;
+      //chart.container.onmousedown = null;
+
+      scope.$watch("data", function (newValue, oldValue) {
+        chart = new Highcharts.Chart(element[0], getOptions(scope.data));
       });
     }
   };

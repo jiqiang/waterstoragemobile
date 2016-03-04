@@ -99,7 +99,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       DataService.fetch().then(function (newData) {
         $scope.data = newData;
         $scope.summary = newData.national[0];
-        $scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', newData.chart, "dorefresh"));
+        $scope.chartData = ChartDataService.fetch('National', 'National', newData.chart, "dorefresh");
+        //$scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', newData.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
@@ -110,9 +111,11 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.summary = storage.national[0];
 
+    $scope.chartData = ChartDataService.fetch('National', 'National', storage.chart, "viewisready");
+
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
-      $scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', storage.chart, "viewisready"));
+      //$scope.$broadcast('viewisready', ChartDataService.fetch('National', 'National', storage.chart, "viewisready"));
     });
 
 }])
@@ -163,6 +166,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.groupvalue = item.title;
 
+    $scope.chartData = ChartDataService.fetch(item.subtype, item.title, storage.chart, "viewisready");
+
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
         $scope.data = newData;
@@ -199,14 +204,16 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
         $scope.groupvalue = item.title;
 
-        $scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh"));
+        $scope.chartData = ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh");
+
+        //$scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
-      $scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, storage.chart, "viewisready"));
+      //$scope.$broadcast('viewisready', ChartDataService.fetch(item.subtype, item.title, storage.chart, "viewisready"));
     });
 
 }])
@@ -228,6 +235,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
     }
 
+    $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "viewisready");
+
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
         $scope.data = newData;
@@ -237,13 +246,15 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
         else {
           $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
         }
-        $scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh"));
+        $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh");
+        //$scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh"));
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
 
     $scope.$on('$ionicView.enter', function (e) {
-      $scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "viewisready"));
+      $scope.viewisentered = true;
+      //$scope.$broadcast('viewisready', ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "viewisready"));
     });
 }])
 

@@ -4,7 +4,7 @@
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
-    <div class="list card">
+    <div class="list card" ng-if="viewisentered">
       <div class="item nopadding summary-past item-bg">
         <div class="row">
           <div class="col">
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="item nopadding summary-past item-bg">
-        <ion-highcharts></ion-highcharts>
+        <ion-highcharts data="chartData"></ion-highcharts>
       </div>
       <div class="item nopadding summary-past item-bg">
         <div class="row">
