@@ -62,9 +62,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   });
 }])
 
-.controller('AboutCtrl', function($scope) {
-
-})
+.controller('AboutCtrl', function($scope) {})
 
 .controller('FiguresCtrl', [
   '$scope',
