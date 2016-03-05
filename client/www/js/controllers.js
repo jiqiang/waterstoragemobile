@@ -72,34 +72,22 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'DataService',
   'storage',
   function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage) {
-    // Turn off splash screen.
-    /*
-    $scope.$on('$ionicView.loaded', function() {
-      ionic.Platform.ready(function() {
-        if (navigator && navigator.splashscreen) {
-          navigator.splashscreen.hide();
-          console.log('turn off splashscreen');
-        }
-      });
-    });
-    */
+
+    function prepare(data, action) {
+      $scope.data = data;
+      $scope.addFavourite = FavouriteService.add;
+      $scope.summary = data.national[0];
+      $scope.chartData = ChartDataService.fetch('National', 'National', data.chart, action);
+    }
+
+    prepare(storage, 'viewisready');
 
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
-        $scope.data = newData;
-        $scope.summary = newData.national[0];
-        $scope.chartData = ChartDataService.fetch('National', 'National', newData.chart, "dorefresh");
+        prepare(newData, 'dorefresh');
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
-
-    $scope.data = storage;
-
-    $scope.addFavourite = FavouriteService.add;
-
-    $scope.summary = storage.national[0];
-
-    $scope.chartData = ChartDataService.fetch('National', 'National', storage.chart, "viewisready");
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
