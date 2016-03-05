@@ -104,83 +104,43 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'ChartDataService',
   'storage',
   function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage) {
-    $scope.data = storage;
 
-    var item;
+    function prepare(data, action) {
+      var item;
 
-    $scope.type = $stateParams.type;
+      $scope.data = data;
+      $scope.type = $stateParams.type;
+      $scope.subType = $stateParams.subType;
+      $scope.typeIndex = $stateParams.typeIndex;
+      $scope.subTypeIndex = $stateParams.subTypeIndex;
+      $scope.cityandsystem = [];
 
-    $scope.subType = $stateParams.subType;
+      if ($scope.subType == 'storages') {
+        item = $scope.data[$stateParams.type][$stateParams.typeIndex];
+        $scope.cityandsystem = item.cityandsystem;
+      }
+      else {
+        item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
+      }
 
-    $scope.typeIndex = $stateParams.typeIndex;
+      if ($scope.type != 'cities') {
+        $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
+      }
 
-    $scope.subTypeIndex = $stateParams.subTypeIndex;
-
-    $scope.cityandsystem = [];
-    if ($scope.subType == 'storages') {
-      item = $scope.data[$stateParams.type][$stateParams.typeIndex];
-      $scope.cityandsystem = item.cityandsystem;
+      $scope.viewTitle = item.title;
+      $scope.storages = item.storages;
+      $scope.summary = item;
+      $scope.addFavourite = FavouriteService.add;
+      $scope.grouptype = item.subtype;
+      $scope.groupvalue = item.title;
+      $scope.chartData = ChartDataService.fetch(item.subtype, item.title, data.chart, action);
     }
-    else {
-      item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
-    }
 
-    if ($scope.type != 'cities') {
-      $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
-    }
-
-    $scope.viewTitle = item.title;
-
-    $scope.storages = item.storages;
-
-    $scope.summary = item;
-
-    $scope.addFavourite = FavouriteService.add;
-
-    $scope.grouptype = item.subtype;
-
-    $scope.groupvalue = item.title;
-
-    $scope.chartData = ChartDataService.fetch(item.subtype, item.title, storage.chart, "viewisready");
+    prepare(storage, 'viewisready');
 
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
-        $scope.data = newData;
-        $scope.type = $stateParams.type;
-
-        $scope.subType = $stateParams.subType;
-
-        $scope.typeIndex = $stateParams.typeIndex;
-
-        $scope.subTypeIndex = $stateParams.subTypeIndex;
-
-        $scope.cityandsystem = [];
-        if ($scope.subType == 'storages') {
-          item = $scope.data[$stateParams.type][$stateParams.typeIndex];
-          $scope.cityandsystem = item.cityandsystem;
-        }
-        else {
-          item = $scope.data[$stateParams.type][$stateParams.typeIndex].cityandsystem[$stateParams.subTypeIndex];
-        }
-
-        if ($scope.type != 'cities') {
-          $scope.showCityAndSystem = $scope.cityandsystem.length > 0;
-        }
-
-        $scope.viewTitle = item.title;
-
-        $scope.storages = item.storages;
-
-        $scope.summary = item;
-
-        $scope.addFavourite = FavouriteService.add;
-
-        $scope.grouptype = item.subtype;
-
-        $scope.groupvalue = item.title;
-
-        $scope.chartData = ChartDataService.fetch(item.subtype, item.title, newData.chart, "dorefresh");
-
+        prepare(newData, 'dorefresh');
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
