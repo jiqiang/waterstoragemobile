@@ -211,27 +211,25 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'ChartDataService',
   'storage',
   function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage) {
-    $scope.data = storage;
 
-    if ($stateParams.subType === 'storages') {
-      $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
-    }
-    else {
-      $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
+    function prepare(data, action) {
+      $scope.data = data;
+
+      if ($stateParams.subType === 'storages') {
+        $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
+      }
+      else {
+        $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
+      }
+
+      $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, action);
     }
 
-    $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "viewisready");
+    prepare(storage, 'viewisready');
 
     $scope.doRefresh = function () {
       DataService.fetch().then(function (newData) {
-        $scope.data = newData;
-        if ($stateParams.subType === 'storages') {
-          $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
-        }
-        else {
-          $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
-        }
-        $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, "dorefresh");
+        prepare(newData, 'dorefresh');
         $scope.$broadcast('scroll.refreshComplete');
       });
     };
