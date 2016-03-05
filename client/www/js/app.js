@@ -21,6 +21,13 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       StatusBar.styleDefault();
     }
 
+    if (navigator && navigator.splashscreen) {
+      setTimeout(function() {
+        navigator.splashscreen.hide();
+        console.log('turn off splashscreen');
+      }, 4000);
+    }
+
   });
 })
 
