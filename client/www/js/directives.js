@@ -38,6 +38,7 @@ angular.module('watsto.directives', ['watsto.services'])
       angular.element($window).bind('resize', function() {
         if (element.highcharts()) {
           element.highcharts().destroy();
+          var options = getOptions(scope.data);
           options.chart.width = element.parent().width();
           options.chart.height = Math.floor(element.parent().width() / 1.418);
           element.highcharts(options);
