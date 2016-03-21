@@ -19,11 +19,11 @@
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    "ios",
+    "android"
   ]
 }
