@@ -13,3 +13,4 @@ client/plugins/
 ._*
 .DS_Store
 note
+data.json

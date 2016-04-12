@@ -63,9 +63,9 @@ try {
     'chart' => getAll(),
   );
 
-  header("Access-Control-Allow-Origin: *");
-  header('Content-Type: application/json');
-  echo json_encode($data);
+  //header("Access-Control-Allow-Origin: *");
+  //header('Content-Type: application/json');
+  file_put_contents("data.json", json_encode($data));
 
  //echo "<pre>";
  //print_r($data);
