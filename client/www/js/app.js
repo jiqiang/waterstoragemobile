@@ -20,14 +20,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-
-    if (navigator && navigator.splashscreen) {
-      setTimeout(function() {
-        navigator.splashscreen.hide();
-        console.log('turn off splashscreen');
-      }, 4000);
-    }
-
   });
 })
 
