@@ -66,7 +66,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html',
+    templateUrl: 'templates/menu.html',
     controller: 'TabCtrl'
   })
 
@@ -80,7 +80,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }]
     },
     views: {
-      'tab-favourites': {
+      'menuContent': {
         templateUrl: 'templates/tab-favourites.html',
         controller: 'FavouritesCtrl'
       }
@@ -90,7 +90,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   .state('tab.about', {
     url: '/about',
     views: {
-      'tab-about': {
+      'menuContent': {
         templateUrl: 'templates/tab-about.html',
         controller: 'AboutCtrl'
       }
@@ -99,7 +99,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   .state('tab.features', {
     url: '/features',
     views: {
-      'tab-about': {
+      'menuContent': {
         templateUrl: 'templates/about-features.html'
       }
     }
@@ -107,7 +107,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   .state('tab.copyright', {
     url: '/copyright',
     views: {
-      'tab-about': {
+      'menuContent': {
         templateUrl: 'templates/about-copyright.html'
       }
     }
@@ -115,7 +115,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   .state('tab.disclaimer', {
     url: '/disclaimer',
     views: {
-      'tab-about': {
+      'menuContent': {
         templateUrl: 'templates/about-disclaimer.html'
       }
     }
@@ -129,7 +129,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
         }]
       },
       views: {
-        'tab-figures': {
+        'menuContent': {
           templateUrl: 'templates/tab-figures.html',
           controller: 'FiguresCtrl'
         }
@@ -144,7 +144,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }]
     },
     views: {
-      'tab-figures': {
+      'menuContent': {
         templateUrl: 'templates/tab-storages.html',
         controller: 'StoragesCtrl'
       }
@@ -159,7 +159,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }]
     },
     views: {
-      'tab-figures': {
+      'menuContent': {
         templateUrl: 'templates/storage-detail.html',
         controller: 'StorageDetailCtrl'
       }
@@ -174,7 +174,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }]
     },
     views: {
-      'tab-search': {
+      'menuContent': {
         templateUrl: 'templates/tab-search.html',
         controller: 'SearchCtrl'
       }

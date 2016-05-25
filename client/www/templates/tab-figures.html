@@ -52,9 +52,6 @@
         </div>
       </div>
       <div class="item nopadding summary-past item-bg">
-        <ion-highcharts data="chartData"></ion-highcharts>
-      </div>
-      <div class="item nopadding summary-past item-bg">
         <div class="row">
           <div class="col">
             <h6>SINCE</h6>
@@ -78,9 +75,14 @@
       </div>
 
     </div>
-    <ion-list ng-if="viewisentered">
-      <div class="item item-divider">STATES</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
+    <ion-highcharts data="chartData"></ion-highcharts>
+    <ion-list>
+      <div class="item item-icon-right item-divider" ng-init="expandState=false" ng-click="expandState=!expandState">
+        STATES
+        <i ng-show="expandState" class="icon ion-chevron-up icon-accessory"></i>
+        <i ng-show="!expandState" class="icon ion-chevron-down icon-accessory"></i>
+      </div>
+      <ion-item ng-show="expandState" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
         <h4>
           {{item.title | stateAbbr}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
@@ -93,8 +95,12 @@
         </ion-option-button>
       </ion-item>
 
-      <div class="item item-divider">CAPITAL CITIES</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/storages/{{$index}}/-1">
+      <div class="item item-icon-right item-divider" ng-init="expandCC=false" ng-click="expandCC=!expandCC">
+        CAPITAL CITIES
+        <i ng-show="expandCC" class="icon ion-chevron-up icon-accessory"></i>
+        <i ng-show="!expandCC" class="icon ion-chevron-down icon-accessory"></i>
+      </div>
+      <ion-item ng-show="expandCC" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.cities" type="item-text-wrap" href="#/tab/storages/cities/storages/{{$index}}/-1">
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
@@ -107,8 +113,12 @@
         </ion-option-button>
       </ion-item>
 
-      <div class="item item-divider">DRAINAGE DIVISIONS</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/storages/{{$index}}/-1">
+      <div class="item item-icon-right item-divider" ng-init="expandDD=false" ng-click="expandDD=!expandDD">
+        DRAINAGE DIVISIONS
+        <i ng-show="expandDD" class="icon ion-chevron-up icon-accessory"></i>
+        <i ng-show="!expandDD" class="icon ion-chevron-down icon-accessory"></i>
+      </div>
+      <ion-item ng-show="expandDD" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/storages/{{$index}}/-1">
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>

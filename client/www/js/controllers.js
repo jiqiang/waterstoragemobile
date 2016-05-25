@@ -7,7 +7,10 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   }
 }])
 
-.controller('TabCtrl', ['$scope', function ($scope) {}])
+.controller('TabCtrl', ['$scope', '$state', function ($scope, $state) {
+  $scope.goSearch = function(e) { $state.go('tab.search'); }
+  $scope.goAbout = function(e) { $state.go('tab.about'); }
+}])
 
 .controller('FavouritesCtrl', [
   '$scope',

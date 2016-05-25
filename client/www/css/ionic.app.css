@@ -9778,3 +9778,19 @@ div.list.list-inset.search label {
   stroke: #444;
   fill: #444;
   vertical-align: middle; }
+
+h4.menu-title {
+  font-family: "OpenSansBold", sans-serif; }
+
+.menu-branding .list {
+  -webkit-box-shadow: 0px 5px 5px 0px #b8b8b8;
+  -moz-box-shadow: 0px 5px 5px 0px #b8b8b8;
+  box-shadow: 0px 5px 5px 0px #b8b8b8;
+  margin-bottom: 8px; }
+  .menu-branding .list .item {
+    background-color: #e4e4e4;
+    border: none; }
+
+i.icon.ion-ios-information {
+  font-size: 24px;
+  color: blue; }

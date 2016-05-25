@@ -24,7 +24,7 @@ angular.module('watsto.directives', ['watsto.services'])
     transclude: false,
     replace: true,
     scope: {data: '='},
-    template: "<div style='text-align: center; margin: 10px;'><h3>{{chartMessage}}</h3></div>",
+    template: "<div style='text-align: center;'><h3>{{chartMessage}}</h3></div>",
     link: function (scope, element, attrs) {
 
       var current_year = new Date().getFullYear(),
@@ -51,21 +51,38 @@ angular.module('watsto.directives', ['watsto.services'])
             type: 'spline',
             reflow: true,
             height: Math.floor(element.parent().width() / 1.618),
-            animation: false
+            animation: false,
+            backgroundColor: {
+               linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+               stops: [
+                  [0, '#2a2a2b'],
+                  [1, '#3e3e40']
+               ]
+            },
+            plotBorderColor: '#606063'
           },
           title: {
             text: 'WATER STORAGE CAPACITY (% FULL)',
-            style: {"fontSize": "10px"},
+            style: {
+              "fontSize": "12px",
+              color: '#E0E0E3'
+            },
             margin: 10
           },
           xAxis: {
             categories: value[1],
             crosshair: false,
             labels: {
-              style: {"fontSize": "8px"}
+              style: {
+                "fontSize": "8px",
+                color: '#E0E0E3'
+              }
             },
+            gridLineColor: '#707073',
             gridLineWidth: 1,
-            lineColor: '#000000',
+            lineColor: '#707073',
+            minorGridLineColor: '#505053',
+            tickColor: '#707073',
             lineWidth: 1
           },
           yAxis: [{
@@ -78,14 +95,20 @@ angular.module('watsto.directives', ['watsto.services'])
             },
             labels: {
               format: '{value}%',
-              style: {"fontSize": "8px"}
+              style: {
+                "fontSize": "8px",
+                color: '#E0E0E3'
+              }
             },
             gridLineWidth: 1,
-            lineColor: '#000000',
+            gridLineColor: '#707073',
+            lineColor: '#707073',
+            minorGridLineColor: '#505053',
+            tickColor: '#707073',
             lineWidth: 1
           }],
           series: [{
-            type: 'spline',
+            type: 'area',
             name: current_year,
             data: value[0]
             //data: ChartDataService.random()
