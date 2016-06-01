@@ -7,6 +7,57 @@
     <div ng-if="!viewisentered" style="text-align:center;margin-top:30px;">
       <ion-spinner></ion-spinner><span style="font-size:11px;margin-left:10px">Loading</span>
     </div>
+    <div class="water-top">
+      <div class="row">
+        <div class="col">
+          <i class="icon ion-android-star-outline"></i>
+        </div>
+        <div class="col col-90">
+          <div class="location">AUSTRALIA</div>
+          <div class="date">{{summary.today}}</div>
+        </div>
+      </div>
+      <div class="row-separator"></div>
+      <div class="row">
+        <div class="col col-80">
+          <div class="figure-per-label">TOTAL STORAGE CAPACITY (% FULL)</div>
+          <div class="figure-per">{{summary.percentage_full_today}}%</div>
+        </div>
+        <div class="col">
+          <div class="year-trend-label">YEAR</div>
+          <div class="year-trend"><i class="icon ion-arrow-down-c"></i></div>
+        </div>
+      </div>
+    </div>
+    <ion-highcharts data="chartData"></ion-highcharts>
+    <div class="water-trend">
+      <div class="row">
+        <div class="col-33">
+          <div class="since">SINCE</div>
+          <div class="days-ago">1 DAY AGO</div>
+          <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+        </div>
+        <div class="col-33">
+          <div class="since">SINCE</div>
+          <div class="days-ago">7 DAYS AGO</div>
+          <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+        </div>
+        <div class="col-33">
+          <div class="since">SINCE</div>
+          <div class="days-ago">30 DAYS AGO</div>
+          <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-33"></div>
+        <div class="col">
+          <button class="button button-small button-block button-calm details">
+            Details
+          </button>
+        </div>
+        <div class="col-33"></div>
+      </div>
+    </div>
     <div class="list card" ng-if="viewisentered">
       <div class="item nopadding summary-past item-bg">
         <div class="row">
@@ -75,14 +126,15 @@
       </div>
 
     </div>
-    <ion-highcharts data="chartData"></ion-highcharts>
+
     <ion-list>
       <div class="item item-icon-right item-divider" ng-init="expandState=false" ng-click="expandState=!expandState">
         STATES
         <i ng-show="expandState" class="icon ion-chevron-up icon-accessory"></i>
         <i ng-show="!expandState" class="icon ion-chevron-down icon-accessory"></i>
       </div>
-      <ion-item ng-show="expandState" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
+      <ion-item ng-show="expandState" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-left item-icon-right item-bg" ng-repeat="item in data.states" type="item-text-wrap" href="#/tab/storages/states/storages/{{$index}}/-1">
+        <i class="icon ion-chevron-right icon-accessory"></i>
         <h4>
           {{item.title | stateAbbr}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
@@ -118,7 +170,8 @@
         <i ng-show="expandDD" class="icon ion-chevron-up icon-accessory"></i>
         <i ng-show="!expandDD" class="icon ion-chevron-down icon-accessory"></i>
       </div>
-      <ion-item ng-show="expandDD" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/storages/{{$index}}/-1">
+      <ion-item ng-show="expandDD" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-left item-icon-right item-bg" ng-repeat="item in data.drainages" type="item-text-wrap" href="#/tab/storages/drainages/storages/{{$index}}/-1">
+        <i class="icon ion-arrow-down-c"></i>
         <h4>
           {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
         </h4>
