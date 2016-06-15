@@ -1,5 +1,19 @@
 angular.module('watsto.directives', ['watsto.services'])
 
+.directive('waterStorageSummary', function () {
+  var directiveDefinitionObject = {
+    restrict: 'AE',
+    transclude: false,
+    replace: true,
+    templateUrl: 'templates/water-storage-summary.html',
+    scope: true,
+    link: function (scope, element, attrs) {
+
+    }
+  };
+  return directiveDefinitionObject;
+})
+
 .directive('ionPercentageBar', function () {
   return {
     link: function (scope, element, attrs) {

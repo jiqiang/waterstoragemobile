@@ -1,0 +1,53 @@
+<div>
+<div class="water-top">
+  <div class="row">
+    <div class="col">
+      <i class="icon ion-android-star-outline"></i>
+    </div>
+    <div class="col col-90">
+      <div class="location">{{viewTitle}}</div>
+      <div class="date">{{summary.today}}</div>
+    </div>
+  </div>
+  <div class="row-separator"></div>
+  <div class="row" ng-click="showPopup()">
+    <div class="col col-80">
+      <div class="figure-per-label">TOTAL STORAGE CAPACITY (% FULL)</div>
+      <div class="figure-per">{{summary.percentage_full_today}}%</div>
+    </div>
+    <div class="col">
+      <div class="year-trend-label">YEAR</div>
+      <div class="year-trend"><i class="icon ion-arrow-down-c"></i></div>
+    </div>
+  </div>
+</div>
+<ion-highcharts data="chartData"></ion-highcharts>
+<div class="water-trend">
+  <div class="row">
+    <div class="col-33">
+      <div class="since">SINCE</div>
+      <div class="days-ago">1 DAY AGO</div>
+      <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+    </div>
+    <div class="col-33">
+      <div class="since">SINCE</div>
+      <div class="days-ago">7 DAYS AGO</div>
+      <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+    </div>
+    <div class="col-33">
+      <div class="since">SINCE</div>
+      <div class="days-ago">30 DAYS AGO</div>
+      <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-33"></div>
+    <div class="col">
+      <button class="button button-small button-block button-calm details" ng-click="showPopup()">
+        Details
+      </button>
+    </div>
+    <div class="col-33"></div>
+  </div>
+</div>
+</div>

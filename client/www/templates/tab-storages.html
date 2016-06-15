@@ -1,4 +1,4 @@
-<ion-view view-title="{{viewTitle}}">
+<ion-view view-title="">
   <ion-content>
     <ion-refresher
       pulling-text="Pull to refresh..."
@@ -7,77 +7,8 @@
     <div ng-if="!viewisentered" style="text-align:center;margin-top:30px;">
       <ion-spinner></ion-spinner><span style="font-size:11px;margin-left:10px">Loading</span>
     </div>
-    <div class="list card" ng-if="viewisentered">
-      <div class="item nopadding summary-past item-bg">
-        <div class="row">
-          <div class="col">
-            <h2>{{summary.today}}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="item nopadding summary-past item-bg">
+    <water-storage-summary></water-storage-summary>
 
-        <div class="row row-center">
-          <div class="col col-67">
-            <h6>TOTAL STORAGE CAPACITY (% FULL):</h6>
-            <h1 class="assertive highlight-figure" style="margin-top:8px">{{summary.percentage_full_today}}%</h1>
-          </div>
-          <div class="col col-33">
-            <h5>SINCE</h5>
-            <h5>1 YEAR AGO</h5>
-            <h3 class="assertive highlight-figure">{{summary.percentage_change_since_last_year}}%</h3>
-            <h5><span class="highlight-figure">{{summary.volume_change_since_last_year}}</span> ML</h5>
-          </div>
-        </div>
-
-      </div>
-      <div class="item nopadding summary-past item-bg">
-        <div class="row row-center">
-          <div class="col">
-            <h6>LATEST VOLUME (LV):</h6>
-          </div>
-          <div class="col">
-            <h4><span class="highlight-figure">{{summary.today_volume_active_total}}</span> ML</h4>
-          </div>
-        </div>
-      </div>
-      <div class="item nopadding summary-past item-bg">
-        <div class="row row-center">
-          <div class="col">
-            <h6>TOTAL CAPACITY (TC):</h6>
-          </div>
-          <div class="col">
-            <h4><span class="highlight-figure">{{summary.today_capacity_active_total}}</span> ML</h4>
-          </div>
-        </div>
-      </div>
-      <div class="item nopadding summary-past item-bg">
-        <ion-highcharts data="chartData"></ion-highcharts>
-      </div>
-      <div class="item nopadding summary-past item-bg">
-        <div class="row">
-          <div class="col">
-            <h6>SINCE</h6>
-            <h6>1 DAY AGO</h6>
-            <h3 class="assertive highlight-figure">{{summary.percentage_change_since_yesterday}}%</h3>
-            <h6><span class="highlight-figure">{{summary.volume_change_since_yesterday}}</span> ML</h6>
-          </div>
-          <div class="col">
-            <h6>SINCE</h6>
-            <h6>7 DAYS AGO</h6>
-            <h3 class="assertive highlight-figure">{{summary.percentage_change_since_last_week}}%</h3>
-            <h6><span class="highlight-figure">{{summary.volume_change_since_last_week}}</span> ML</h6>
-          </div>
-          <div class="col">
-            <h6>SINCE</h6>
-            <h6>30 DAYS AGO</h6>
-            <h3 class="assertive highlight-figure">{{summary.percentage_change_since_last_month}}%</h3>
-            <h6><span class="highlight-figure">{{summary.volume_change_since_last_month}}</span> ML</h6>
-          </div>
-        </div>
-      </div>
-
-    </div>
     <ion-list ng-if="viewisentered">
       <div class="item item-divider" ng-show="showCityAndSystem">CITIES AND SYSTEMS</div>
       <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in cityandsystem" type="item-text-wrap" href="#/tab/storages/{{type}}/cityandsystem/{{typeIndex}}/{{$index}}">

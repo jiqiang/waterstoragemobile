@@ -21,23 +21,10 @@ $font-family-base: "OpenSansRegular", sans-serif !default;
 
 $royal: #2c3e50 !default;
 //$assertive: #386e9b !default;
+$positive: #2062a1;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-
-.ion-arrow-down-c {
-  color: $assertive;
-}
-
-.ion-arrow-up-c {
-  color: $balanced;
-}
-
-.item {
-  .icon {
-    font-size: 18px;
-  }
-}
 
 .water-top {
   background-color: $positive;
@@ -190,7 +177,93 @@ h4.menu-title {
   }
 }
 
-i.icon.ion-ios-information {
-  font-size: 24px;
-  color:blue;
+.popup-container .popup {
+  width: 90%;
+  background-color: #fff;
+
+  .popup-body {
+
+    padding: 0;
+    color: #455b6c;
+
+    .popup-close {
+      font-size: 2em;
+      color: #000;
+      opacity: 0.5;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+
+    hr {
+      padding: 0;
+      margin: 0;
+      color: #b5c1ce;
+    }
+
+    .detail-header-top {
+      padding: 20px;
+
+      .detail-title {
+        font-family: "OpenSansBold", sans-serif;
+        font-size: 1.07em;
+      }
+
+      .detail-percentage {
+        font-size: 2em;
+        padding-top: 35px;
+        padding-bottom: 0;
+
+        span {
+          color: #b5c1ce;
+        }
+      }
+    }
+
+    .detail-header-bottom {
+      padding: 20px;
+      font-size: 0.928em;
+      color: #455b6c;
+    }
+
+    .list {
+
+
+
+      .item {
+        color: #455b6c;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        border-bottom: 2px solid #fff;
+        background-color: #effaff;
+
+        .ion-arrow-down-c {
+          color: #ff6f6f;
+        }
+
+        .ion-arrow-up-c {
+          color: #0cad55;
+        }
+
+        .icon {
+          font-size: 1.375em;
+        }
+
+        .detail-list-label {
+          font-size: 0.8125em;
+          font-family: "OpenSansBold", sans-serif;
+        }
+
+        .detail-list-figure {
+          font-size: 0.8125em;
+        }
+
+      }
+
+    }
+  }
+
+  .popup-head {
+    padding: 0;
+  }
 }

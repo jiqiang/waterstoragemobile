@@ -1,4 +1,4 @@
-angular.module('watsto.services', [])
+angular.module('watsto.services', ['ionic'])
 
 .factory('DataService', ['$http', '$q', 'ConfigService', function($http, $q, ConfigService) {
 
@@ -72,6 +72,10 @@ angular.module('watsto.services', [])
     return true;
   }
 
+  function isFigureIncreased(figure) {
+    return figure.indexOf('-') == -1 ? true : false;
+  }
+
   return {
     fetch: function () {
 
@@ -100,7 +104,9 @@ angular.module('watsto.services', [])
       }
 
       return deferred.promise;
-    }
+    },
+
+    isFigureIncreased: isFigureIncreased
   };
 }])
 
@@ -311,4 +317,17 @@ angular.module('watsto.services', [])
       return 'data/chart.json';
     }
   };
+})
+
+.factory('PopupService', function ($ionicPopup) {
+  return {
+    getPopup: getPopup
+  };
+
+  function getPopup(scope) {
+    return $ionicPopup.show({
+      templateUrl: 'templates/water-storage-summary-details.html',
+      scope: scope
+    });
+  }
 });

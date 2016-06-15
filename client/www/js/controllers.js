@@ -7,9 +7,24 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   }
 }])
 
-.controller('TabCtrl', ['$scope', '$state', function ($scope, $state) {
+.controller('TabCtrl', ['$scope', '$state', '$ionicPopup', 'DataService', function ($scope, $state, $ionicPopup, DataService) {
   $scope.goSearch = function(e) { $state.go('tab.search'); }
   $scope.goAbout = function(e) { $state.go('tab.about'); }
+
+  $scope.isFigureIncreased = DataService.isFigureIncreased;
+  /*
+  var detailsPopup;
+  $scope.showPopup = function() {
+    detailsPopup = $ionicPopup.show({
+      templateUrl: 'templates/water-storage-summary-details.html',
+      scope: $scope,
+    });
+  }
+
+  $scope.closePopup = function() {
+    detailsPopup.close();
+  }
+  */
 }])
 
 .controller('FavouritesCtrl', [
@@ -74,9 +89,20 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'ChartDataService',
   'DataService',
   'storage',
-  function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage) {
+  'PopupService',
+  function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage, PopupService) {
+    var popup;
+
+    $scope.showPopup = function() {
+      popup = PopupService.getPopup($scope);
+    };
+
+    $scope.closePopup = function() {
+      popup.close();
+    }
 
     function prepare(data, action) {
+      $scope.viewTitle = "AUSTRALIA";
       $scope.data = data;
       $scope.addFavourite = FavouriteService.add;
       $scope.summary = data.national[0];
@@ -106,7 +132,18 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'DataService',
   'ChartDataService',
   'storage',
-  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage) {
+  'PopupService',
+  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage, PopupService) {
+
+    var popup;
+
+    $scope.showPopup = function() {
+      popup = PopupService.getPopup($scope);
+    };
+
+    $scope.closePopup = function() {
+      popup.close();
+    }
 
     function prepare(data, action) {
       var item;
@@ -161,19 +198,30 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'DataService',
   'ChartDataService',
   'storage',
-  function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage) {
+  'PopupService',
+  function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage, PopupService) {
+    var popup;
+
+    $scope.showPopup = function() {
+      popup = PopupService.getPopup($scope);
+    };
+
+    $scope.closePopup = function() {
+      popup.close();
+    }
 
     function prepare(data, action) {
       $scope.data = data;
 
       if ($stateParams.subType === 'storages') {
-        $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
+        $scope.summary = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.storageIndex];
       }
       else {
-        $scope.storageDetail = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
+        $scope.summary = $scope.data[$stateParams.type][$stateParams.typeIndex][$stateParams.subType][$stateParams.subTypeIndex].storages[$stateParams.storageIndex];
       }
 
-      $scope.chartData = ChartDataService.fetch("storages", $scope.storageDetail.title, storage.chart, action);
+      $scope.chartData = ChartDataService.fetch("storages", $scope.summary.title, storage.chart, action);
+      $scope.viewTitle = $scope.summary.title;
     }
 
     prepare(storage, 'viewisready');
