@@ -21,30 +21,45 @@ $font-family-base: "OpenSansRegular", sans-serif !default;
 
 $royal: #2c3e50 !default;
 //$assertive: #386e9b !default;
-$positive: #2062a1;
+$positive: #2062a1 !default;
+$dark: #455b6c !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+.bar .button.button-icon.ion-android-search:before {
+  font-size: 1.411em;
+  opacity: 0.5;
+  margin-right: 20px;
+}
 
 .water-top {
   background-color: $positive;
   color: $light;
 
   .row-separator {
-    padding: 10px 0;
+    padding: 5px 0;
   }
 
   .icon {
-    font-size: 24px;
+    font-size: 1.575em;
+  }
+
+  .ion-arrow-up-c {
+    color: #7cdf1a;
+  }
+
+  .ion-arrow-down-c {
+    color: #ff6f6f;
   }
 
   .date, .figure-per-label, .year-trend-label {
-    font-size: 12px;
+    font-size: 0.857em;
     color: #A3C0DD;
   }
 
   .location {
-    font-size: 15px;
+    font-size: 1.071em;
     font-family: "OpenSansBold", sans-serif;
     padding-top: 3px;
   }
@@ -54,7 +69,7 @@ $positive: #2062a1;
   }
 
   .figure-per {
-    font-size: 60px;
+    font-size: 4.285em;
     line-height: 60px;
   }
 
@@ -85,11 +100,20 @@ $positive: #2062a1;
   }
 
   .details {
-    font-size: 15px;
-    color: $dark;
+    font-size: 12px;
+    background-color: #74b3c9;
+    color: #000;
     border-radius: 14px;
     -moz-border-radius: 14px;
     -webkit-border-radius: 14px;
+  }
+
+  .ion-arrow-up-c {
+    color: #7cdf1a;
+  }
+
+  .ion-arrow-down-c {
+    color: #ff6f6f;
   }
 }
 

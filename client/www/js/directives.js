@@ -62,24 +62,17 @@ angular.module('watsto.directives', ['watsto.services'])
       function getOptions(value) {
         return {
           chart: {
-            type: 'spline',
+            type: 'area',
             reflow: true,
             height: Math.floor(element.parent().width() / 1.618),
             animation: false,
-            backgroundColor: {
-               linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-               stops: [
-                  [0, '#2a2a2b'],
-                  [1, '#3e3e40']
-               ]
-            },
-            plotBorderColor: '#606063'
+            backgroundColor: '#2c3e50'
           },
           title: {
             text: 'WATER STORAGE CAPACITY (% FULL)',
             style: {
               "fontSize": "12px",
-              color: '#E0E0E3'
+              color: '#a3c0dd'
             },
             margin: 10
           },
@@ -88,12 +81,10 @@ angular.module('watsto.directives', ['watsto.services'])
             crosshair: false,
             labels: {
               style: {
-                "fontSize": "8px",
-                color: '#E0E0E3'
+                "fontSize": "12px",
+                color: '#a3c0dd'
               }
             },
-            gridLineColor: '#707073',
-            gridLineWidth: 1,
             lineColor: '#707073',
             minorGridLineColor: '#505053',
             tickColor: '#707073',
@@ -110,8 +101,8 @@ angular.module('watsto.directives', ['watsto.services'])
             labels: {
               format: '{value}%',
               style: {
-                "fontSize": "8px",
-                color: '#E0E0E3'
+                "fontSize": "12px",
+                color: '#a3c0dd'
               }
             },
             gridLineWidth: 1,
@@ -136,9 +127,10 @@ angular.module('watsto.directives', ['watsto.services'])
           },
           legend: {enabled: false},
           plotOptions: {
-            spline: {
-              animation: false,
-              allowPointSelect: true
+            area: {
+              marker: {
+                enabled: false
+              }
             }
           }
         };

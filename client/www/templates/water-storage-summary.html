@@ -2,9 +2,6 @@
 <div class="water-top">
   <div class="row">
     <div class="col">
-      <i class="icon ion-android-star-outline"></i>
-    </div>
-    <div class="col col-90">
       <div class="location">{{viewTitle}}</div>
       <div class="date">{{summary.today}}</div>
     </div>
@@ -12,12 +9,13 @@
   <div class="row-separator"></div>
   <div class="row" ng-click="showPopup()">
     <div class="col col-80">
-      <div class="figure-per-label">TOTAL STORAGE CAPACITY (% FULL)</div>
+      <div class="figure-per-label">% FULL</div>
       <div class="figure-per">{{summary.percentage_full_today}}%</div>
+      <div class="figure-per-label">TOTAL CAPACITY (TC) {{summary.today_capacity_active_total}} ML</div>
     </div>
     <div class="col">
       <div class="year-trend-label">YEAR</div>
-      <div class="year-trend"><i class="icon ion-arrow-down-c"></i></div>
+      <div class="year-trend"><i class="icon" ng-class="isFigureIncreased(summary.volume_change_since_last_year) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i></div>
     </div>
   </div>
 </div>
@@ -27,17 +25,17 @@
     <div class="col-33">
       <div class="since">SINCE</div>
       <div class="days-ago">1 DAY AGO</div>
-      <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+      <div class="day-trend"><i class="icon" ng-class="isFigureIncreased(summary.volume_change_since_yesterday) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i></div>
     </div>
     <div class="col-33">
       <div class="since">SINCE</div>
       <div class="days-ago">7 DAYS AGO</div>
-      <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+      <div class="day-trend"><i class="icon" ng-class="isFigureIncreased(summary.volume_change_since_last_week) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i></div>
     </div>
     <div class="col-33">
       <div class="since">SINCE</div>
       <div class="days-ago">30 DAYS AGO</div>
-      <div class="day-trend"><i class="icon ion-arrow-down-c"></i></div>
+      <div class="day-trend"><i class="icon" ng-class="isFigureIncreased(summary.volume_change_since_last_month) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i></div>
     </div>
   </div>
   <div class="row">
