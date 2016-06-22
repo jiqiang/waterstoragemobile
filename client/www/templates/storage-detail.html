@@ -1,12 +1,9 @@
-<ion-view view-title="">
+<ion-view view-title="{{viewTitle}}">
   <ion-content>
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
-    <div ng-if="!viewisentered" style="text-align:center;margin-top:30px;">
-      <ion-spinner></ion-spinner><span style="font-size:11px;margin-left:10px">Loading</span>
-    </div>
     <water-storage-summary></water-storage-summary>
   </ion-content>
 </ion-view>

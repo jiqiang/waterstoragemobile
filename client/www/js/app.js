@@ -23,27 +23,6 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   });
 })
 
-.filter('stateAbbr', function() {
-  var stateMap = {
-    'south australia': 'SA',
-    'new south wales': 'NSW',
-    'australian capital territory': 'ACT',
-    'queensland': 'QLD',
-    'western australia': 'WA',
-    'victoria': 'VIC',
-    'northern territory': 'NT',
-    'tasmania': 'TAS'
-  }
-
-  return function(state) {
-    var states = state.split("/");
-    for (var i = 0; i < states.length; i++) {
-      states[i] = stateMap[states[i].toLowerCase()];
-    }
-    return states.join(" / ");
-  }
-})
-
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
   $ionicConfigProvider.views.maxCache(50);
@@ -137,7 +116,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
     })
 
   .state('tab.storages', {
-    url: '/storages/:type/:subType/:typeIndex/:subTypeIndex',
+    url: '/storages/:type/:subType/:typeIndex/:subTypeIndex/:storageIndex',
     resolve: {
       storage: ['DataService', function (DataService) {
         return DataService.fetch();

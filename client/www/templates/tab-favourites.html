@@ -1,18 +1,20 @@
 <ion-view view-title="Favourites">
   <ion-content>
     <ion-list>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in favouritesData" type="item-text-wrap" href="{{item.href}}">
-        <h4>
-          {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
-        </h4>
-        <h6>
-          TC: <span class="highlight-figure">{{item.today_capacity_active_total}}</span> ML<span style="float:right">LV: <span class="highlight-figure">{{item.today_volume_active_total}}</span> ML</span>
-        </h6>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button ng-click="removeFavourite($index)">
-          <i class="icon ion-trash-a"></i>
-        </ion-option-button>
-      </ion-item>
+      <div class="location-list">
+        <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-icon-left item-icon-right item-bg" ng-repeat="item in favouritesData" type="item-text-wrap" href="{{item.href}}">
+          <i class="icon" ng-class="isFigureIncreased(item.volume_change_since_last_year) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i>
+          <h4>
+            {{item.title}}<span>{{item.percentage_full_today}}%</span>
+          </h4>
+          <h6>
+            <span class="yr">YEAR</span>
+            <span class="tc">TC: {{item.today_capacity_active_total}} ML</span>
+            <span class="lv">LV: {{item.today_volume_active_total}} ML</span>
+          </h6>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>

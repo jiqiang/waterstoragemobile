@@ -1,41 +1,34 @@
-<ion-view view-title="">
+<ion-view view-title="{{viewTitle}}">
   <ion-content>
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
-    <div ng-if="!viewisentered" style="text-align:center;margin-top:30px;">
-      <ion-spinner></ion-spinner><span style="font-size:11px;margin-left:10px">Loading</span>
-    </div>
+
     <water-storage-summary></water-storage-summary>
 
     <ion-list ng-if="viewisentered">
-      <div class="item item-divider" ng-show="showCityAndSystem">CITIES AND SYSTEMS</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in cityandsystem" type="item-text-wrap" href="#/tab/storages/{{type}}/cityandsystem/{{typeIndex}}/{{$index}}">
-        <h4>
-          {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
-        </h4>
-        <h6>
-          TC: <span class="highlight-figure">{{item.today_capacity_active_total}}</span> ML<span style="float:right">LV: <span class="highlight-figure">{{item.today_volume_active_total}}</span> ML</span>
-        </h6>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button ng-click="addFavourite('{{type}}', {{typeIndex}}, 'cityandsystem', {{$index}}, null)">
-          <i class="icon ion-{{platform}}-star"></i>
-        </ion-option-button>
-      </ion-item>
-      <div class="item item-divider">WATER STORAGES</div>
-      <ion-item ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-right item-bg" ng-repeat="item in storages" type="item-text-wrap" href="#/tab/storage/{{type}}/{{subType}}/{{typeIndex}}/{{subTypeIndex}}/{{$index}}">
-        <h4>
-          {{item.title}}<span style="float:right" class="assertive highlight-figure">{{item.percentage_full_today}}%</span>
-        </h4>
-        <h6>
-          TC: <span class="highlight-figure">{{item.today_capacity_active_total}}</span> ML<span style="float:right">LV: <span class="highlight-figure">{{item.today_volume_active_total}}</span> ML</span>
-        </h6>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button ng-click="addFavourite('{{type}}', {{typeIndex}}, '{{subType}}', {{subTypeIndex}}, {{$index}})">
-          <i class="icon ion-{{platform}}-star"></i>
-        </ion-option-button>
-      </ion-item>
+
+      <water-storage-list
+        listtitle="CITIES AND SYSTEMS"
+        listdata="cityandsystem"
+        listtype="{{type}}"
+        listsubtype="cityandsystem"
+        listtypeindex="{{typeIndex}}"
+        listsubtypeindex=""
+        liststorageindex="-1">
+      </water-storage-list>
+
+      <water-storage-list
+        listtitle="WATER STORAGES"
+        listdata="storages"
+        listtype="{{type}}"
+        listsubtype="{{subType}}"
+        listtypeindex="{{typeIndex}}"
+        listsubtypeindex="{{subTypeIndex}}"
+        liststorageindex="">
+      </water-storage-list>
+
     </ion-list>
   </ion-content>
 </ion-view>

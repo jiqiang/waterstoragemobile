@@ -14,19 +14,102 @@ angular.module('watsto.directives', ['watsto.services'])
   return directiveDefinitionObject;
 })
 
+.directive('waterStorageList', function ($state, FavouriteService, DataService) {
+  var directiveDefinitionObject = {
+    restrict: 'AE',
+    transclude: false,
+    replace: true,
+    templateUrl: 'templates/water-storage-list.html',
+    scope: {
+      listdata: '=',
+      listtitle: '@',
+      listtype: '@',
+      listsubtype: '@',
+      listtypeindex: '@',
+      listsubtypeindex: '@',
+      liststorageindex: '@'
+    },
+    link: function (scope, element, attrs) {
+
+      scope.isFigureIncreased = DataService.isFigureIncreased;
+
+      scope.addFavourite = function(idx) {
+        if (scope.liststorageindex != -1) {
+          FavouriteService.add(
+            scope.listtype,
+            scope.listtypeindex,
+            scope.listsubtype,
+            scope.listsubtypeindex,
+            idx);
+        }
+        else if (scope.listsubtypeindex != -1 && scope.liststorageindex == -1) {
+          FavouriteService.add(
+            scope.listtype,
+            scope.listtypeindex,
+            scope.listsubtype,
+            idx,
+            scope.liststorageindex);
+        }
+        else if (scope.listsubtypeindex == -1 && scope.liststorageindex == -1) {
+          FavouriteService.add(
+            scope.listtype,
+            idx,
+            scope.listsubtype,
+            scope.listsubtypeindex,
+            scope.liststorageindex);
+        }
+      };
+
+      scope.go = function(idx) {
+        if (scope.liststorageindex != -1) {
+          $state.go('tab.storage-detail', {
+            type: scope.listtype,
+            subType: scope.listsubtype,
+            typeIndex: scope.listtypeindex,
+            subTypeIndex: scope.listsubtypeindex,
+            storageIndex: idx
+          });
+        }
+        else if (scope.listsubtypeindex != -1 && scope.liststorageindex == -1) {
+          $state.go('tab.storages', {
+            type: scope.listtype,
+            subType: scope.listsubtype,
+            typeIndex: scope.listtypeindex,
+            subTypeIndex: idx,
+            storageIndex: scope.liststorageindex
+          });
+        }
+        else if (scope.listsubtypeindex == -1 && scope.liststorageindex == -1) {
+          $state.go('tab.storages', {
+            type: scope.listtype,
+            subType: scope.listsubtype,
+            typeIndex: idx,
+            subTypeIndex: scope.listsubtypeindex,
+            storageIndex: scope.liststorageindex
+          });
+        }
+      };
+    }
+  };
+  return directiveDefinitionObject;
+})
+
 .directive('ionPercentageBar', function () {
   return {
     link: function (scope, element, attrs) {
-      element.find('a').css('opacity', 0.9);
+      element.find('.item-content').css('opacity', 0.8);
       element
         .append(
-          $('<div></div>')
+          $('<div ></div>')
             .css('position', 'absolute')
             .css('top', 0)
             .css('bottom', 0)
             .css('border', 'none')
-            .css('background-color', '#0099ff')
+            .css('background-color', '#74b3c9')
             .css('width', attrs.ionPercentageBar + '%')
+            .css('-webkit-border-radius', '0px 5px 5px 0px')
+            .css('-moz-border-radius', '0px 5px 5px 0px')
+            .css('border-radius', '0px 5px 5px 0px')
         );
     }
   };

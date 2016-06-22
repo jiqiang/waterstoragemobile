@@ -9883,16 +9883,16 @@ a.button {
   background-color: #ecf0f1; }
 
 .item-complex .item-content, .item {
-  background-color: #ecf0f1;
   border-color: #ffffff; }
 
 .item.item-divider {
   font-size: 15px;
   font-family: "OpenSansBold", sans-serif;
   color: #2C3E50;
-  border-color: #ffffff; }
+  border-color: #ffffff;
+  background-color: #effaff; }
   .item.item-divider .icon {
-    color: #455b6c; }
+    color: #ccc; }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #333333; }
@@ -9985,3 +9985,34 @@ h4.menu-title {
         font-size: 0.8125em; }
   .popup-container .popup .popup-head {
     padding: 0; }
+
+.location-list .item-icon-left .ion-arrow-up-c,
+.location-list .item-icon-left .ion-arrow-down-c {
+  font-size: 1.3em;
+  top: -3px; }
+
+.location-list .item-icon-left .ion-arrow-up-c {
+  color: #0cad55; }
+
+.location-list .item-icon-left .ion-arrow-down-c {
+  color: #ff6f6f; }
+
+.location-list .item-content h4 {
+  font-size: 13px;
+  font-family: "OpenSansBold", sans-serif;
+  color: #2c3e50; }
+  .location-list .item-content h4 span {
+    margin-left: 10px;
+    color: #2062a1; }
+
+.location-list .item-content h6 {
+  color: #748491; }
+  .location-list .item-content h6 .tc {
+    position: absolute;
+    left: 55px; }
+  .location-list .item-content h6 .lv {
+    position: absolute;
+    left: 165px; }
+  .location-list .item-content h6 .yr {
+    position: absolute;
+    left: 15px; }

@@ -141,6 +141,12 @@ angular.module('watsto.services', ['ionic'])
 
 .factory('FavouriteService', function () {
   function add (type, typeIndex, subType, subTypeIndex, storageIndex) {
+    console.log(type);
+    console.log(typeIndex);
+    console.log(subType);
+    console.log(subTypeIndex);
+    console.log(storageIndex);
+
     var isExist = false, favourites = get();
 
     for (var i = 0; i < favourites.length; i++) {

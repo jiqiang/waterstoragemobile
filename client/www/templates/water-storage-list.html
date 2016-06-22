@@ -1,0 +1,22 @@
+<div class="location-list" ng-show="listdata.length > 0">
+  <div class="item item-icon-right item-divider" ng-init="expand=false" ng-click="expand=!expand">
+    {{listtitle}}
+    <i ng-show="expand" class="icon ion-chevron-up icon-accessory"></i>
+    <i ng-show="!expand" class="icon ion-chevron-down icon-accessory"></i>
+  </div>
+  <ion-item ng-show="expand" ion-percentage-bar="{{item.percentage_full_today}}" class="item-remove-animate item-icon-left item-icon-right item-bg" ng-repeat="item in listdata" type="item-text-wrap" ng-click="go($index)">
+    <i class="icon" ng-class="isFigureIncreased(item.volume_change_since_last_year) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i>
+    <h4>
+      {{item.title}}<span>{{item.percentage_full_today}}%</span>
+    </h4>
+    <h6>
+      <span class="yr">YEAR</span>
+      <span class="tc">TC: {{item.today_capacity_active_total}} ML</span>
+      <span class="lv">LV: {{item.today_volume_active_total}} ML</span>
+    </h6>
+    <i class="icon ion-chevron-right icon-accessory"></i>
+    <ion-option-button ng-click="addFavourite($index)">
+      <i class="icon ion-ios-star"></i>
+    </ion-option-button>
+  </ion-item>
+</div>

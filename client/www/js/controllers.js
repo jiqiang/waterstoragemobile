@@ -30,9 +30,10 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 .controller('FavouritesCtrl', [
   '$scope',
   'FavouriteService',
+  'DataService',
   'storage',
-  function ($scope, FavouriteService, storage) {
-
+  function ($scope, FavouriteService, DataService, storage) {
+  $scope.isFigureIncreased = DataService.isFigureIncreased;
   $scope.removeFavourite = function (index) {
     $scope.favouritesData.splice(index, 1);
     FavouriteService.remove(index);
@@ -40,7 +41,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
   $scope.$on('$ionicView.enter', function (e) {
     $scope.data = storage;
-    var obj,
+    var obj = {},
         _type,
         _subType,
         _typeIndex,
@@ -48,7 +49,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
         _storageIndex,
         favouritesData = [],
         favourites = FavouriteService.get();
-
     for (var i = 0; i < favourites.length; i++) {
 
       _type = favourites[i].type;
@@ -57,25 +57,27 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       _subTypeIndex = favourites[i].subTypeIndex;
       _storageIndex = favourites[i].storageIndex;
 
-      if (_type !== null && _typeIndex !== null && _subType === null && _subTypeIndex === null && _storageIndex === null) {
-        obj = $scope.data[_type][_typeIndex];
-        obj.href = "#/tab/storages/" + _type + "/storages/" + _typeIndex + "/-1";
+      if (_subTypeIndex == -1 && _storageIndex != -1) {
+        obj = $scope.data[_type][_typeIndex][_subType][_storageIndex];
+        obj.href = "#/tab/storage/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
       }
-      else if (_type !== null && _typeIndex !== null && _subType !== null && _subTypeIndex !== null && _storageIndex === null) {
+      else if (_subTypeIndex != -1 && _storageIndex != -1) {
+        obj = $scope.data[_type][_typeIndex][_subType][_subTypeIndex].storages[_storageIndex];
+        obj.href = "#/tab/storage/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
+      }
+      else if (_subTypeIndex != -1 && _storageIndex == -1) {
         obj = $scope.data[_type][_typeIndex][_subType][_subTypeIndex];
-        obj.href = "#/tab/storages/" + _type + "/cityandsystem/" + _typeIndex + "/" + _subTypeIndex;
+        obj.href = "#/tab/storages/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
       }
-      else if (_type !== null && _typeIndex !== null && _subType === 'storages' && _subTypeIndex === -1 && _storageIndex !== null) {
-        obj = $scope.data[_type][_typeIndex].storages[_storageIndex];
-        obj.href = "#/tab/storage/" + _type + "/storages/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
-      }
-      else if (_type !== null && _typeIndex !== null && _subType === 'cityandsystem' && _subTypeIndex !== null && _storageIndex !== null) {
-        obj = $scope.data[_type][_typeIndex]['cityandsystem'][_subTypeIndex].storages[_storageIndex];
-        obj.href = "#/tab/storage/" + _type + "/cityandsystem/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
+      else if (_subTypeIndex == -1 && _storageIndex == -1) {
+        obj = $scope.data[_type][_typeIndex];
+        obj.href = "#/tab/storages/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
       }
 
       favouritesData.push(obj);
     }
+
+
     $scope.favouritesData = favouritesData;
   });
 }])
