@@ -5,26 +5,40 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   $scope.scrollToTop = function() {
     $ionicScrollDelegate.scrollTop(true);
   }
+  ionic.Platform.fullScreen(true, false);
 }])
 
-.controller('TabCtrl', ['$scope', '$state', '$ionicPopup', 'DataService', function ($scope, $state, $ionicPopup, DataService) {
-  $scope.goSearch = function(e) { $state.go('tab.search'); }
-  $scope.goAbout = function(e) { $state.go('tab.about'); }
+.controller('TabCtrl', [
+  '$scope',
+  '$state',
+  'DataService',
+  '$ionicScrollDelegate',
+  '$document',
+  '$timeout',
+  '$ionicPosition',
+  function ($scope, $state, DataService, $ionicScrollDelegate, $document, $timeout, $ionicPosition) {
+    var statesExpanded = false;
+    var citiesExpanded = false;
+    $scope.goSearch = function(e) { $state.go('tab.search'); }
+    $scope.goAbout = function(e) { $state.go('tab.about'); }
+    $scope.goScroll = function(type) {
+      $timeout(function() {
 
-  $scope.isFigureIncreased = DataService.isFigureIncreased;
-  /*
-  var detailsPopup;
-  $scope.showPopup = function() {
-    detailsPopup = $ionicPopup.show({
-      templateUrl: 'templates/water-storage-summary-details.html',
-      scope: $scope,
-    });
-  }
+        var where = $document.find('.location-list .item-divider.item-type-'+type);
 
-  $scope.closePopup = function() {
-    detailsPopup.close();
-  }
-  */
+        var wherePosition = $ionicPosition.offset(where);
+
+        if (!where.hasClass('expanded')) {
+
+          where.triggerHandler('click');
+
+        }
+
+        $ionicScrollDelegate.scrollBy(wherePosition.left, wherePosition.top - 43, true);
+
+      }, 0);
+    }
+    $scope.isFigureIncreased = DataService.isFigureIncreased;
 }])
 
 .controller('FavouritesCtrl', [

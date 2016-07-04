@@ -1,5 +1,5 @@
 <div class="location-list" ng-show="listdata.length > 0">
-  <div class="item item-icon-right item-divider" ng-init="expand=false" ng-click="expand=!expand">
+  <div class="item item-icon-right item-divider item-type-{{listtype}}" ng-class="{expanded: expand}" ng-init="expand=false" ng-click="expand=!expand">
     {{listtitle}}
     <i ng-show="expand" class="icon ion-chevron-up icon-accessory"></i>
     <i ng-show="!expand" class="icon ion-chevron-down icon-accessory"></i>

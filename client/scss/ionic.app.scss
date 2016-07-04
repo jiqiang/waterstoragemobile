@@ -201,6 +201,24 @@ h4.menu-title {
   }
 }
 
+.menu-items {
+  .icon {
+    color: #2a7cc8;
+    font-size: 1.4em;
+  }
+
+  .link-icon {
+    color: #000;
+    opacity: 0.25;
+    font-size: 1em;
+  }
+
+  .item {
+    font-size: 1.1em;
+    border-color: #b5c1ce;
+  }
+}
+
 .popup-container .popup {
   width: 90%;
   background-color: #fff;
