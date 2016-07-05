@@ -5,7 +5,7 @@
       </ion-nav-back-button>
 
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-click="onMenuClick()">
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
@@ -25,11 +25,14 @@
         </ion-item>
       </ion-list>
       <ion-list class="menu-items">
-        <ion-item class="item item-icon-right" menu-close ng-click="goScroll('states')">
+        <water-storage-menu-favourites data="data" favourites="favourites"></water-storage-menu-favourites>
+        <ion-item class="item item-icon-left item-icon-right" menu-close ng-click="goScroll('states')">
+          <i class="icon ion-bookmark"></i>
           States
           <i class="icon ion-chevron-right icon-accessory link-icon"></i>
         </ion-item>
-        <ion-item class="item item-icon-right" menu-close ng-click="goScroll('cities')">
+        <ion-item class="item item-icon-left item-icon-right" menu-close ng-click="goScroll('cities')">
+          <i class="icon ion-bookmark"></i>
           Capital Cities
           <i class="icon ion-chevron-right icon-accessory link-icon"></i>
         </ion-item>

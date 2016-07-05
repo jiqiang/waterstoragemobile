@@ -141,11 +141,6 @@ angular.module('watsto.services', ['ionic'])
 
 .factory('FavouriteService', function () {
   function add (type, typeIndex, subType, subTypeIndex, storageIndex) {
-    console.log(type);
-    console.log(typeIndex);
-    console.log(subType);
-    console.log(subTypeIndex);
-    console.log(storageIndex);
 
     var isExist = false, favourites = get();
 
@@ -160,7 +155,8 @@ angular.module('watsto.services', ['ionic'])
     }
 
     if (!isExist) {
-      favourites.push({type: type, subType: subType, typeIndex: typeIndex, storageIndex: storageIndex, subTypeIndex: subTypeIndex});
+      favourites.unshift({type: type, subType: subType, typeIndex: typeIndex, storageIndex: storageIndex, subTypeIndex: subTypeIndex});
+      favourites = favourites.length > 3 ? favourites.slice(0, 3) : favourites;
       window.localStorage.setItem('waterstoragefavourites', angular.toJson(favourites));
     }
   }

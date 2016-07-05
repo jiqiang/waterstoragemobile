@@ -16,28 +16,36 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$document',
   '$timeout',
   '$ionicPosition',
-  function ($scope, $state, DataService, $ionicScrollDelegate, $document, $timeout, $ionicPosition) {
-    var statesExpanded = false;
-    var citiesExpanded = false;
+  'FavouriteService',
+  'storage',
+  function ($scope, $state, DataService, $ionicScrollDelegate, $document, $timeout, $ionicPosition, FavouriteService, storage) {
+
+    $scope.data = storage;
+    $scope.favourites = FavouriteService.get();
+
+    $scope.onMenuClick = function() {
+      $scope.favourites = FavouriteService.get();
+    }
+
     $scope.goSearch = function(e) { $state.go('tab.search'); }
+
     $scope.goAbout = function(e) { $state.go('tab.about'); }
+
     $scope.goScroll = function(type) {
+
       $timeout(function() {
-
         var where = $document.find('.location-list .item-divider.item-type-'+type);
-
         var wherePosition = $ionicPosition.offset(where);
 
         if (!where.hasClass('expanded')) {
-
           where.triggerHandler('click');
-
         }
 
         $ionicScrollDelegate.scrollBy(wherePosition.left, wherePosition.top - 43, true);
+      }, 100);
 
-      }, 0);
     }
+
     $scope.isFigureIncreased = DataService.isFigureIncreased;
 }])
 
@@ -46,7 +54,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'FavouriteService',
   'DataService',
   'storage',
-  function ($scope, FavouriteService, DataService, storage) {
+  '$stateParams',
+  function ($scope, FavouriteService, DataService, storage, $stateParams) {
   $scope.isFigureIncreased = DataService.isFigureIncreased;
   $scope.removeFavourite = function (index) {
     $scope.favouritesData.splice(index, 1);
@@ -54,6 +63,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   }
 
   $scope.$on('$ionicView.enter', function (e) {
+    console.log($stateParams);
     $scope.data = storage;
     var obj = {},
         _type,

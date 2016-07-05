@@ -1,0 +1,13 @@
+<div class="menu-favourites" ng-show="favData.length > 0">
+  <div class="item item-divider">Favourites</div>
+  <ion-item
+    class="item item-icon-left item-icon-right"
+    menu-close
+    ng-repeat="item in favData"
+    type="item-text-wrap"
+    ng-click="goFavourite($index)">
+    <i class="icon ion-ios-star"></i>
+    {{item.title}}
+    <i class="icon ion-chevron-right icon-accessory link-icon"></i>
+  </ion-item>
+</div>

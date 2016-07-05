@@ -44,6 +44,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   // setup an abstract state for the tabs directive
   .state('tab', {
     url: '/tab',
+    resolve: {
+      storage: ['DataService', function (DataService) {
+        return DataService.fetch();
+      }]
+    },
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'TabCtrl'

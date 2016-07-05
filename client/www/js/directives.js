@@ -94,6 +94,82 @@ angular.module('watsto.directives', ['watsto.services'])
   return directiveDefinitionObject;
 })
 
+.directive('waterStorageMenuFavourites', function ($state) {
+  var directiveDefinitionObject = {
+    restrict: 'AE',
+    transclude: false,
+    replace: true,
+    templateUrl: 'templates/water-storage-menu-favourites.html',
+    scope: { data: '=', favourites: '=' },
+    link: function (scope, element, attrs) {
+
+      function getFavouritesData() {
+        var obj = {},
+          _type,
+          _subType,
+          _typeIndex,
+          _subTypeIndex,
+          _storageIndex,
+          favouritesData = [];
+        for (var i = 0; i < scope.favourites.length; i++) {
+
+          _type = scope.favourites[i].type;
+          _subType = scope.favourites[i].subType;
+          _typeIndex = scope.favourites[i].typeIndex;
+          _subTypeIndex = scope.favourites[i].subTypeIndex;
+          _storageIndex = scope.favourites[i].storageIndex;
+
+          if (_subTypeIndex == -1 && _storageIndex != -1) {
+            obj = scope.data[_type][_typeIndex][_subType][_storageIndex];
+          }
+          else if (_subTypeIndex != -1 && _storageIndex != -1) {
+            obj = scope.data[_type][_typeIndex][_subType][_subTypeIndex].storages[_storageIndex];
+          }
+          else if (_subTypeIndex != -1 && _storageIndex == -1) {
+            obj = scope.data[_type][_typeIndex][_subType][_subTypeIndex];
+          }
+          else if (_subTypeIndex == -1 && _storageIndex == -1) {
+            obj = scope.data[_type][_typeIndex];
+          }
+
+          favouritesData.push(obj);
+        }
+        return favouritesData;
+      }
+
+      scope.$watch('favourites', function (newValue, oldValue) {
+        if (newValue) {
+          scope.favData = getFavouritesData();
+        }
+      });
+
+      scope.favData = getFavouritesData();
+
+      scope.goFavourite = function (idx) {
+        var fav = scope.favourites[idx],
+            urlParams = {
+              type: fav.type,
+              subType: fav.subType,
+              typeIndex: fav.typeIndex,
+              subTypeIndex: fav.subTypeIndex,
+              storageIndex: fav.storageIndex
+            };
+
+        if (fav.storageIndex != -1) {
+          $state.go('tab.storage-detail', urlParams);
+        }
+        else if (fav.subTypeIndex != -1 && fav.storageIndex == -1) {
+          $state.go('tab.storages', urlParams);
+        }
+        else if (fav.subTypeIndex == -1 && fav.storageIndex == -1) {
+          $state.go('tab.storages', urlParams);
+        }
+      }
+    }
+  }
+  return directiveDefinitionObject;
+})
+
 .directive('ionPercentageBar', function () {
   return {
     link: function (scope, element, attrs) {
