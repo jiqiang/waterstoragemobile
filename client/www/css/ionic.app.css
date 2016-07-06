@@ -9947,6 +9947,12 @@ h4.menu-title {
   font-size: 1.1em;
   border-color: #b5c1ce; }
 
+.menu-recent .item-complex .item-content {
+  background-color: #effaff; }
+
+.menu-recent .item {
+  border-color: #effaff; }
+
 .popup-container .popup {
   width: 90%;
   background-color: #fff; }

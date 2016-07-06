@@ -14,7 +14,7 @@ angular.module('watsto.directives', ['watsto.services'])
   return directiveDefinitionObject;
 })
 
-.directive('waterStorageList', function ($state, FavouriteService, DataService) {
+.directive('waterStorageList', function ($state, FavouriteService, DataService, LocalStorageService) {
   var directiveDefinitionObject = {
     restrict: 'AE',
     transclude: false,
@@ -61,6 +61,7 @@ angular.module('watsto.directives', ['watsto.services'])
       };
 
       scope.go = function(idx) {
+
         if (scope.liststorageindex != -1) {
           $state.go('tab.storage-detail', {
             type: scope.listtype,
@@ -69,6 +70,16 @@ angular.module('watsto.directives', ['watsto.services'])
             subTypeIndex: scope.listsubtypeindex,
             storageIndex: idx
           });
+
+          LocalStorageService
+            .use('waterstoragerecentvisits')
+            .addItem({
+              type: scope.listtype,
+              typeIndex: scope.listtypeindex,
+              subType: scope.listsubtype,
+              subTypeIndex: scope.listsubtypeindex,
+              storageIndex: idx
+            });
         }
         else if (scope.listsubtypeindex != -1 && scope.liststorageindex == -1) {
           $state.go('tab.storages', {
@@ -78,6 +89,16 @@ angular.module('watsto.directives', ['watsto.services'])
             subTypeIndex: idx,
             storageIndex: scope.liststorageindex
           });
+
+          LocalStorageService
+            .use('waterstoragerecentvisits')
+            .addItem({
+              type: scope.listtype,
+              typeIndex: scope.listtypeindex,
+              subType: scope.listsubtype,
+              subTypeIndex: idx,
+              storageIndex: scope.liststorageindex
+            });
         }
         else if (scope.listsubtypeindex == -1 && scope.liststorageindex == -1) {
           $state.go('tab.storages', {
@@ -87,6 +108,16 @@ angular.module('watsto.directives', ['watsto.services'])
             subTypeIndex: scope.listsubtypeindex,
             storageIndex: scope.liststorageindex
           });
+
+          LocalStorageService
+            .use('waterstoragerecentvisits')
+            .addItem({
+              type: scope.listtype,
+              typeIndex: idx,
+              subType: scope.listsubtype,
+              subTypeIndex: scope.listsubtypeindex,
+              storageIndex: scope.liststorageindex
+            });
         }
       };
     }
@@ -164,6 +195,87 @@ angular.module('watsto.directives', ['watsto.services'])
         else if (fav.subTypeIndex == -1 && fav.storageIndex == -1) {
           $state.go('tab.storages', urlParams);
         }
+      }
+    }
+  }
+  return directiveDefinitionObject;
+})
+
+.directive('waterStorageMenuRecent', function ($state, LocalStorageService) {
+  var directiveDefinitionObject = {
+    restrict: 'AE',
+    transclude: false,
+    replace: true,
+    templateUrl: 'templates/water-storage-menu-recent.html',
+    scope: { data: '=', visits: '=' },
+    link: function (scope, element, attrs) {
+      function getVisitsData() {
+        var obj = {},
+          _type,
+          _subType,
+          _typeIndex,
+          _subTypeIndex,
+          _storageIndex,
+          visitsData = [];
+        for (var i = 0; i < scope.visits.length; i++) {
+
+          _type = scope.visits[i].type;
+          _subType = scope.visits[i].subType;
+          _typeIndex = scope.visits[i].typeIndex;
+          _subTypeIndex = scope.visits[i].subTypeIndex;
+          _storageIndex = scope.visits[i].storageIndex;
+
+          if (_subTypeIndex == -1 && _storageIndex != -1) {
+            obj = scope.data[_type][_typeIndex][_subType][_storageIndex];
+          }
+          else if (_subTypeIndex != -1 && _storageIndex != -1) {
+            obj = scope.data[_type][_typeIndex][_subType][_subTypeIndex].storages[_storageIndex];
+          }
+          else if (_subTypeIndex != -1 && _storageIndex == -1) {
+            obj = scope.data[_type][_typeIndex][_subType][_subTypeIndex];
+          }
+          else if (_subTypeIndex == -1 && _storageIndex == -1) {
+            obj = scope.data[_type][_typeIndex];
+          }
+
+          visitsData.push(obj);
+        }
+        return visitsData;
+      }
+
+      scope.$watch('visits', function (newValue, oldValue) {
+        if (newValue) {
+          scope.visitsData = getVisitsData();
+        }
+      });
+
+      scope.visitsData = getVisitsData();
+
+      scope.goVisit = function (idx) {
+        var visit = scope.visits[idx],
+            urlParams = {
+              type: visit.type,
+              subType: visit.subType,
+              typeIndex: visit.typeIndex,
+              subTypeIndex: visit.subTypeIndex,
+              storageIndex: visit.storageIndex
+            };
+
+        if (visit.storageIndex != -1) {
+          $state.go('tab.storage-detail', urlParams);
+        }
+        else if (visit.subTypeIndex != -1 && visit.storageIndex == -1) {
+          $state.go('tab.storages', urlParams);
+        }
+        else if (visit.subTypeIndex == -1 && visit.storageIndex == -1) {
+          $state.go('tab.storages', urlParams);
+        }
+      }
+
+      scope.removeVisit = function (idx) {
+        LocalStorageService
+          .use('waterstoragerecentvisits')
+          .removeItem(idx);
       }
     }
   }

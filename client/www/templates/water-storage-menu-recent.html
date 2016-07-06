@@ -1,0 +1,17 @@
+<ion-list class="menu-items menu-recent" ng-show="visitsData.length > 0" can-swipe="true">
+  <div class="item item-divider item-icon-right">
+    Recent
+  </div>
+  <ion-item
+    class="item item-icon-right"
+    menu-close
+    ng-repeat="item in visitsData"
+    type="item-text-wrap"
+    ng-click="goVisit($index)">
+    {{item.title}}
+    <i class="icon ion-chevron-right icon-accessory link-icon"></i>
+    <ion-option-button ng-click="visitsData.splice($index, 1); removeVisit($index)">
+      <i class="icon ion-ios-trash"></i>
+    </ion-option-button>
+  </ion-item>
+</ion-list>

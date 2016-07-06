@@ -24,8 +24,11 @@
           <h4 class="menu-title">Bureau of Meteorology</h4>
         </ion-item>
       </ion-list>
+
+      <water-storage-menu-favourites data="data" favourites="favourites"></water-storage-menu-favourites>
+      <water-storage-menu-recent data="data" visits="visits"></water-storage-menu-recent>
+
       <ion-list class="menu-items">
-        <water-storage-menu-favourites data="data" favourites="favourites"></water-storage-menu-favourites>
         <ion-item class="item item-icon-left item-icon-right" menu-close ng-click="goScroll('states')">
           <i class="icon ion-bookmark"></i>
           States

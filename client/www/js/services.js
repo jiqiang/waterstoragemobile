@@ -186,6 +186,64 @@ angular.module('watsto.services', ['ionic'])
   };
 })
 
+.factory('LocalStorageService', function ($window) {
+
+  return {
+
+    localStorageKey: '',
+
+    use: function (name) {
+      this.localStorageKey = name;
+      return this;
+    },
+
+    addItem: function (obj) {
+      var isItemExist = false, items = this.getItems();
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].type === obj.type
+            && items[i].subType === obj.subType
+            && items[i].typeIndex === obj.typeIndex
+            && items[i].storageIndex === obj.storageIndex
+            && items[i].subTypeIndex === obj.subTypeIndex) {
+          isItemExist = true;
+        }
+      }
+
+      if (!isItemExist) {
+
+        items.unshift({
+          type: obj.type,
+          subType: obj.subType,
+          typeIndex: obj.typeIndex,
+          storageIndex: obj.storageIndex,
+          subTypeIndex: obj.subTypeIndex
+        });
+
+        items = items.length > 3 ? items.slice(0, 3) : items;
+        $window.localStorage.setItem(this.localStorageKey, angular.toJson(items));
+      }
+
+      return this;
+    },
+
+    getItems: function () {
+      var items_json = $window.localStorage.getItem(this.localStorageKey);
+
+      return items_json ? angular.fromJson(items_json) : [];
+    },
+
+    removeItem: function (index) {
+      var items = this.getItems();
+
+      items.splice(index, 1);
+
+      $window.localStorage.setItem(this.localStorageKey, angular.toJson(items));
+
+      return this;
+    }
+  }
+})
+
 .factory('SearchService', function () {
 
   var i, j, k, l, list;

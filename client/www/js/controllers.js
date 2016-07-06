@@ -18,13 +18,20 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$ionicPosition',
   'FavouriteService',
   'storage',
-  function ($scope, $state, DataService, $ionicScrollDelegate, $document, $timeout, $ionicPosition, FavouriteService, storage) {
+  'LocalStorageService',
+  function ($scope, $state, DataService, $ionicScrollDelegate, $document, $timeout, $ionicPosition, FavouriteService, storage, LocalStorageService) {
 
     $scope.data = storage;
-    $scope.favourites = FavouriteService.get();
+    $scope.favourites = LocalStorageService.use('waterstoragefavourites').getItems();
+    $scope.visits = LocalStorageService.use('waterstoragerecentvisits').getItems();
 
     $scope.onMenuClick = function() {
-      $scope.favourites = FavouriteService.get();
+      $scope.favourites = LocalStorageService.use('waterstoragefavourites').getItems();
+      $scope.visits = LocalStorageService.use('waterstoragerecentvisits').getItems();
+    }
+
+    $scope.removeVisit = function(index) {
+      console.log(index);
     }
 
     $scope.goSearch = function(e) { $state.go('tab.search'); }
