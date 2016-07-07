@@ -365,3 +365,46 @@ h4.menu-title {
     }
   }
 }
+
+.static-header {
+  background-color: #2062a1;
+  color: #fff;
+  .app-name {
+    font-size: 0.85em;
+  }
+  .page-title {
+    font-family: "OpenSansBold", sans-serif;
+    font-size: 1.2em;
+    margin: 20px 0 10px 0;
+  }
+}
+
+.static-content {
+  background-color: #fff8e3;
+  .col {
+    padding-top: 20px;
+
+    h5 {
+      font-size: 1.2em;
+    }
+
+    h6 {
+      font-size: 1em;
+      font-family: "OpenSansBold", sans-serif;
+    }
+
+    p {
+      font-size: 0.9em;
+    }
+
+    p.italic {
+      font-style: italic;
+    }
+
+    ul {
+      font-size: 0.9em;
+      list-style: disc;
+      margin: 0px 23px;
+    }
+  }
+}

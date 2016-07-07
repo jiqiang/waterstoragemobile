@@ -88,11 +88,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }
     }
   })
-  .state('tab.copyright', {
-    url: '/copyright',
+  .state('tab.privacy', {
+    url: '/privacy',
     views: {
       'menuContent': {
-        templateUrl: 'templates/about-copyright.html'
+        templateUrl: 'templates/privacy.html'
       }
     }
   })

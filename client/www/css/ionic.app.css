@@ -10035,3 +10035,31 @@ h4.menu-title {
   .location-list .item-content h6 .yr {
     position: absolute;
     left: 15px; }
+
+.static-header {
+  background-color: #2062a1;
+  color: #fff; }
+  .static-header .app-name {
+    font-size: 0.85em; }
+  .static-header .page-title {
+    font-family: "OpenSansBold", sans-serif;
+    font-size: 1.2em;
+    margin: 20px 0 10px 0; }
+
+.static-content {
+  background-color: #fff8e3; }
+  .static-content .col {
+    padding-top: 20px; }
+    .static-content .col h5 {
+      font-size: 1.2em; }
+    .static-content .col h6 {
+      font-size: 1em;
+      font-family: "OpenSansBold", sans-serif; }
+    .static-content .col p {
+      font-size: 0.9em; }
+    .static-content .col p.italic {
+      font-style: italic; }
+    .static-content .col ul {
+      font-size: 0.9em;
+      list-style: disc;
+      margin: 0px 23px; }

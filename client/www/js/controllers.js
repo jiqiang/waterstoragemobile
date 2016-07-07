@@ -38,6 +38,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.goAbout = function(e) { $state.go('tab.about'); }
 
+    $scope.goPrivacy = function() { $state.go('tab.privacy'); }
+
     $scope.goScroll = function(type) {
 
       $timeout(function() {
