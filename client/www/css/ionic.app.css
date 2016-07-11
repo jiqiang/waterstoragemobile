@@ -10063,3 +10063,11 @@ h4.menu-title {
       font-size: 0.9em;
       list-style: disc;
       margin: 0px 23px; }
+
+.spinner-container {
+  text-align: center;
+  margin-top: 20px; }
+  .spinner-container .spinner-text {
+    color: #444;
+    margin-left: 5px;
+    font-size: 0.9em; }

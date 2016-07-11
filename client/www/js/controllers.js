@@ -58,65 +58,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     $scope.isFigureIncreased = DataService.isFigureIncreased;
 }])
 
-.controller('FavouritesCtrl', [
-  '$scope',
-  'FavouriteService',
-  'DataService',
-  'storage',
-  '$stateParams',
-  function ($scope, FavouriteService, DataService, storage, $stateParams) {
-  $scope.isFigureIncreased = DataService.isFigureIncreased;
-  $scope.removeFavourite = function (index) {
-    $scope.favouritesData.splice(index, 1);
-    FavouriteService.remove(index);
-  }
-
-  $scope.$on('$ionicView.enter', function (e) {
-    console.log($stateParams);
-    $scope.data = storage;
-    var obj = {},
-        _type,
-        _subType,
-        _typeIndex,
-        _subTypeIndex,
-        _storageIndex,
-        favouritesData = [],
-        favourites = FavouriteService.get();
-    for (var i = 0; i < favourites.length; i++) {
-
-      _type = favourites[i].type;
-      _subType = favourites[i].subType;
-      _typeIndex = favourites[i].typeIndex;
-      _subTypeIndex = favourites[i].subTypeIndex;
-      _storageIndex = favourites[i].storageIndex;
-
-      if (_subTypeIndex == -1 && _storageIndex != -1) {
-        obj = $scope.data[_type][_typeIndex][_subType][_storageIndex];
-        obj.href = "#/tab/storage/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
-      }
-      else if (_subTypeIndex != -1 && _storageIndex != -1) {
-        obj = $scope.data[_type][_typeIndex][_subType][_subTypeIndex].storages[_storageIndex];
-        obj.href = "#/tab/storage/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
-      }
-      else if (_subTypeIndex != -1 && _storageIndex == -1) {
-        obj = $scope.data[_type][_typeIndex][_subType][_subTypeIndex];
-        obj.href = "#/tab/storages/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
-      }
-      else if (_subTypeIndex == -1 && _storageIndex == -1) {
-        obj = $scope.data[_type][_typeIndex];
-        obj.href = "#/tab/storages/" + _type + "/" + _subType + "/" + _typeIndex + "/" + _subTypeIndex + "/" + _storageIndex;
-      }
-
-      favouritesData.push(obj);
-    }
-
-
-    $scope.favouritesData = favouritesData;
-  });
-}])
-
-.controller('AboutCtrl', function($scope) {})
-
 .controller('FiguresCtrl', [
   '$scope',
   '$ionicLoading',

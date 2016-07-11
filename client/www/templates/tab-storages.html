@@ -1,34 +1,40 @@
 <ion-view view-title="{{viewTitle}}">
   <ion-content>
-    <ion-refresher
-      pulling-text="Pull to refresh..."
-      on-refresh="doRefresh()">
-    </ion-refresher>
+    <div class="spinner-container" ng-if="!viewisentered">
+      <ion-spinner></ion-spinner>
+      <span class="spinner-text">Loading</span>
+    </div>
+    <div ng-if="viewisentered">
+      <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+      </ion-refresher>
 
-    <water-storage-summary></water-storage-summary>
+      <water-storage-summary></water-storage-summary>
 
-    <ion-list ng-if="viewisentered">
+      <ion-list ng-if="viewisentered">
 
-      <water-storage-list
-        listtitle="CITIES AND SYSTEMS"
-        listdata="cityandsystem"
-        listtype="{{type}}"
-        listsubtype="cityandsystem"
-        listtypeindex="{{typeIndex}}"
-        listsubtypeindex=""
-        liststorageindex="-1">
-      </water-storage-list>
+        <water-storage-list
+          listtitle="CITIES AND SYSTEMS"
+          listdata="cityandsystem"
+          listtype="{{type}}"
+          listsubtype="cityandsystem"
+          listtypeindex="{{typeIndex}}"
+          listsubtypeindex=""
+          liststorageindex="-1">
+        </water-storage-list>
 
-      <water-storage-list
-        listtitle="WATER STORAGES"
-        listdata="storages"
-        listtype="{{type}}"
-        listsubtype="{{subType}}"
-        listtypeindex="{{typeIndex}}"
-        listsubtypeindex="{{subTypeIndex}}"
-        liststorageindex="">
-      </water-storage-list>
+        <water-storage-list
+          listtitle="WATER STORAGES"
+          listdata="storages"
+          listtype="{{type}}"
+          listsubtype="{{subType}}"
+          listtypeindex="{{typeIndex}}"
+          listsubtypeindex="{{subTypeIndex}}"
+          liststorageindex="">
+        </water-storage-list>
 
-    </ion-list>
+      </ion-list>
+    </div>
   </ion-content>
 </ion-view>

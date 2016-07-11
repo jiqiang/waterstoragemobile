@@ -1,42 +1,48 @@
 <ion-view view-title="AUSTRALIA">
   <ion-content>
-    <ion-refresher
-      pulling-text="Pull to refresh..."
-      on-refresh="doRefresh()">
-    </ion-refresher>
-    <water-storage-summary></water-storage-summary>
-    <ion-list>
+    <div class="spinner-container" ng-if="!viewisentered">
+      <ion-spinner></ion-spinner>
+      <span class="spinner-text">Loading</span>
+    </div>
+    <div ng-if="viewisentered">
+      <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+      </ion-refresher>
+      <water-storage-summary></water-storage-summary>
+      <ion-list>
 
-      <water-storage-list
-        listtitle="STATES"
-        listdata="data.states"
-        listtype="states"
-        listsubtype="storages"
-        listtypeindex=""
-        listsubtypeindex="-1"
-        liststorageindex="-1">
-      </water-storage-list>
+        <water-storage-list
+          listtitle="STATES"
+          listdata="data.states"
+          listtype="states"
+          listsubtype="storages"
+          listtypeindex=""
+          listsubtypeindex="-1"
+          liststorageindex="-1">
+        </water-storage-list>
 
-      <water-storage-list
-        listtitle="CAPITAL CITIES"
-        listdata="data.cities"
-        listtype="cities"
-        listsubtype="storages"
-        listtypeindex=""
-        listsubtypeindex="-1"
-        liststorageindex="-1">
-      </water-storage-list>
+        <water-storage-list
+          listtitle="CAPITAL CITIES"
+          listdata="data.cities"
+          listtype="cities"
+          listsubtype="storages"
+          listtypeindex=""
+          listsubtypeindex="-1"
+          liststorageindex="-1">
+        </water-storage-list>
 
-      <water-storage-list
-        listtitle="DRAINAGE DIVISIONS"
-        listdata="data.drainages"
-        listtype="drainages"
-        listsubtype="storages"
-        listtypeindex=""
-        listsubtypeindex="-1"
-        liststorageindex="-1">
-      </water-storage-list>
+        <water-storage-list
+          listtitle="DRAINAGE DIVISIONS"
+          listdata="data.drainages"
+          listtype="drainages"
+          listsubtype="storages"
+          listtypeindex=""
+          listsubtypeindex="-1"
+          liststorageindex="-1">
+        </water-storage-list>
 
-    </ion-list>
+      </div>
+    </ion-pane>
   </ion-content>
 </ion-view>

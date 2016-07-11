@@ -408,3 +408,18 @@ h4.menu-title {
     }
   }
 }
+
+.spinner-container {
+  text-align: center;
+  margin-top: 20px;
+
+  .spinner-text {
+    color: #444;
+    margin-left: 5px;
+    font-size: 0.9em;
+  }
+}
+
+ion-spinner.page-loading {
+
+}
