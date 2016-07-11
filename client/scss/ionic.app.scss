@@ -366,6 +366,10 @@ h4.menu-title {
   }
 }
 
+.static-page {
+  background-color: #fff8e3;
+}
+
 .static-header {
   background-color: #2062a1;
   color: #fff;
@@ -420,6 +424,19 @@ h4.menu-title {
   }
 }
 
-ion-spinner.page-loading {
+.feedback {
+  label.item.item-input {
+    border-color: #d6d6d6;
+    border-width: 3px;
+    margin-bottom: 10px;
+  }
 
+  .comment {
+    height: 70px;
+  }
+
+  .send {
+    border-color: #d6d6d6;
+    border-width: 1px;
+  }
 }

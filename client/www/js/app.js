@@ -20,6 +20,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
 })
 
@@ -34,6 +35,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
   $ionicConfigProvider.templates.maxPrefetch(30);
 
   $ionicConfigProvider.views.transition('platform');
+
+  $httpProvider.defaults.headers.common = {};
+  $httpProvider.defaults.headers.post = {};
+  $httpProvider.defaults.headers.put = {};
+  $httpProvider.defaults.headers.patch = {};
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -80,11 +86,12 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }
     }
   })
-  .state('tab.features', {
-    url: '/features',
+  .state('tab.feedback', {
+    url: '/feedback',
     views: {
       'menuContent': {
-        templateUrl: 'templates/about-features.html'
+        templateUrl: 'templates/feedback.html',
+        controller: 'FeedbackCtrl'
       }
     }
   })

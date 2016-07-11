@@ -1,0 +1,27 @@
+<ion-view view-title="">
+  <ion-content class="static-page">
+    <div class="row static-header">
+      <div class="col">
+        <div class="app-name">BOM Water Storage - Bureau of Meteorology</div>
+        <div class="page-title">Feedback</div>
+      </div>
+    </div>
+    <div class="row static-content">
+      <div class="col">
+        <h5>Privacy Statement</h5>
+        <p>
+          We welcome your feedback to improve our app. Please note that we may not be able to privide a personalised response.
+        </p>
+        <div class="list feedback">
+          <label class="item item-input">
+            <input class="email" type="text" placeholder="Email address (optional)" ng-model="feedback.email">
+          </label>
+          <label class="item item-input">
+            <textarea class="comment" placeholder="Comments" ng-model="feedback.comments"></textarea>
+          </label>
+          <button class="button button-block send" ng-click="sendFeedback(); $event.stopPropagation();">Send</button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

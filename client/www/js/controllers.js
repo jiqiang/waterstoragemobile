@@ -5,7 +5,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   $scope.scrollToTop = function() {
     $ionicScrollDelegate.scrollTop(true);
   }
-  ionic.Platform.fullScreen(true, false);
+  //ionic.Platform.fullScreen(true, false);
+
 }])
 
 .controller('TabCtrl', [
@@ -30,15 +31,13 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       $scope.visits = LocalStorageService.use('waterstoragerecentvisits').getItems();
     }
 
-    $scope.removeVisit = function(index) {
-      console.log(index);
-    }
-
     $scope.goSearch = function(e) { $state.go('tab.search'); }
 
     $scope.goAbout = function(e) { $state.go('tab.about'); }
 
     $scope.goPrivacy = function() { $state.go('tab.privacy'); }
+
+    $scope.goFeedback = function() { $state.go('tab.feedback'); }
 
     $scope.goScroll = function(type) {
 
@@ -240,4 +239,26 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     }
 
     $scope.list = list;
+}])
+
+.controller('FeedbackCtrl', ['$scope', '$ionicLoading', '$state', 'FeedbackService', function($scope, $ionicLoading, $state, FeedbackService) {
+  $scope.feedback = {email: '', comments: ''};
+  $scope.sendFeedback = function() {
+
+    if ($scope.feedback.email != "" && !FeedbackService.validate($scope.feedback.email)) {
+      $ionicLoading.show({ template: 'Email is invalid!', noBackdrop: true, duration: 1000 });
+    }
+    else if ($scope.feedback.comments == "") {
+      $ionicLoading.show({ template: 'Comments is required!', noBackdrop: true, duration: 1000 });
+    }
+    else {
+      FeedbackService
+        .send($scope.feedback.email, $scope.feedback.comments)
+        .then(function(response) {
+          console.log(response);
+          $ionicLoading.show({ template: 'Feedback sent!', noBackdrop: true, duration: 1000 });
+          $state.go('tab.figures');
+        }, function(response) {});
+    }
+  }
 }]);

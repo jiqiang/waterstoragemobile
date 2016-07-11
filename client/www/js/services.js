@@ -390,4 +390,47 @@ angular.module('watsto.services', ['ionic'])
       scope: scope
     });
   }
+})
+
+.factory('FeedbackService', function ($http) {
+  var device = ionic.Platform.device(),
+      endpoint = 'http://wdev.bom.gov.au/cgi-bin/survey/survey.cgi',
+      feedback = {
+        Sv_SurveyId: 'APP_WATER_STORAGE',
+        Sv_Title: 'Feedback for the water storage app',
+        Sv_FileName: 'survey.txt',
+        Sv_CGIInternal: 'E',
+        Sv_CGIForwardUrl: 'www.bom.gov.au',
+        Sv_Time: Date.now(),
+        fb_Browser_String: device.platform + ' ' + device.model + '(' + device.manufacture + ') ' + device.version,
+        fb_General_Page_Location: 'BOM Water Storage app',
+        fb_Email_Address: '',
+        fb_Comments: ''
+      };
+
+  console.log(device);
+
+  return {
+    send: function(email, comments) {
+      feedback.fb_Email_Address = email;
+      feedback.fb_Comments = comments;
+
+      return $http({
+        method: 'POST',
+        url: endpoint,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function(obj) {
+          var str = [];
+          for(var p in obj)
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          return str.join("&");
+        },
+        data: feedback
+      });
+    },
+    validate: function(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+  }
 });
