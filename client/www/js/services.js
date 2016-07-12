@@ -266,7 +266,6 @@ angular.module('watsto.services', ['ionic'])
   }
 
   function createList (rawData) {
-
     list = [];
 
     // National
@@ -282,7 +281,7 @@ angular.module('watsto.services', ['ionic'])
       addToList({
         name: rawData.states[i].title,
         type: 'State',
-        href: '#/tab/storages/states/storages/' + i + '/-1'
+        href: '#/tab/storages/states/storages/' + i + '/-1' + '/-1'
       });
 
       // City and system
@@ -290,7 +289,7 @@ angular.module('watsto.services', ['ionic'])
         addToList({
           name: rawData.states[i].cityandsystem[j].title,
           type: 'City / System',
-          href: '#/tab/storages/states/cityandsystem/' + i + '/' + j
+          href: '#/tab/storages/states/cityandsystem/' + i + '/' + j + '/-1'
         });
       }
 
@@ -309,7 +308,7 @@ angular.module('watsto.services', ['ionic'])
       addToList({
         name: rawData.drainages[i].title,
         type: 'Drainage Division',
-        href: '#/tab/storages/drainages/storages/' + i + '/-1'
+        href: '#/tab/storages/drainages/storages/' + i + '/-1' + '/-1'
       });
     }
 
