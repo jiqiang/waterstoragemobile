@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'watsto.directives'])
 
-.run(function($ionicPlatform, $rootScope, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, $ionicLoading, GoogleAnalyticsService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +20,9 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    GoogleAnalyticsService.call('startTrackerWithId', ['UA-55722104-5']);
+    GoogleAnalyticsService.call('debugMode', []);
 
   });
 })

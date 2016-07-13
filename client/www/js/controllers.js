@@ -59,13 +59,14 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
 .controller('FiguresCtrl', [
   '$scope',
-  '$ionicLoading',
   'FavouriteService',
   'ChartDataService',
   'DataService',
   'storage',
   'PopupService',
-  function ($scope, $ionicLoading, FavouriteService, ChartDataService, DataService, storage, PopupService) {
+  'GoogleAnalyticsService',
+  function ($scope, FavouriteService, ChartDataService, DataService, storage, PopupService, GoogleAnalyticsService) {
+
     var popup;
 
     $scope.showPopup = function() {
@@ -95,6 +96,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
+      GoogleAnalyticsService.call('trackView', ['Australia']);
     });
 
 }])
@@ -108,7 +110,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'ChartDataService',
   'storage',
   'PopupService',
-  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage, PopupService) {
+  'GoogleAnalyticsService',
+  function ($scope, $stateParams, $ionicLoading, FavouriteService, DataService, ChartDataService, storage, PopupService, GoogleAnalyticsService) {
 
     var popup;
 
@@ -162,6 +165,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.viewisentered = true;
+      GoogleAnalyticsService.call('trackView', [$scope.viewTitle]);
     });
 
 }])
@@ -174,7 +178,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'ChartDataService',
   'storage',
   'PopupService',
-  function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage, PopupService) {
+  'GoogleAnalyticsService',
+  function ($scope, $stateParams, $ionicLoading, DataService, ChartDataService, storage, PopupService, GoogleAnalyticsService) {
     var popup;
 
     $scope.showPopup = function() {
@@ -210,6 +215,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.$on('$ionicView.enter', function (e) {
       $scope.viewisentered = true;
+      GoogleAnalyticsService.call('trackView', [$scope.viewTitle]);
     });
 }])
 
@@ -218,7 +224,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$ionicLoading',
   'SearchService',
   'storage',
-  function($scope, $ionicLoading, SearchService, storage) {
+  'GoogleAnalyticsService',
+  function($scope, $ionicLoading, SearchService, storage, GoogleAnalyticsService) {
 
     $scope.data = storage;
 
@@ -239,9 +246,17 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     }
 
     $scope.list = list;
+
+    GoogleAnalyticsService.call('trackView', ['Search page']);
 }])
 
-.controller('FeedbackCtrl', ['$scope', '$ionicLoading', '$state', 'FeedbackService', function($scope, $ionicLoading, $state, FeedbackService) {
+.controller('FeedbackCtrl', [
+  '$scope',
+  '$ionicLoading',
+  '$state',
+  'FeedbackService',
+  'GoogleAnalyticsService',
+  function($scope, $ionicLoading, $state, FeedbackService, GoogleAnalyticsService) {
   $scope.feedback = {email: '', comments: ''};
   $scope.sendFeedback = function() {
 
@@ -261,4 +276,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
         }, function(response) {});
     }
   }
+
+  GoogleAnalyticsService.call('trackView', ['Feedback page']);
 }]);

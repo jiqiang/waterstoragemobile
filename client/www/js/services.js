@@ -432,4 +432,41 @@ angular.module('watsto.services', ['ionic'])
       return re.test(email);
     }
   }
+})
+
+.factory('GoogleAnalyticsService', function ($window) {
+
+  var service = {
+    isGoogleAnalyticsAvailable: function () {
+      return $window.analytics ? true : false;
+    },
+
+    debugMode: function () {
+      console.log('Google Analytics: enable debug mode');
+      $window.analytics.debugMode();
+    },
+
+    startTrackerWithId: function (id) {
+      $window.analytics.startTrackerWithId(id);
+      console.log('Google Analytics: start tracker with id - ' + id);
+    },
+
+    trackView: function (view) {
+      $window.analytics.trackView(view);
+      console.log('Google Analytics: track view - ' + view);
+    }
+  };
+
+  return {
+    call: function(func, params) {
+
+      if (!service.isGoogleAnalyticsAvailable()) {
+        console.log('Google Analytics: not available');
+        return;
+      }
+
+      service[func].apply(undefined, params);
+    }
+  }
+
 });
