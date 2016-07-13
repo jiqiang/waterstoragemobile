@@ -10086,3 +10086,8 @@ h4.menu-title {
 .feedback .send {
   border-color: #d6d6d6;
   border-width: 1px; }
+
+.search-item-list {
+  border-color: #fff; }
+  .search-item-list .item-content {
+    background-color: #effaff; }
