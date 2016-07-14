@@ -250,6 +250,10 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     GoogleAnalyticsService.call('trackView', ['Search page']);
 }])
 
+.controller('AboutCtrl', ['$scope', function () {
+
+}])
+
 .controller('FeedbackCtrl', [
   '$scope',
   '$ionicLoading',

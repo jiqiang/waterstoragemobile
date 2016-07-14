@@ -84,7 +84,7 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
     url: '/about',
     views: {
       'menuContent': {
-        templateUrl: 'templates/tab-about.html',
+        templateUrl: 'templates/about.html',
         controller: 'AboutCtrl'
       }
     }
