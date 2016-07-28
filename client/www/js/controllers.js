@@ -39,6 +39,8 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.goFeedback = function() { $state.go('tab.feedback'); }
 
+    $scope.goFaq = function() { $state.go('tab.faq'); }
+
     $scope.goScroll = function(type) {
 
       $timeout(function() {

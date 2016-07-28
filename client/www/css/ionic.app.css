@@ -10066,6 +10066,8 @@ h4.menu-title {
       font-size: 0.9em;
       list-style: disc;
       margin: 0px 23px; }
+    .static-content .col ul.number-list {
+      list-style: decimal; }
 
 .spinner-container {
   text-align: center;

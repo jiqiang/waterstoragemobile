@@ -106,11 +106,11 @@ angular.module('watsto', ['ionic', 'watsto.controllers', 'watsto.services', 'wat
       }
     }
   })
-  .state('tab.disclaimer', {
-    url: '/disclaimer',
+  .state('tab.faq', {
+    url: '/faq',
     views: {
       'menuContent': {
-        templateUrl: 'templates/about-disclaimer.html'
+        templateUrl: 'templates/faq.html'
       }
     }
   })
