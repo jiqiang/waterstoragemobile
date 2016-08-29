@@ -20,6 +20,16 @@ angular.module('watsto.services', ['ionic'])
     });
   }
 
+  function getFromBackup () {
+    console.log('get data from backup');
+
+    return $http({
+      method: 'GET',
+      url: 'data/data.json',
+      timeout: 15000
+    });
+  }
+
   function saveToLocal () {
     console.log('save data to local');
 
@@ -77,11 +87,11 @@ angular.module('watsto.services', ['ionic'])
   }
 
   return {
-    fetch: function () {
+    fetch: function (forceUpdate) {
 
       var deferred = $q.defer();
 
-      if (isLocalDataOutdated()) {
+      if (isLocalDataOutdated() || forceUpdate) {
 
         getFromRemote().then(function (response) {
           wsData = response.data;
@@ -92,6 +102,15 @@ angular.module('watsto.services', ['ionic'])
           console.log('can not get data from remote');
           if (localDataExists()) {
             getFromLocal();
+          }
+          else {
+            console.log('can not get data from local storage');
+            getFromBackup().then(function (response) {
+              wsData = response.data;
+              saveToLocal();
+              setLocalDataTimestamp();
+              deferred.resolve(wsData);
+            });
           }
           deferred.resolve(wsData);
         });
@@ -361,10 +380,11 @@ angular.module('watsto.services', ['ionic'])
   return {
     getDataUrl: function () {
       if ('' === getBaseUrl()) {
-        return 'data/data.json';
+        return 'http://waterstorageapp.bom.gov.au/uat/data.json';
       }
+
       //return getBaseUrl() + 'index.php';
-      return 'data/data.json';
+      return 'http://waterstorageapp.bom.gov.au/uat/data.json';
 
     },
     getChartUrl: function () {

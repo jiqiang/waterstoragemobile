@@ -68,7 +68,6 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'PopupService',
   'GoogleAnalyticsService',
   function ($scope, FavouriteService, ChartDataService, DataService, storage, PopupService, GoogleAnalyticsService) {
-    console.log(storage);
     var popup;
 
     $scope.showPopup = function() {
@@ -90,7 +89,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     prepare(storage, 'viewisready');
 
     $scope.doRefresh = function () {
-      DataService.fetch().then(function (newData) {
+      DataService.fetch(true).then(function (newData) {
         prepare(newData, 'dorefresh');
         $scope.$broadcast('scroll.refreshComplete');
       });
@@ -159,7 +158,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     prepare(storage, 'viewisready');
 
     $scope.doRefresh = function () {
-      DataService.fetch().then(function (newData) {
+      DataService.fetch(true).then(function (newData) {
         prepare(newData, 'dorefresh');
         $scope.$broadcast('scroll.refreshComplete');
       });
@@ -209,7 +208,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
     prepare(storage, 'viewisready');
 
     $scope.doRefresh = function () {
-      DataService.fetch().then(function (newData) {
+      DataService.fetch(true).then(function (newData) {
         prepare(newData, 'dorefresh');
         $scope.$broadcast('scroll.refreshComplete');
       });
