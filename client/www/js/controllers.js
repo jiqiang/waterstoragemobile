@@ -68,7 +68,7 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   'PopupService',
   'GoogleAnalyticsService',
   function ($scope, FavouriteService, ChartDataService, DataService, storage, PopupService, GoogleAnalyticsService) {
-
+    console.log(storage);
     var popup;
 
     $scope.showPopup = function() {
@@ -219,6 +219,10 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       $scope.viewisentered = true;
       GoogleAnalyticsService.call('trackView', [$scope.viewTitle]);
     });
+
+    $scope.$on('$ionicView.afterEnter', function() {
+      $scope.storageDetailBackground = "#455b6c";
+    })
 }])
 
 .controller('SearchCtrl', [

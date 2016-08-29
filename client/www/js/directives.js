@@ -325,7 +325,7 @@ angular.module('watsto.directives', ['watsto.services'])
           element.highcharts().destroy();
           var options = getOptions(scope.data);
           options.chart.width = element.parent().width();
-          options.chart.height = Math.floor(element.parent().width() / 1.418);
+          options.chart.height = Math.floor(element.parent().width() / 1.618);
           element.highcharts(options);
         }
       });
@@ -333,9 +333,9 @@ angular.module('watsto.directives', ['watsto.services'])
       function getOptions(value) {
         return {
           chart: {
-            type: 'area',
+            type: 'line',
             reflow: true,
-            height: Math.floor(element.parent().width() / 1.618),
+            height: Math.floor(element.parent().width() / 1.418),
             animation: false,
             backgroundColor: '#2c3e50'
           },
@@ -345,7 +345,7 @@ angular.module('watsto.directives', ['watsto.services'])
               "fontSize": "12px",
               color: '#a3c0dd'
             },
-            margin: 10
+            margin: 20
           },
           xAxis: {
             categories: value[1],
@@ -378,17 +378,33 @@ angular.module('watsto.directives', ['watsto.services'])
             },
             gridLineWidth: 1,
             gridLineColor: '#707073',
-            lineColor: '#707073',
+            lineColor: '##fff',
             minorGridLineColor: '#505053',
             tickColor: '#707073',
             lineWidth: 1
           }],
           series: [{
-            type: 'area',
+            type: 'line',
             name: current_year,
-            data: value[0]
+            color: '#BBDEFB',
+            data: value[0][0]
             //data: ChartDataService.random()
-          }],
+          },
+          {
+            type: 'line',
+            color: '#2196F3',
+            name: last_year,
+            data: value[0][1]
+            //data: ChartDataService.random()
+          },
+          {
+            type: 'line',
+            color: '#00BCD4',
+            name: last_year_before,
+            data: value[0][2]
+            //data: ChartDataService.random()
+          }
+          ],
           credits: {enabled: false},
           exporting: {enabled: false},
           tooltip: {
@@ -396,9 +412,23 @@ angular.module('watsto.directives', ['watsto.services'])
             headerFormat: '',
             pointFormat: '{point.y:.2f} %'
           },
-          legend: {enabled: false},
+          legend: {
+            //enabled: false,
+            layout: 'horizontal',
+            align: 'center',
+            style: {color: '#fff'},
+            borderWidth: 0,
+            itemStyle: {
+              color: '#a3c0dd'
+            }
+          },
           plotOptions: {
-            area: {
+            line: {
+              events: {
+                legendItemClick: function() {
+                  return false;
+                }
+              },
               marker: {
                 enabled: false
               }

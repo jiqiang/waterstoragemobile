@@ -114,10 +114,9 @@ angular.module('watsto.services', ['ionic'])
   return {
     fetch: function (group_type, group_value, data, event_name) {
       var timeline = [];
-
       if (data[group_type][group_value]) {
         timeline = [
-          data[group_type][group_value], // chart x data
+          [data[group_type][group_value]['CY'], data[group_type][group_value]['LY'], data[group_type][group_value]['LLY']], // chart x data
           data['timeseries'], // chart y data
           event_name
         ];

@@ -36,6 +36,7 @@ $dark: #455b6c !default;
 .water-top {
   background-color: $positive;
   color: $light;
+  height: 200px;
 
   .row-separator {
     padding: 5px 0;
@@ -81,8 +82,11 @@ $dark: #455b6c !default;
 }
 
 .water-trend {
+  padding-top: 20px;
   text-align: center;
   background-color: $dark;
+  height: 200px;
+  min-height: 200px;
 
   .since {
     font-size: 12px;
@@ -451,3 +455,4 @@ h4.menu-title {
     background-color: #effaff;
   }
 }
+

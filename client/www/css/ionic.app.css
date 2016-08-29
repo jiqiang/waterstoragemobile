@@ -9822,7 +9822,8 @@ a.button {
 
 .water-top {
   background-color: #2062a1;
-  color: #fff; }
+  color: #fff;
+  height: 200px; }
   .water-top .row-separator {
     padding: 5px 0; }
   .water-top .icon {
@@ -9847,8 +9848,11 @@ a.button {
     line-height: 60px; }
 
 .water-trend {
+  padding-top: 20px;
   text-align: center;
-  background-color: #455b6c; }
+  background-color: #455b6c;
+  height: 200px;
+  min-height: 200px; }
   .water-trend .since {
     font-size: 12px;
     color: #A3C0DD; }
