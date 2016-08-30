@@ -11,8 +11,10 @@
     </h4>
     <h6>
       <span class="yr">YEAR</span>
-      <span class="tc">TC: {{item.today_capacity_active_total}} ML</span>
-      <span class="lv">LV: {{item.today_volume_active_total}} ML</span>
+      <div>
+        <div class="tc">CAPACITY {{item.today_capacity_active_total}} ML</div>
+        <div class="lv">LATEST {{item.today_volume_active_total}} ML</div>
+      </div>
     </h6>
     <i class="icon ion-chevron-right icon-accessory"></i>
     <ion-option-button ng-click="addFavourite($index)">

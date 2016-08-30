@@ -329,7 +329,7 @@ h4.menu-title {
     .ion-arrow-up-c,
     .ion-arrow-down-c {
       font-size: 1.3em;
-      top: -3px;
+      top: -8px;
     }
 
     .ion-arrow-up-c {
@@ -342,6 +342,8 @@ h4.menu-title {
   }
 
   .item-content {
+    padding-top: 8px;
+    padding-bottom: 8px;
     h4 {
       font-size: 13px;
       font-family: "OpenSansBold", sans-serif;
@@ -354,17 +356,17 @@ h4.menu-title {
 
     h6 {
       color: #748491;
+
       .tc {
-        position: absolute;
-        left: 55px;
+        margin-bottom: 3px;
       }
       .lv {
-        position: absolute;
-        left: 165px;
+
       }
       .yr {
         position: absolute;
         left: 15px;
+        top: 40px;
       }
     }
   }

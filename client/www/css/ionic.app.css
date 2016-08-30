@@ -10012,7 +10012,7 @@ h4.menu-title {
 .location-list .item-icon-left .ion-arrow-up-c,
 .location-list .item-icon-left .ion-arrow-down-c {
   font-size: 1.3em;
-  top: -3px; }
+  top: -8px; }
 
 .location-list .item-icon-left .ion-arrow-up-c {
   color: #0cad55; }
@@ -10020,25 +10020,24 @@ h4.menu-title {
 .location-list .item-icon-left .ion-arrow-down-c {
   color: #ff6f6f; }
 
-.location-list .item-content h4 {
-  font-size: 13px;
-  font-family: "OpenSansBold", sans-serif;
-  color: #2c3e50; }
-  .location-list .item-content h4 span {
-    margin-left: 10px;
-    color: #2062a1; }
-
-.location-list .item-content h6 {
-  color: #748491; }
-  .location-list .item-content h6 .tc {
-    position: absolute;
-    left: 55px; }
-  .location-list .item-content h6 .lv {
-    position: absolute;
-    left: 165px; }
-  .location-list .item-content h6 .yr {
-    position: absolute;
-    left: 15px; }
+.location-list .item-content {
+  padding-top: 8px;
+  padding-bottom: 8px; }
+  .location-list .item-content h4 {
+    font-size: 13px;
+    font-family: "OpenSansBold", sans-serif;
+    color: #2c3e50; }
+    .location-list .item-content h4 span {
+      margin-left: 10px;
+      color: #2062a1; }
+  .location-list .item-content h6 {
+    color: #748491; }
+    .location-list .item-content h6 .tc {
+      margin-bottom: 3px; }
+    .location-list .item-content h6 .yr {
+      position: absolute;
+      left: 15px;
+      top: 40px; }
 
 .static-page {
   background-color: #fff8e3; }
