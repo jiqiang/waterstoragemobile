@@ -252,6 +252,12 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
 
     $scope.list = list;
 
+    $scope.$on('$ionicView.beforeEnter', function (e) {
+      $scope.keyword = {value: undefined};
+      $scope.list = list;
+      GoogleAnalyticsService.call('trackView', ['Search page']);
+    });
+
     GoogleAnalyticsService.call('trackView', ['Search page']);
 }])
 
