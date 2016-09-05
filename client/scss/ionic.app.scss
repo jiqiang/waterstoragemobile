@@ -36,14 +36,14 @@ $dark: #455b6c !default;
 .water-top {
   background-color: $positive;
   color: $light;
-  height: 200px;
+  height: 220px;
 
   .row-separator {
     padding: 5px 0;
   }
 
   .icon {
-    font-size: 1.575em;
+    font-size: 1.975em;
   }
 
   .ion-arrow-up-c {
@@ -57,6 +57,16 @@ $dark: #455b6c !default;
   .date, .figure-per-label, .year-trend-label {
     font-size: 0.857em;
     color: #A3C0DD;
+  }
+
+  .figure-per-label-bottom {
+    line-height: 10px;
+  }
+
+  .figure-per-label-left {
+    font-size: 0.857em;
+    text-align: right;
+    padding-right: 15px;
   }
 
   .location {
@@ -78,6 +88,14 @@ $dark: #455b6c !default;
     .icon {
       line-height: 60px;
     }
+  }
+
+  .figure-increase-color {
+    color: #cbff99;
+  }
+
+  .figure-decrease-color {
+    color: #fdcbc8;
   }
 }
 

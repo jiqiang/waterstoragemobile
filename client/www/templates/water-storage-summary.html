@@ -11,11 +11,20 @@
     <div class="col col-80">
       <div class="figure-per-label">% FULL</div>
       <div class="figure-per">{{summary.percentage_full_today}}%</div>
-      <div class="figure-per-label">CAPACITY: {{summary.today_capacity_active_total}} ML</div>
     </div>
     <div class="col">
       <div class="year-trend-label">YEAR</div>
       <div class="year-trend"><i class="icon" ng-class="isFigureIncreased(summary.volume_change_since_last_year) ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-50">
+      <div class="figure-per-label figure-per-label-bottom">TOTAL CAPACITY</div>
+      <div class="figure-per-label">{{summary.today_capacity_active_total}} ML</div>
+    </div>
+    <div class="col figure-per-label-left" ng-class="isFigureIncreased(summary.volume_change_since_last_year) ? 'figure-increase-color' : 'figure-decrease-color'">
+      <div class="figure-per-label-bottom">{{summary.percentage_change_since_last_year}}%</div>
+      <div>{{summary.volume_change_since_last_year}}&nbsp;ML</div>
     </div>
   </div>
 </div>

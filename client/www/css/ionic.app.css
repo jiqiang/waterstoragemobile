@@ -9823,11 +9823,11 @@ a.button {
 .water-top {
   background-color: #2062a1;
   color: #fff;
-  height: 200px; }
+  height: 220px; }
   .water-top .row-separator {
     padding: 5px 0; }
   .water-top .icon {
-    font-size: 1.575em; }
+    font-size: 1.975em; }
   .water-top .ion-arrow-up-c {
     color: #7cdf1a; }
   .water-top .ion-arrow-down-c {
@@ -9835,6 +9835,12 @@ a.button {
   .water-top .date, .water-top .figure-per-label, .water-top .year-trend-label {
     font-size: 0.857em;
     color: #A3C0DD; }
+  .water-top .figure-per-label-bottom {
+    line-height: 10px; }
+  .water-top .figure-per-label-left {
+    font-size: 0.857em;
+    text-align: right;
+    padding-right: 15px; }
   .water-top .location {
     font-size: 1.071em;
     font-family: "OpenSansBold", sans-serif;
@@ -9846,6 +9852,10 @@ a.button {
     line-height: 60px; }
   .water-top .year-trend .icon {
     line-height: 60px; }
+  .water-top .figure-increase-color {
+    color: #cbff99; }
+  .water-top .figure-decrease-color {
+    color: #fdcbc8; }
 
 .water-trend {
   padding-top: 20px;
