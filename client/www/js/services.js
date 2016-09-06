@@ -377,45 +377,11 @@ angular.module('watsto.services', ['ionic'])
 })
 
 .factory('ConfigService', function ($location) {
-
-  function getBaseUrl () {
-    var host = $location.host(),
-        protocol = $location.protocol(),
-        baseUrl;
-
-    switch (host) {
-      case 'localhost':
-        baseUrl = 'http://localhost:8888/waterstoragemobile/server/';
-        break;
-      case 'wdev.bom.gov.au':
-        baseUrl = 'http://wdev.bom.gov.au/water/ws_mobile_app_master/data/';
-        break;
-    }
-
-    if (protocol === 'file') {
-      baseUrl = '';
-    }
-
-    console.log(baseUrl);
-    return baseUrl;
-  }
-
+  var dataUrl = 'http://waterstorageapp.bom.gov.au/uat/data.json';
   return {
     getDataUrl: function () {
-      if ('' === getBaseUrl()) {
-        return 'http://waterstorageapp.bom.gov.au/uat/data.json';
-      }
-
-      //return getBaseUrl() + 'index.php';
-      return 'http://waterstorageapp.bom.gov.au/uat/data.json';
-
-    },
-    getChartUrl: function () {
-      if ('' === getBaseUrl()) {
-        return 'data/chart.json';
-      }
-      //return getBaseUrl() + 'chart.php';
-      return 'data/chart.json';
+      console.log('Data URL: ' + dataUrl)
+      return dataUrl;
     }
   };
 })
