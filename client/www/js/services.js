@@ -1,6 +1,6 @@
 angular.module('watsto.services', ['ionic'])
 
-.factory('DataService', ['$http', '$q', 'ConfigService', function($http, $q, ConfigService) {
+.factory('DataService', ['$http', '$q', 'ConfigService', '$ionicHistory', function($http, $q, ConfigService, $ionicHistory) {
 
   // Initialize data.
   var wsData = {
@@ -114,6 +114,8 @@ angular.module('watsto.services', ['ionic'])
           }
           deferred.resolve(wsData);
         });
+
+        $ionicHistory.clearCache();
       }
       else {
         if (!isLocalDataLoaded()) {
