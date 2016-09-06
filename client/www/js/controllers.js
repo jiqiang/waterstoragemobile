@@ -229,13 +229,13 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
   '$ionicLoading',
   'SearchService',
   'storage',
+  'LocalStorageService',
   'GoogleAnalyticsService',
-  function($scope, $ionicLoading, SearchService, storage, GoogleAnalyticsService) {
+  function($scope, $ionicLoading, SearchService, storage, LocalStorageService, GoogleAnalyticsService) {
 
     $scope.data = storage;
 
     var list = SearchService.createList(storage);
-
     $scope.keyword = {value: undefined};
 
     $scope.onKeywordChange = function () {
@@ -257,6 +257,18 @@ angular.module('watsto.controllers', ['watsto.services', 'ionic'])
       $scope.list = list;
       GoogleAnalyticsService.call('trackView', ['Search page']);
     });
+
+    $scope.addVisitFromSearch = function (item) {
+      LocalStorageService
+        .use('waterstoragerecentvisits')
+        .addItem({
+          type: item._type,
+          typeIndex: item._typeIndex,
+          subType: item._subType,
+          subTypeIndex: item._subTypeIndex,
+          storageIndex: item._storageIndex
+        });
+    }
 
     GoogleAnalyticsService.call('trackView', ['Search page']);
 }])

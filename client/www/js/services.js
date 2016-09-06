@@ -287,19 +287,25 @@ angular.module('watsto.services', ['ionic'])
     list = [];
 
     // National
+    /*
     addToList({
       name: 'Australia',
       type: 'National',
       href: '#/tab/figure'
     });
-
+    */
     for (i = 0; i < rawData.states.length; i++) {
 
       // State
       addToList({
         name: rawData.states[i].title,
         type: 'State',
-        href: '#/tab/storages/states/storages/' + i + '/-1' + '/-1'
+        href: '#/tab/storages/states/storages/' + i + '/-1' + '/-1',
+        _type: 'states',
+        _subType: 'storages',
+        _typeIndex: i,
+        _subTypeIndex: -1,
+        _storageIndex: -1
       });
 
       // City and system
@@ -307,7 +313,12 @@ angular.module('watsto.services', ['ionic'])
         addToList({
           name: rawData.states[i].cityandsystem[j].title,
           type: 'City / System',
-          href: '#/tab/storages/states/cityandsystem/' + i + '/' + j + '/-1'
+          href: '#/tab/storages/states/cityandsystem/' + i + '/' + j + '/-1',
+          _type: 'states',
+          _subType: 'cityandsystem',
+          _typeIndex: i,
+          _subTypeIndex: j,
+          _storageIndex: -1
         });
       }
 
@@ -316,7 +327,12 @@ angular.module('watsto.services', ['ionic'])
         addToList({
           name: rawData.states[i].storages[j].title,
           type: 'Water Storage',
-          href: '#/tab/storage/states/storages/' + i + '/-1/' + j
+          href: '#/tab/storage/states/storages/' + i + '/-1/' + j,
+          _type: 'states',
+          _subType: 'storages',
+          _typeIndex: i,
+          _subTypeIndex: -1,
+          _storageIndex: j
         });
       }
     }
@@ -326,7 +342,12 @@ angular.module('watsto.services', ['ionic'])
       addToList({
         name: rawData.drainages[i].title,
         type: 'Drainage Division',
-        href: '#/tab/storages/drainages/storages/' + i + '/-1' + '/-1'
+        href: '#/tab/storages/drainages/storages/' + i + '/-1' + '/-1',
+        _type: 'drainages',
+        _subType: 'storages',
+        _typeIndex: i,
+        _subTypeIndex: -1,
+        storageIndex: -1
       });
     }
 
